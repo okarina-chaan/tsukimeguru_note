@@ -14,6 +14,10 @@ RUN apt-get update -qq && \
     pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+RUN npm install -g yarn
+
+RUN gem install foreman
+
 WORKDIR /rails
 
 ENV RAILS_ENV=development
@@ -25,4 +29,5 @@ RUN bundle install
 COPY . .
 
 EXPOSE 3000
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+
+CMD ["bin/dev"]

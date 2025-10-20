@@ -19,8 +19,7 @@ gem "jbuilder"
 
 # Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
 gem "tailwindcss-ruby"
-
-gem "sqlite3", "~> 2.0"
+gem "tailwindcss-rails", "~> 4.3"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -52,6 +51,8 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
+  gem "sqlite3", "~> 2.0"
+
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
@@ -61,4 +62,3 @@ group :development do
   gem "web-console"
 end
 
-gem "tailwindcss-rails", "~> 4.3"

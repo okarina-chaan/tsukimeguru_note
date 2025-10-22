@@ -95,9 +95,10 @@ LINE通知機能（新月・満月通知）
 フレームワーク：Ruby on Rails 8  
 データベース：PostgreSQL  
 デプロイ先：Render  
-使用予定のライブラリ：  
+使用予定のAPI：  
 LINE Login API（ユーザー認証）  
 LINE Messaging API（通知機能）  
 Free AstrologyAPI(月星座情報)  
 chart.js（グラフ表示）  
+おはこん番地は!?Web API（月相計算）
 フロントエンド：Tailwind CSS + JavaScript  

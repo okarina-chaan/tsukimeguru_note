@@ -100,5 +100,5 @@ LINE Login API（ユーザー認証）
 LINE Messaging API（通知機能）  
 Free AstrologyAPI(月星座情報)  
 chart.js（グラフ表示）  
-おはこん番地は!?Web API（月相計算）
+おはこん番地は!?Web API（月相計算）  
 フロントエンド：Tailwind CSS + JavaScript  

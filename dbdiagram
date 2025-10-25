@@ -75,3 +75,13 @@ Table line_message_logs {
   status string [note: '送信ステータス (success/fail)']
   sent_at datetime
 }
+
+Table user_moon_message_settings {
+  id integer [pk]
+  user_id integer [ref: > users.id]
+  moon_phase_name string [not null, note: '月相（新月／満月／上弦／下弦）']
+  is_enabled boolean [default: false, note: 'この月相の通知を受け取るか']
+  preferred_hour integer [note: '通知を受けたい時刻']
+  created_at datetime
+  updated_at datetime
+}

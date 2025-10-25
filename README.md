@@ -104,7 +104,10 @@ chart.js（グラフ表示）
 おはこん番地は!?Web API（月相計算）  
 フロントエンド：Tailwind CSS + JavaScript  
 
-##### 画面遷移図
+## 画面遷移図
 
 Figma：<https://www.figma.com/design/eGtdn0sVWhmvQkbmZAhXqE/%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3?m=auto&t=w0GcPL4M1cHHEjEY-6>
 
+## ER図
+
+[![Image from Gyazo](https://i.gyazo.com/2e6f30aa15d47ed3c938f7a0c9dbff3d.png)](https://gyazo.com/2e6f30aa15d47ed3c938f7a0c9dbff3d)

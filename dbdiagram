@@ -1,0 +1,77 @@
+Table users {
+  id integer [pk]
+  line_user_id string [not null, unique, note: 'LINEのユーザー識別子']
+  name string [note: 'LINEの表示名']
+  created_at datetime
+  updated_at datetime
+}
+
+Table diaries {
+  id integer [pk]
+  user_id integer [ref: > users.id]
+  moon_phase_id integer [ref: > moon_phases.id]
+  mood_score integer [note: '気分スコア (1〜5)']
+  body_condition integer [note: '体調スコア (1〜5)']
+  three_good_things text [note: '今日の良かったこと3つ']
+  memo text [note: '自由記述']
+  created_at datetime
+  updated_at datetime
+}
+
+Table moon_notes {
+  id integer [pk]
+  user_id integer [ref: > users.id]
+  moon_phase_id integer [ref: > moon_phases.id]
+  content text [note: '記録本文']
+  created_at datetime
+  updated_at datetime
+}
+
+Table moon_profiles {
+  id integer [pk]
+  user_id integer [ref: > users.id]
+  moon_sign_id integer [ref: > moon_signs.id]
+  birth_date date
+  birth_time time
+  birth_place string
+  created_at datetime
+}
+
+Table moon_signs {
+  id integer [pk]
+  name string	[note: '英語名']
+  name_ja	string	[note: '日本語名']
+  description	text	[note: '解説文']
+  created_at datetime
+  updated_at	datetime
+}
+
+Table moon_phases {
+  id integer [pk]
+  date date [unique]
+  moon_age float [note: '月齢']
+  name string [note: '新月／満月／上弦／下弦']
+  moon_sign string [note: 'その日の月星座']
+  message text [note: '月齢に応じたメッセージ']
+  created_at datetime
+}
+
+Table moon_messages {
+  id integer [pk]
+  moon_phase_name string [not null, note: '月相（新月／満月／上弦／下弦）']
+  title string [note: 'メッセージタイトル（任意）']
+  content text [note: '通知メッセージ本文']
+  send_hour integer [note: '送信時刻']
+  is_active boolean [default: true, note: '通知を有効にするかどうか']
+  created_at datetime
+  updated_at datetime
+}
+
+
+Table line_message_logs {
+  id integer [pk]
+  user_id integer [ref: > users.id]
+  moon_message_id integer [ref: > moon_messages.id]
+  status string [note: '送信ステータス (success/fail)']
+  sent_at datetime
+}

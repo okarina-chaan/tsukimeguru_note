@@ -1,5 +1,34 @@
-<div>
-  <h1 class="font-bold text-4xl">Home#index</h1>
-  <button class="btn btn-primary">Hello daisyUI!</button>
-  <p>Find me in app/views/home/index.html.erb</p>
-</div>
+<!DOCTYPE html>
+<html lang="ja" data-theme="tsukimeguru-dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>月めぐるノート</title>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_importmap_tags %>
+</head>
+
+<body class="font-sans bg-base-100 text-base-content">
+  <!-- Hero Section -->
+  <section
+    class="hero min-h-screen bg-cover bg-center"
+    style="background-image: linear-gradient(0deg, rgba(29,27,56,0.9), rgba(29,27,56,0.2)), url('https://lh3.googleusercontent.com/aida-public/AB6AXuDUinb5ZdalBKZLXMCr3sQE8X-_oPR4HMKpKqhF9wPVuH8wuTjTutdAy-dOboy4E9KEzD3OMn52sCDy7abOcSoz4gzavF2xQXFd9Zi6rD0Mrc9wBVZQKk5sjJE7j19WS0cgkI2TIgD7ronmJeIbL-bVOn7rOg5jEBgRbHbSGWet7XTU3252M8PMmTORLIG96IKT17uLB9bXs148KAPcVPTfEbt4Io4ENWc2WYw6ceVB4-o_J5JG4r9DlXeM3ZYtZkkGnawaEDs1gQ');"
+  >
+    <div class="hero-overlay bg-opacity-30"></div>
+    <div class="hero-content text-center text-neutral-content flex flex-col items-center">
+      <h1 class="text-4xl font-display text-primary mb-2">月めぐるノート</h1>
+      <p class="text-secondary mb-8">月の満ち欠けでめぐる、ありのままの私</p>
+
+      <div class="flex flex-col gap-3 w-72">
+        <button class="btn bg-[#03C755] text-white border-[#00b544]">
+          <svg aria-label="Line logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><g fill-rule="evenodd" stroke-linejoin="round" fill="white"><path fill-rule="nonzero" d="M12.91 6.57c.232 0 .42.19.42.42 0 .23-.188.42-.42.42h-1.17v.75h1.17a.42.42 0 1 1 0 .84h-1.59a.42.42 0 0 1-.418-.42V5.4c0-.23.188-.42.42-.42h1.59a.42.42 0 0 1-.002.84h-1.17v.75h1.17zm-2.57 2.01a.421.421 0 0 1-.757.251l-1.63-2.217V8.58a.42.42 0 0 1-.42.42.42.42 0 0 1-.418-.42V5.4a.418.418 0 0 1 .755-.249L9.5 7.366V5.4c0-.23.188-.42.42-.42.23 0 .42.19.42.42v3.18zm-3.828 0c0 .23-.188.42-.42.42a.42.42 0 0 1-.418-.42V5.4c0-.23.188-.42.42-.42.23 0 .418.19.418.42v3.18zM4.868 9h-1.59c-.23 0-.42-.19-.42-.42V5.4c0-.23.19-.42.42-.42.232 0 .42.19.42.42v2.76h1.17a.42.42 0 1 1 0 .84M16 6.87C16 3.29 12.41.376 8 .376S0 3.29 0 6.87c0 3.208 2.846 5.896 6.69 6.405.26.056.615.172.705.394.08.2.053.518.026.722 0 0-.092.565-.113.685-.035.203-.16.79.693.432.854-.36 4.607-2.714 6.285-4.646C15.445 9.594 16 8.302 16 6.87"></path></g></svg>
+          LINEでログイン
+        </button>
+        <button class="btn btn-outline btn-primary w-full">使い方を見る</button>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
+

@@ -10,28 +10,19 @@
 @plugin "daisyui/theme" {
   name: "tsukimeguru-dark";
   default: true;
-  prefersdark: false;
-  color-scheme: "light";
-  --color-base-100: #1d1b38;
+  color-scheme: "dark";
+  --color-base-100: #1c1b2f;
   --color-base-200: #2a274e;
-  --color-base-300: oklch(0.290 0.099 306.6);
-  --color-base-content: #e8e9ff;
-  --color-primary: #f7c8d0;
-  --color-primary-content: oklch(93% 0.034 272.788);
-  --color-secondary: #b4a582;
-  --color-secondary-content: oklch(94% 0.028 342.258);
-  --color-accent: #c2a9e2;
-  --color-accent-content: oklch(38% 0.063 188.416);
-  --color-neutral: #4b4453;
-  --color-neutral-content: oklch(92% 0.004 286.32);
-  --color-info: #9dcff5;
-  --color-info-content: oklch(29% 0.066 243.157);
-  --color-success: #a0d6b4;
-  --color-success-content: oklch(37% 0.077 168.94);
+  --color-base-content: #f4ecd8; /* 柔らかい生成り */
+  --color-primary: #f6b87e; /* 月の橙光 */
+  --color-primary-content: #2b2020;
+  --color-secondary: #e2c4a8;
+  --color-accent: #b19dd5;  /* 月夜の薄紫 */
+  --color-neutral: #3a3548;
+  --color-info: #a6c8ec;
+  --color-success: #b8d7b0;
   --color-warning: #f0e68c;
-  --color-warning-content: oklch(41% 0.112 45.904);
-  --color-error: #f99695;
-  --color-error-content: oklch(27% 0.105 12.094);
+  --color-error: #f79e9d;
   --radius-selector: 0.5rem;
   --radius-field: 0.25rem;
   --radius-box: 0.5rem;

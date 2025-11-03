@@ -5,17 +5,18 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - .:/rails
+      - /rails/node_modules
     ports:
-      - "3000:3000"
+      - "3000:3001"
     environment:
       RAILS_ENV: development
       PORT: 3000
-      CHOKIDAR_USEPOLLING: "true"  # ← Tailwind監視用！
+      CHOKIDAR_USEPOLLING: "true" 
     depends_on:
       - db
-    command: bin/dev
-    tty: true          # ← binding.irb/byebug対応
-    stdin_open: true   # ← 対話操作を許可
+    command: bundle exec rails s -b 0.0.0.0 -p 3000 -P /tmp/server.pid
+    tty: true
+    stdin_open: true
 
   db:
     image: postgres:15

@@ -2,6 +2,7 @@ Table users {
   id integer [pk]
   line_user_id string [not null, unique, note: 'LINEのユーザー識別子']
   name string [note: 'LINEの表示名']
+  account_resistered boolean [default: false, note: 'アカウント登録済みかどうか']
   created_at datetime
   updated_at datetime
 }

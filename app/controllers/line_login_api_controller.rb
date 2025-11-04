@@ -1,13 +1,13 @@
 class LineLoginApiController < ApplicationController
-  require 'faraday'
-  require 'json'
-  require 'securerandom'
+  require "faraday"
+  require "json"
+  require "securerandom"
 
   def login
     session[:state] = SecureRandom.urlsafe_base64
     base_url = "https://access.line.me/oauth2/v2.1/authorize"
     response_type = "code"
-    client_id = ENV['LINE_CHANNEL_ID']
+    client_id = ENV["LINE_CHANNEL_ID"]
     redirect_uri = CGI.escape(line_login_api_callback_url)
     state = session[:state]
     scope = "profile%20openid"
@@ -40,23 +40,23 @@ class LineLoginApiController < ApplicationController
   private
 
   def exchange_code_for_token(code)
-    conn = Faraday.new(url: 'https://api.line.me')
+    conn = Faraday.new(url: "https://api.line.me")
     response = conn.post("/oauth2/v2.1/token") do |req|
-      req.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+      req.headers["Content-Type"] = "application/x-www-form-urlencoded"
       req.body = {
-        grant_type: 'authorization_code',
+        grant_type: "authorization_code",
         code: code,
         redirect_uri: line_login_api_callback_url,
-        client_id: ENV['LINE_CHANNEL_ID'],
-        client_secret: ENV['LINE_CHANNEL_SECRET']
+        client_id: ENV["LINE_CHANNEL_ID"],
+        client_secret: ENV["LINE_CHANNEL_SECRET"]
       }
     end
-    JSON.parse(response.body)['id_token'] if response.status == 200
+    JSON.parse(response.body)["id_token"] if response.status == 200
   end
 
   def verify_id_token_and_get_sub(id_token)
     return nil unless id_token
-    conn = Faraday.new(url: 'https://api.line.me')
+    conn = Faraday.new(url: "https://api.line.me")
     response = conn.post("/oauth2/v2.1/verify") do |req|
       req.headers["Content-Type"] = "application/x-www-form-urlencoded"
         req.body = URI.encode_www_form(

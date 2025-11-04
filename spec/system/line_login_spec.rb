@@ -33,7 +33,7 @@ RSpec.describe "LineLogin", type: :system do
 
   context "既存ユーザー（account_registered: false）の場合" do
     let!(:user) { User.create!(line_user_id: "1234567890", name: nil, account_registered: false) }
-    
+
     it "アカウント名登録画面に遷移すること" do
       visit line_login_api_callback_path(code: "auth_code", state: "test_state")
       expect(page).to have_current_path(edit_account_name_path)

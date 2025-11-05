@@ -11,4 +11,8 @@ Rails.application.routes.draw do
   post "line_login_api/callback", to: "line_login_api#callback"
   get "home/dashboard", to: "home#dashboard", as: :dashboard
   get "account_name/edit", to: "account_name#edit"
+
+  if Rails.env.test?
+    require "rack_session_access/capybara"
+  end
 end

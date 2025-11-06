@@ -41,11 +41,18 @@ gem "kamal", require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 
-gem "omniauth-line"
 gem "omniauth-auth0"
 gem "omniauth-rails_csrf_protection"
 gem "faraday"
 
+gem "importmap-rails", "~> 2.2"
+
+
+group :development, :production do
+
+  gem "omniauth-line"
+
+end
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -72,6 +79,7 @@ group :development do
   gem "web-console"
 end
 
-gem "importmap-rails", "~> 2.2"
-
-gem "rack_session_access", "~> 0.2.0"
+group :test do
+  gem 'webmock'
+  gem "rack_session_access", "~> 0.2.0"
+end

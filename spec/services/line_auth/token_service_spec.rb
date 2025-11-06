@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe LineAuth::TokenService do
   describe '#exchange_code_for_token' do
-    it 'returns id_token when successful' do
+    it '成功したときにid_tokenを返す' do
       stub_request(:post, "https://api.line.me/oauth2/v2.1/token")
         .to_return(status: 200, body: { id_token: "fake_token" }.to_json)
 

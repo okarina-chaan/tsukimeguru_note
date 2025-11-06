@@ -26,7 +26,7 @@ RSpec.describe "LINEログインフロー", type: :system do
   end
 
   it "既存ユーザーはダッシュボードに遷移する" do
-    create(:user, line_user_id: line_user_id, name: "リナ")
+    create(:user, line_user_id: line_user_id, name: "つきのうさぎ")
 
     visit line_login_api_login_path
 

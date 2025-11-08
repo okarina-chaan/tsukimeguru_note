@@ -35,7 +35,7 @@ RSpec.describe "LINEログインフロー", type: :system do
 
     visit line_login_api_callback_path(code: "auth_code", state: state)
 
-    expect(page).to have_current_path("/home/dashboard")
+    expect(page).to have_current_path(dashboard_path)
     expect(page).to have_content("ログインしました")
   end
 

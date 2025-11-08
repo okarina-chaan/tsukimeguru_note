@@ -1,6 +1,6 @@
 class AccountNamesController < ApplicationController
   before_action :require_login
-  before_action :redirect_if_registered, only: [:edit, :update]
+  before_action :redirect_if_registered, only: [ :edit, :update ]
 
   def edit
     @user = current_user

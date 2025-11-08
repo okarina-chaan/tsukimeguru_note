@@ -1,0 +1,16 @@
+ja:
+  activerecord:
+    models:
+      daily_note: 日記
+
+    attributes:
+      daily_note:
+        condition_score: 体調
+        mood_score: 気分
+        date: 日付
+        memo: メモ
+
+    errors:
+      blank: "を入力してください"
+      taken: "は既に記入済みです"
+      inclusion: "は正しい値を選択してください"

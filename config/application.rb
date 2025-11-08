@@ -18,10 +18,11 @@ require "action_cable/engine"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module RailsTemplate
+module TsukimeguruNote
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
+    config.i18n.default_locale = :ja
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -29,6 +30,8 @@ module RailsTemplate
     config.autoload_lib(ignore: %w[assets tasks])
 
     config.autoload_paths << Rails.root.join("app/services")
+
+    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}").to_s]
 
     # Configuration for the application, engines, and railties goes here.
     #

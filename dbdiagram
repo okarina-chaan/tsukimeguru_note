@@ -7,14 +7,18 @@ Table users {
   updated_at datetime
 }
 
-Table diaries {
-  id integer [pk]
-  user_id integer [ref: > users.id]
-  moon_phase_id integer [ref: > moon_phases.id]
-  mood_score integer [note: '気分スコア (1〜5)']
-  body_condition integer [note: '体調スコア (1〜5)']
-  three_good_things text [note: '今日の良かったこと3つ']
-  memo text [note: '自由記述']
+Table daily_notes {
+  id bigint [pk]
+  user_id bigint [ref: > users.id]
+  date date [not null]
+  condition_score int [note: '体調']
+  mood_score int [note: '気分']
+  did_today string [ note: '今日やったこと']
+  challenges string [ note: '今日できなかったこと、伸びしろポイント']
+  good_things string [ note: '今日あった感謝や嬉しかったこと３つ']
+  try_tomorrow string [ note: '明日やってみたいこと']
+  note text [ note: '自由記述メモ']
+  moon_phase_name string [ note: 'APIから取った月相']
   created_at datetime
   updated_at datetime
 }

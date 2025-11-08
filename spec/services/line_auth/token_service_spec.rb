@@ -13,4 +13,3 @@ RSpec.describe LineAuth::TokenService do
     end
   end
 end
-

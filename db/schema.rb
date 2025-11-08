@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_03_072852) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_07_082900) do
+  create_table "daily_notes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.date "date", null: false
+    t.integer "condition_score"
+    t.integer "mood_score"
+    t.text "did_today"
+    t.string "challenge"
+    t.string "good_things"
+    t.string "try_tomorrow"
+    t.text "memo"
+    t.string "moon_phase_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "date"], name: "index_daily_notes_on_user_id_and_date", unique: true
+    t.index ["user_id"], name: "index_daily_notes_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "line_user_id", null: false
     t.string "name"
@@ -19,4 +36,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_03_072852) do
     t.datetime "updated_at", null: false
     t.index ["line_user_id"], name: "index_users_on_line_user_id", unique: true
   end
+
+  add_foreign_key "daily_notes", "users"
 end

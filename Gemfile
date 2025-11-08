@@ -47,11 +47,11 @@ gem "faraday"
 
 gem "importmap-rails", "~> 2.2"
 
+gem "rails-i18n"
+
 
 group :development, :production do
-
   gem "omniauth-line"
-
 end
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -80,6 +80,6 @@ group :development do
 end
 
 group :test do
-  gem 'webmock'
+  gem "webmock"
   gem "rack_session_access", "~> 0.2.0"
 end

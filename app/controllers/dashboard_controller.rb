@@ -3,7 +3,6 @@ class DashboardController < ApplicationController
 
   def index
     @user = current_user
-    @daily_note = DailyNote.new
-    # @moon_phase = MoonPhaseService.current_phase
+    @daily_note ||= current_user.daily_notes.build
   end
 end

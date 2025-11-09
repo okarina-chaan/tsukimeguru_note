@@ -2,6 +2,7 @@ class DailyNotesController < ApplicationController
   before_action :require_login
 
   def index
+    @daily_note ||= current_user.daily_notes.build
     @daily_notes = current_user.daily_notes.order(date: :desc)
   end
 
@@ -14,6 +15,7 @@ class DailyNotesController < ApplicationController
     if @daily_note.save
       redirect_to daily_notes_path, notice: "今日の日記を保存しました"
     else
+      @daily_notes = current_user.daily_notes.order(date: :desc)
       flash.now[:alert] = "日記の保存に失敗しました"
       render "dashboard/index", status: :unprocessable_entity
     end

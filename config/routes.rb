@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index", as: :dashboard
 
   if Rails.env.test?
-    require 'rack_session_access/capybara'
-    mount RackSessionAccess::Middleware.new(Rails.application), at: '/rack_session'
+    require "rack_session_access/capybara"
+    mount RackSessionAccess::Middleware.new(Rails.application), at: "/rack_session"
   end
 end

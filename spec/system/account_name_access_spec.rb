@@ -6,8 +6,9 @@ RSpec.describe "アカウント名登録ページへのアクセス制御", type
   let(:user) { create(:user, name: "つきのうさぎ", account_registered: true) }
 
   before do
-    driven_by(:rack_test)
-    page.set_rack_session(user_id: user.id)
+    allow_any_instance_of(ApplicationController)
+      .to receive(:current_user)
+      .and_return(user)
   end
 
   it "アカウント名登録済みユーザーはアクセスできない" do

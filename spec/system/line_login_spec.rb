@@ -26,13 +26,11 @@ RSpec.describe "LINEログインフロー", type: :system do
   end
 
   it "既存ユーザーはダッシュボードに遷移する" do
-    create(:user, line_user_id: line_user_id, name: "つきのうさぎ")
+    create(:user, :registered, line_user_id: line_user_id)
 
     visit line_login_api_login_path
 
-    state = SecureRandom.urlsafe_base64
-    page.set_rack_session(state: state)
-
+    state = page.current_url.match(/state=([^&]+)/)[1]
     visit line_login_api_callback_path(code: "auth_code", state: state)
 
     expect(page).to have_current_path(dashboard_path)
@@ -42,6 +40,6 @@ RSpec.describe "LINEログインフロー", type: :system do
   it "stateが不一致の場合はrootに戻る" do
     visit line_login_api_callback_path(code: "auth_code", state: "wrong_state")
     expect(page).to have_current_path(root_path)
-    expect(page).to have_content("不正なリクエストです")
+    expect(page).to have_content("不正なアクセスです")
   end
 end

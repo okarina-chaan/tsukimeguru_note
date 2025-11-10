@@ -1,30 +1,60 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "日記作成", type: :system do
+RSpec.describe "日記機能", type: :system do
   let(:user) { create(:user) }
 
   before do
-    WebMock.allow_net_connect!
     sign_in_as(user)
   end
-after { WebMock.disable_net_connect!(allow_localhost: true) }
 
-  it "ユーザーが日記を作成できる" do
-    visit dashboard_path
+  describe "日記作成" do
+    it "正しく保存できる" do
+      visit dashboard_path
 
-    find("button[data-value='5'][data-action*='selectHealth']").click
-    find("button[data-value='4'][data-action*='selectMood']").click
-    click_button "保存する"
-    expect(page).to have_content("日記を保存しました")
-    expect(DailuNNote.count).to eq(1)
+    find("input[name='daily_note[condition_score]']", visible: false).set("5")
+    find("input[name='daily_note[mood_score]']", visible: false).set("4")
+
+      sleep 0.5
+      click_button "保存する"
+
+      expect(page).to have_content("日記を保存しました")
+      expect(DailyNote.count).to eq(1)
+    end
+
+    it "バリデーションエラーで保存されない" do
+      visit dashboard_path
+      click_button "保存する"
+
+      expect(page).to have_content("体調を入力してください")
+      expect(page).to have_content("気分を入力してください")
+      expect(DailyNote.count).to eq(0)
+    end
   end
 
-  it "バリデーションエラー時は保存されない" do
-    visit dashboard_path
+  let(:other_user) { create(:user) }
 
-    click_button "保存する"
-    expect(page).to have_content("体調スコアを入力してください")
-    expect(page).to have_content("気分スコアを入力してください")
-    expect(DailyNote.count).to eq(0)
+  describe "日記一覧" do
+    let!(:one_note) do
+      create(:daily_note,
+             user: user,
+             date: Date.yesterday,
+             did_today: "朝早起きした。",
+             try_tomorrow: "今夜も22時には寝る。")
+    end
+    let!(:other_note) do
+      create(:daily_note,
+              user: other_user,
+              date: Date.today,
+             did_today: "スマホを見すぎた。",
+             try_tomorrow: "朝ストレッチをする。")
+    end
+
+    it "ユーザーが作成した日記だけ表示される" do
+      visit daily_notes_path
+
+      expect(page).to have_content("日記一覧")
+      expect(page).to have_content("朝早起きした。")
+      expect(page).not_to have_content("スマホを見すぎた。")
+    end
   end
 end

@@ -10,8 +10,9 @@ class LineLoginApiController < ApplicationController
   end
 
   def callback
-    unless valid_state?(params[:state])
-      redirect_to root_path, alert: "不正なリクエストです" and return
+    if params[:state] != session[:state]
+      redirect_to root_path, alert: "不正なアクセスです"
+      return
     end
 
     session.delete(:state)

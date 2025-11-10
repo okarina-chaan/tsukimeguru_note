@@ -14,5 +14,6 @@ Rails.application.routes.draw do
 
   if Rails.env.test?
     require "rack_session_access/capybara"
+    mount RackSessionAccess::Middleware.new(Rails.application), at: "/rack_session"
   end
 end

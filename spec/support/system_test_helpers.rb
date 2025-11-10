@@ -2,7 +2,9 @@ require 'rack_session_access/capybara'
 
 module SystemTestHelpers
   def sign_in_as(user)
-    page.set_rack_session(user_id: user.id)
+    allow_any_instance_of(ApplicationController)
+      .to receive(:current_user)
+      .and_return(user)
   end
 end
 

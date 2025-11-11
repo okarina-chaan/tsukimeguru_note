@@ -56,5 +56,14 @@ RSpec.describe "日記機能", type: :system do
       expect(page).to have_content("朝早起きした。")
       expect(page).not_to have_content("スマホを見すぎた。")
     end
+
+    it "日記の編集ができる" do
+      visit daily_notes_path
+
+      click_link "編集", href: edit_daily_note_path(one_note)
+      expect(page).to have_content("日記を編集する")
+      click_button "更新する"
+      expect(page).to have_content("日記を更新しました")
+    end
   end
 end

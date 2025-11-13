@@ -60,10 +60,16 @@ RSpec.describe "日記機能", type: :system do
     it "日記の編集ができる" do
       visit daily_notes_path
 
-      click_link "編集", href: edit_daily_note_path(one_note)
+      click_link "編集する", href: edit_daily_note_path(one_note)
       expect(page).to have_content("日記を編集する")
       click_button "更新する"
       expect(page).to have_content("日記を更新しました")
+    end
+
+    it "日記の削除ができる" do
+      visit daily_notes_path
+      click_link "削除する", href: daily_note_path(one_note)
+      expect(page).to have_content("日記を削除しました")
     end
   end
 end

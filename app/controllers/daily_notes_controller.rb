@@ -1,6 +1,6 @@
 class DailyNotesController < ApplicationController
   before_action :require_login
-  before_action :set_daily_note, only: %i[edit update]
+  before_action :set_daily_note, only: %i[edit update destroy]
 
   def index
     @daily_note ||= current_user.daily_notes.build
@@ -26,12 +26,17 @@ class DailyNotesController < ApplicationController
   end
 
   def update
-    if @daily_note.save
+    if @daily_note.update(daily_note_params)
       redirect_to daily_notes_path, notice: "日記を更新しました"
     else
       flash.now[:alert] = "日記の更新に失敗しました"
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+      @daily_note.destroy
+      redirect_to daily_notes_path, notice: "日記を削除しました"
   end
 
   private

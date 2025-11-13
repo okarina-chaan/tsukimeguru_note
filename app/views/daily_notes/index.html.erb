@@ -74,6 +74,15 @@
             <% end %>
           </div>
 
+          <div class="text-right mt-2">
+            <%= link_to daily_note_path(note),
+                        data: { turbo_method: :delete, turbo_confirm: "本当にこの日記を削除しますか？" },
+                        class: "btn btn-sm btn-outline btn-error",
+                        style: "border: 1px solid #f79e9d; color: #f79e9d; background-color: transparent; text-decoration: none;" do %>
+               削除する
+            <% end %>
+          </div>
+
         </div>
       </article>
     <% end %>
@@ -81,7 +90,6 @@
     <% if @daily_notes.empty? %>
       <div class="text-center text-sm opacity-70" style="color: #f4ecd8;">
         まだ日記がありません。<br>
-        <%= link_to "今日の日記を書く", new_daily_note_path, class: "text-primary underline hover:text-accent" %>
       </div>
     <% end %>
   </div>

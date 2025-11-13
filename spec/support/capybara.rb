@@ -9,3 +9,13 @@ Capybara.register_driver :selenium_chrome_headless do |app|
 
   Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
 end
+
+Capybara.default_max_wait_time = 5
+Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.default_driver = :selenium_chrome_headless
+
+RSpec.configure do |config|
+  config.before(:each, type: :system) do
+    driven_by :selenium_chrome_headless
+  end
+end

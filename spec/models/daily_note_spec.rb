@@ -17,7 +17,7 @@ RSpec.describe "DailyNote", type: :model do
         expect(daily_note).to be_valid
       end
     end
-
+ 
     context '異常系' do
       it '体調スコアが未入力のとき、日記が保存されない' do
         daily_note = DailyNote.new(
@@ -29,7 +29,7 @@ RSpec.describe "DailyNote", type: :model do
         expect(daily_note).to be_invalid
         expect(daily_note.errors[:condition_score]).to include("を入力してください")
       end
-
+      
       it '気分スコアが未入力のとき、日記が保存されない' do
         daily_note = DailyNote.new(
           user: user,

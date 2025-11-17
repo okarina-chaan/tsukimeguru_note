@@ -1,4 +1,57 @@
-<div>
-  <h1 class="font-bold text-4xl">MoonNotes#new</h1>
-  <p>Find me in app/views/moon_notes/new.html.erb</p>
-</div>
+<section class="relative min-h-screen w-full flex flex-col items-center justify-start px-4 py-12">
+
+  <div class="absolute inset-0 bg-gradient-to-b from-[#1a1833] via-[#1c1a40] to-[#1a1a2d] opacity-90 pointer-events-none"></div>
+
+  <div class="relative z-10 w-full max-w-2xl space-y-8">
+
+    <div class="text-center space-y-3">
+      <div class="text-5xl font-display text-primary">
+        <%= @moon_phase_emoji %>
+      </div>
+      <h1 class="text-3xl font-bold text-primary-content">
+        <%= @moon_phase_name %> の Moon Note
+      </h1>
+      <p class="text-base text-base-content/80">
+      今日の月に合わせたテーマを用意しました。今のあなたの気持ちを書き留めてみましょう。
+      </p>
+    </div>
+
+    <div class="card bg-base-200/60 backdrop-blur-xl shadow-xl border border-base-100/20">
+      <div class="card-body space-y-4 text-center">
+        <h2 class="card-title text-xl font-semibold text-primary">
+          今回のテーマ：<%= @moon_theme %>
+        </h2>
+        <p class="text-base text-base-content/80 leading-relaxed">
+          <%= @moon_theme_description %>
+        </p>
+      </div>
+    </div>
+
+    <%= form_with model: @moon_note, local: true do |f| %>
+
+      <div class="card bg-base-100/70 backdrop-blur-xl shadow-lg border border-base-content/10">
+        <div class="card-body space-y-6">
+
+          <div>
+            <label class="label">
+              <span class="label-text text-base font-medium">あなたの Moon Note</span>
+            </label>
+
+            <%= f.text_area :content,
+                rows: 8,
+                class: "textarea textarea-bordered textarea-lg w-full bg-base-200/60 backdrop-blur text-base-content",
+                placeholder: "月のテーマに照らして、思っていること・願い・手放したいものなどを書いてみてください…" %>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-center">
+        <%= f.submit "保存する",
+            class: "btn btn-primary px-8 py-2 rounded-xl shadow-md" %>
+      </div>
+
+    <% end %>
+
+  </div>
+</section>

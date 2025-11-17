@@ -4,6 +4,14 @@ require "json"
 class MoonApiService
   BASE_URL = "http://labs.bitmeister.jp/ohakon/json/"
 
+  SYNODIC_MONTH = 29.530588
+  EVENT_RANGES = {
+    new_moon:       -0.5..0.5,
+    first_quarter_moon:  6.88..7.88,
+    full_moon:      14.27..15.27,
+    last_quarter_moon:   21.65..22.65
+  }
+
   def self.fetch(date = Date.today)
     year  = date.year
     month = date.month
@@ -16,16 +24,38 @@ class MoonApiService
 
     data = JSON.parse(response)
     angle = data["moon_phase"].to_f % 360.0
+    moon_age = angle / 360.0 * SYNODIC_MONTH
+    event = detect_event(moon_age)
 
     {
       date: date,
-      moon_phase_angle: angle,
-      moon_phase_name: phase_name(angle),
+      angle: angle,
+      moon_age: moon_age,
+      event: event,
+      moon_phase_name: phase_name_for_event(event),
       moon_phase_emoji: phase_emoji(angle)
     }
   rescue => e
     Rails.logger.error("Moon API error: #{e.message}")
     nil
+  end
+
+  def self.detect_event(moon_age)
+    EVENT_RANGES.each do |event, range|
+      return event if range.include?(moon_age)
+    end
+    nil
+  end
+
+  def self.phase_name_for_event(event)
+    case event
+    when :new_moon          then "新月"
+    when :first_quarter_moon then "上弦の月"
+    when :full_moon         then "満月"
+    when :last_quarter_moon  then "下弦の月"
+    else
+      "その他の月相"
+    end
   end
 
   def self.phase_name(angle)

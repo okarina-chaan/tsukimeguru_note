@@ -142,6 +142,8 @@ GEM
       activesupport (>= 6.1)
     hashdiff (1.2.1)
     hashie (5.0.0)
+    heroicon (1.0.0)
+      rails (>= 5.2)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.2.2)
@@ -487,6 +489,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faraday
+  heroicon
   importmap-rails (~> 2.2)
   jbuilder
   jsbundling-rails

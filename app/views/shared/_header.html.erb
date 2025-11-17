@@ -1,0 +1,18 @@
+<header class="navbar bg-base-100 border-b border-base-content/10 px-4 h-16">
+  <div class="flex items-center gap-3">
+    <%= image_tag "logoimg.png", class: "h-8 w-8" %>
+    <span class="btn btn-ghost text-xl font-display text-white">月めぐるノート</span>
+  </div>
+
+  <nav class="ml-auto hidden md:flex gap-8">
+    <% main_nav_items.each do |item| %>
+      <%= link_to item[:path],
+          class: "flex items-center gap-2 hover:text-primary transition" do %>
+        <%= heroicon item[:icon],
+              variant: :outline,
+              options: { class: "w-5 h-5" } %>
+        <span><%= item[:name] %></span>
+      <% end %>
+    <% end %>
+  </nav>
+</header>

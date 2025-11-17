@@ -16,7 +16,8 @@
 
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 
     <%= favicon_link_tag('/favico.ico') %>
@@ -24,6 +25,7 @@
   </head>
 
   <body class="relative bg-base-100 text-base-content">
+    <%= render 'shared/header' %>
 
     <div class="toast toast-top toast-start z-50">
       <% if notice %>

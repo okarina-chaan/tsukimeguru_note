@@ -6,6 +6,9 @@ module.exports = {
   ],
   theme: { extend: {} },
   plugins: [require("daisyui")],
+  safelist: [
+    'card-moon',
+  ]
   daisyui: {
     themes: ["tsukimeguru-dark"],
     darkTheme: "tsukimeguru-dark",

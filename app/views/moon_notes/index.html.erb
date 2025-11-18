@@ -1,0 +1,33 @@
+<section class="moon-notes-index">
+  <div class="container">
+    <% @moon_notes.each do |moon_note| %>
+      <article class="card bg-base-100 shadow-md border border-base-content/10 p-4 rounded-xl mb-6">
+        <div class="moon-note-header">
+          <div class="moon-info">
+            <span class="moon-icon"><%= moon_phase_icon(moon_note.moon_phase) %></span>
+            <div class="moon-details">
+              <h2 class="moon-phase-name"><%= moon_phase_name(moon_note.moon_phase) %></h2>
+              <time class="note-date" datetime="<%= moon_note.date %>">
+                <%= l(moon_note.date, format: :long) %>
+              </time>
+            </div>
+          </div>
+          <div class="moon-age-display">
+            <span class="moon-age-label">月齢</span>
+            <span class="moon-age-value"><%= moon_note.moon_age.round(1) %></span>
+          </div>
+        </div>
+        
+        <div class="note-content">
+          <%= simple_format(moon_note.content) %>
+        </div>
+      </article>
+    <% end %>
+    
+    <% if @moon_notes.empty? %>
+      <div class="empty-state">
+        <p>まだノートがありません</p>
+      </div>
+    <% end %>
+  </div>
+</section>

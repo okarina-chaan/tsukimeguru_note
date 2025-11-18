@@ -1,6 +1,10 @@
 class MoonNotesController < ApplicationController
   before_action :require_login
 
+  def index
+    @moon_notes = current_user.moon_notes.order(date: :desc)
+  end
+
   def new
     @moon_note = current_user.moon_notes.build
     data = MoonApiService.fetch(Date.today)

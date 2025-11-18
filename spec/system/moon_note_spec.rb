@@ -1,53 +1,72 @@
 require "rails_helper"
 
-RSpec.describe "Moon Note作成フロー", type: :system do
+RSpec.describe "Moon Note", type: :system do
   let(:user) { create(:user, :registered) }
 
   before { sign_in_as(user) }
 
-  context "今日は満月" do
-    before do
-      allow(MoonApiService).to receive(:fetch).and_return(
-        event: :full_moon,
-        moon_phase_name: "満月",
-        moon_phase_emoji: "🌕",
-        moon_age: 14.3,
-        date: Date.today
-      )
+  describe "moon note作成" do
+    context "今日は満月" do
+      before do
+        allow(MoonApiService).to receive(:fetch).and_return(
+          event: :full_moon,
+          moon_phase_name: "満月",
+          moon_phase_emoji: "🌕",
+          moon_age: 14.3,
+          date: Date.today
+        )
+      end
+
+      it "moon note作成画面に遷移できる" do
+        visit new_moon_note_path
+        expect(page).to have_content("今日は満月です。Moon Noteを作成しましょう！")
+        expect(page).to have_button("保存する")
+      end
+
+      it "moon noteを正しく保存できる" do
+        visit new_moon_note_path
+        fill_in "moon_note_content", with: "早起きが習慣になってきた。"
+        click_button "保存する"
+
+        expect(page).to have_content("Moon Noteを保存しました")
+        expect(MoonNote.count).to eq(1)
+        expect(MoonNote.last.moon_phase).to eq("full_moon")
+      end
     end
 
-    it "moon note作成画面に遷移できる" do
-      visit new_moon_note_path
-      expect(page).to have_content("今日は満月です。Moon Noteを作成しましょう！")
-      expect(page).to have_button("保存する")
-    end
+    context "今日はどの月相にもあたらない" do
+      before do
+        allow(MoonApiService).to receive(:fetch).and_return(
+          event: nil,
+          moon_phase_name: "その他",
+          moon_phase_emoji: "",
+          moon_age: 12.0,
+          date: Date.today
+        )
+      end
 
-    it "moon noteを正しく保存できる" do
-      visit new_moon_note_path
-      fill_in "moon_note_content", with: "早起きが習慣になってきた。"
-      click_button "保存する"
-
-      expect(page).to have_content("Moon Noteを保存しました")
-      expect(MoonNote.count).to eq(1)
-      expect(MoonNote.last.moon_phase).to eq("full_moon")
+      it "moon note作成画面に遷移できずダッシュボードにリダイレクトされる" do
+        visit new_moon_note_path
+        expect(page).to have_current_path(dashboard_path)
+        expect(page).to have_content("今日のMoon Noteはありません。")
+      end
     end
   end
 
-  context "今日はどの月相にもあたらない" do
-    before do
-      allow(MoonApiService).to receive(:fetch).and_return(
-        event: nil,
-        moon_phase_name: "その他",
-        moon_phase_emoji: "",
-        moon_age: 12.0,
-        date: Date.today
-      )
+  describe "moon note一覧" do
+    context "moon noteが存在する場合" do
+      let!(:moon_note) { create(:moon_note, user: user, date: Date.today - 1) }
+      it "moon note一覧が表示される" do
+        visit moon_notes_path
+        expect(page).to have_content("今日は満月です。心が穏やかになります。")
+      end
     end
 
-    it "moon note作成画面に遷移できずダッシュボードにリダイレクトされる" do
-      visit new_moon_note_path
-      expect(page).to have_current_path(dashboard_path)
-      expect(page).to have_content("今日のMoon Noteはありません。")
+    context "moon noteが存在しない場合" do
+      it "moon noteが存在しないことが表示される" do
+        visit moon_notes_path
+        expect(page).to have_content("まだノートがありません")
+      end
     end
   end
 end

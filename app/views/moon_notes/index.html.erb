@@ -33,6 +33,16 @@
                       style: "border: 1px solid #b19dd5; color: #b19dd5; background-color: transparent; text-decoration: none;" do %>
               編集する
           <% end %>
+          <div class="text-right mt-2">
+            <%= link_to moon_note_path(moon_note),
+                        id: "delete_button",
+                        data: { turbo_method: :delete, turbo_confirm: "本当にこのMoon Noteを削除しますか？" },
+                        class: "btn btn-sm btn-outline btn-error",
+                        style: "border: 1px solid #f79e9d; color: #f79e9d; background-color: transparent; text-decoration: none;" do %>
+               削除する
+            <% end %>
+          </div>
+
         </div>
       </article>
     <% end %>

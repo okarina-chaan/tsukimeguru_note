@@ -1,0 +1,63 @@
+<main class="min-h-screen px-4 py-10" style="background-color: #1c1b2f;">
+
+  <header class="text-center mb-10">
+    <h1 class="text-3xl font-bold mb-2" style="color: #f6b87e;">Moon Note 編集</h1>
+  </header>
+
+  <div class="w-full max-w-xl mx-auto space-y-16">
+
+    <section class="p-6 rounded-2xl border" 
+      style="background-color: #2a274e; border-color: rgba(255,255,255,0.15); margin-bottom: 4px;">
+
+      <h2 class="text-center text-2xl font-bold" style="color:#f6b87e;">
+        <%= @moon_theme[:title] %>
+      </h2>
+      <p class="text-center mt-2" style="color:#f4ecd8;">
+        <%= @moon_theme[:description] %>
+      </p>
+
+    </section>
+
+    <section class="p-6 rounded-2xl border"
+      style="background-color: #2a274e; border-color: rgba(255,255,255,0.15);">
+      <% if @moon_note.errors.any? %>
+        <div class="mb-4 p-3 rounded-lg"
+            style="background-color: #4a3c5a; border:1px solid #d98bb6;">
+          <p class="font-bold mb-1 text-sm" style="color:#f6b87e;">
+            入力内容にエラーがあります
+          </p>
+
+          <ul class="list-none pl-0 text-sm" style="color:#f4ecd8;">
+            <% @moon_note.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <%= form_with model: @moon_note, local: true do |f| %>
+
+        <label class="block mb-3">
+          <p class="text-sm mb-2" style="color:#f4ecd8;">この日のMoon Note</p>
+
+          <%= f.text_area :content,
+              rows: 8,
+              class: "w-full rounded-lg p-4 leading-relaxed focus:outline-none",
+              style: "background-color: #1c1b2f; color: #f4ecd8; border:1px solid rgba(255,255,255,0.15);" %>
+        </label>
+
+        <div class="text-center pt-4">
+          <%= f.submit "更新する",
+                class: "px-6 py-3 rounded-lg font-bold",
+                style: "background-color:#f6b87e; color:#1c1b2f;" %>
+          <%= link_to "キャンセル",
+            moon_notes_path,
+            class: "btn btn-ghost",
+            style: "color: #f4ecd8;" %>
+        </div>
+
+      <% end %>
+
+    </section>
+  </div>
+</main>

@@ -1,5 +1,7 @@
 class MoonNotesController < ApplicationController
   before_action :require_login
+  before_action :set_moon_note, only: %i[edit update]
+  before_action :set_moon_theme, only: %i[edit update]
 
   def index
     @moon_notes = current_user.moon_notes.order(date: :desc)
@@ -40,9 +42,29 @@ class MoonNotesController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @moon_note.update(moon_note_params)
+      redirect_to moon_notes_path, notice: "Moon Noteを更新しました"
+    else
+      render :edit, status: :unprocessable_entity
+      alert = "Moon Noteの更新に失敗しました"
+    end
+  end
+
   private
 
   def moon_note_params
     params.require(:moon_note).permit(:content)
+  end
+
+  def set_moon_note
+   @moon_note = current_user.moon_notes.find(params[:id])
+  end
+
+  def set_moon_theme
+    @moon_theme = MoonNoteThemeService.for(@moon_note.moon_phase.to_sym)
   end
 end

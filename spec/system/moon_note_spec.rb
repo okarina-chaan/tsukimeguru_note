@@ -69,4 +69,31 @@ RSpec.describe "Moon Note", type: :system do
       end
     end
   end
+
+  describe "moon note編集" do
+    let!(:moon_note) { create(:moon_note, user: user, date: Date.today - 1, content: "更新前だよ") }
+
+    context "正常" do
+      it "moon noteを正しく更新できる" do
+        visit edit_moon_note_path(moon_note)
+
+        fill_in "moon_note_content", with: "本文を更新するよ"
+        click_button "更新する"
+
+        expect(page).to have_current_path(moon_notes_path)
+        expect(page).to have_content("更新しました")
+      end
+    end
+
+    context "異常" do
+      it "contentが空欄のときはエラーメッセージが出る" do
+        visit edit_moon_note_path(moon_note)
+
+        fill_in "moon_note_content", with: ""
+        click_button "更新する"
+
+        expect(page).to have_content("本文を入力してください")
+      end
+    end
+  end
 end

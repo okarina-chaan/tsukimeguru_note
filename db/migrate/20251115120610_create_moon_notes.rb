@@ -6,7 +6,7 @@ class CreateMoonNotes < ActiveRecord::Migration[8.0]
       t.date :date, null: false
       t.float :moon_age, null: false
       t.integer :moon_phase, null: false
-      t.text :content
+      t.text :content, null: false
 
       t.timestamps
     end

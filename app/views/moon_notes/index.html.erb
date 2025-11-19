@@ -1,10 +1,11 @@
-<section class="moon-notes-index">
-  <div class="container">
-    <h1 class="text-3xl font-bold text-primary-content text-center" style="color: #f6b87e;">
-      Moon Note一覧
-    </h1>
+<section class="min-h-screen py-10 px-4 text-base-content" style="background-color: #1c1b2f;">
+  <header class="text-center mb-10">
+    <h1 class="text-3xl font-bold mb-2" style="color: #f6b87e;">Moon Note一覧</h1>
+    <p class="text-sm opacity-70" style="color: #f4ecd8;">月のリズム、自分の軌跡</p>
+  </header>
+  <div class="space-y-8">
     <% @moon_notes.each do |moon_note| %>
-      <article class="card bg-base-100 shadow-md border border-base-content/10 p-4 rounded-xl mb-6">
+      <article class="card shadow-lg rounded-2xl p-6" style="background-color: #2a274e;">
         <div class="moon-note-header">
           <div class="moon-info">
             <span class="moon-icon"><%= moon_phase_icon(moon_note.moon_phase) %></span>
@@ -19,10 +20,19 @@
             <span class="moon-age-label">月齢</span>
             <span class="moon-age-value"><%= moon_note.moon_age.round(1) %></span>
           </div>
+
         </div>
         
         <div class="note-content">
           <%= simple_format(moon_note.content) %>
+        </div>
+
+        <div class="text-right mt-3">
+          <%= link_to edit_moon_note_path(moon_note),
+                      class: "btn btn-sm btn-outline btn-accent",
+                      style: "border: 1px solid #b19dd5; color: #b19dd5; background-color: transparent; text-decoration: none;" do %>
+              編集する
+          <% end %>
         </div>
       </article>
     <% end %>

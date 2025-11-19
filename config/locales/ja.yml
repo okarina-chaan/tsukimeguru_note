@@ -2,7 +2,6 @@ ja:
   activerecord:
     models:
       daily_note: 日記
-      moon_note: ムーンノート
 
     attributes:
       daily_note:
@@ -11,11 +10,7 @@ ja:
         date: 今日
         memo: メモ
       moon_note:
-        moon_phase:
-          new_moon: 新月
-          first_quarter_moon: 上弦の月
-          full_moon: 満月
-          first_quarter_moon: 下弦の月
+        content: 本文
     errors:
       blank: "を入力してください"
       taken: "は既に記入済みです"

@@ -1,6 +1,6 @@
 class MoonNotesController < ApplicationController
   before_action :require_login
-  before_action :set_moon_note, only: %i[edit update]
+  before_action :set_moon_note, only: %i[edit update destroy]
   before_action :set_moon_theme, only: %i[edit update]
 
   def index
@@ -52,6 +52,11 @@ class MoonNotesController < ApplicationController
       render :edit, status: :unprocessable_entity
       alert = "Moon Noteの更新に失敗しました"
     end
+  end
+
+  def destroy
+    @moon_note.destroy
+    redirect_to moon_notes_path, notice: "Moon Noteを削除しました"
   end
 
   private

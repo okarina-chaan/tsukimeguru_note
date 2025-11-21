@@ -8,10 +8,15 @@ Rails.application.routes.draw do
 
   root to: "home#index"
   get "home/index"
+  get "/pages/*id" => "high_voltage/pages#show", as: :page
   get "line_login_api/login", to: "line_login_api#login"
   get "line_login_api/callback", to: "line_login_api#callback"
   post "line_login_api/callback", to: "line_login_api#callback"
   get "dashboard", to: "dashboard#index", as: :dashboard
+
+  get "mypage",   to: "users#mypage",   as: :account_name_edit
+  get "settings", to: "users#settings"
+
 
   if Rails.env.test?
     require "rack_session_access/capybara"

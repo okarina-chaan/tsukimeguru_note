@@ -1,14 +1,7 @@
-module.exports = {
-  content: [
-    "./app/views/**/*.{html.erb,erb}",
-    "./app/helpers/**/*.rb",
-    "./app/javascript/**/*.{js,ts}",
-  ],
+import daisyui from "daisyui"
+
+export default {
+  content: ["./app/views/**/*.{erb,html}", "./app/javascript/**/*.js"],
   theme: { extend: {} },
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: ["tsukimeguru-dark"],
-    darkTheme: "tsukimeguru-dark",
-    base: false,
-  },
-};
+  plugins: [daisyui],
+}

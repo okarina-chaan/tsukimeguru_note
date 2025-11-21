@@ -51,6 +51,7 @@ gem "importmap-rails", "~> 2.2"
 
 gem "rails-i18n"
 
+gem "high_voltage"
 
 group :development, :production do
   gem "omniauth-line"

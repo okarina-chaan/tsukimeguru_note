@@ -2,6 +2,8 @@
 @source "../../views/**/*.html.erb";
 @source "../../helpers/**/*.rb";
 @source "../../javascript/**/*.js";
+@source not "./daisyui{,*}.mjs";
+
 
 @plugin "./daisyui.mjs";
 

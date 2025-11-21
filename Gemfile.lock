@@ -146,6 +146,7 @@ GEM
     hashie (5.0.0)
     heroicon (1.0.0)
       rails (>= 5.2)
+    high_voltage (5.0.0)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.2.2)
@@ -493,6 +494,7 @@ DEPENDENCIES
   faker
   faraday
   heroicon
+  high_voltage
   importmap-rails (~> 2.2)
   jbuilder
   jsbundling-rails

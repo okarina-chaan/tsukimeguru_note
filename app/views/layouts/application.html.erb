@@ -26,6 +26,7 @@
 
   <body class="relative bg-base-100 text-base-content">
     <%= render 'shared/header' %>
+
     <div class="toast toast-top toast-start z-50">
       <% if notice %>
         <div class="alert alert-success shadow-lg">
@@ -38,9 +39,7 @@
       <% end %>
     </div>
 
-    <main class="container mx-auto min-h-screen flex flex-col pt-20">
-      <%= yield %>
-    </main>
+    <%= yield %>
 
   </body>
 </html>

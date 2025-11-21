@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,14 +16,12 @@
     --c-accent-purple: #7A5E8E;
     --c-accent-mauve: #B67699;
   }
-
   body {
     @apply text-[color:var(--c-text)] font-["Noto_Sans_JP","sans-serif"] antialiased;
     background: linear-gradient(to bottom, var(--c-base-top) 0%, var(--c-base-bottom) 100%);
     background-attachment: fixed;
     background-repeat: no-repeat;
   }
-
   .star-noise {
     background-image:
       linear-gradient(to bottom, var(--c-base-top) 0%, var(--c-base-bottom) 100%),
@@ -30,13 +30,9 @@
     background-blend-mode: overlay;
     background-size: cover, auto, 400px 400px;
   }
-
-  @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@500;600;700&display=swap");
-
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
   }
-
   .font-display {
     font-family: "Honoka Mincho", serif;
     letter-spacing: 0.08em;
@@ -48,26 +44,22 @@
     @apply rounded-xl border border-white/10 bg-[rgba(255,255,255,0.06)] backdrop-blur-md p-6 transition-shadow;
     box-shadow: 0 6px 16px rgba(0,0,0,0.3), inset 0 0 6px rgba(255,255,255,0.05);
   }
-
   .card-moon:hover {
     box-shadow: 0 8px 18px rgba(255,215,235,0.15), inset 0 0 8px rgba(255,255,255,0.07);
   }
-
   .bubble {
     @apply relative rounded-xl text-sm leading-relaxed p-5 shadow-sm;
-    background-color: rgba(122,94,142,0.25); /* accent-purple半透明 */
+    background-color: rgba(122,94,142,0.25);
     color: var(--c-accent-peach);
     border: 1px solid rgba(255,255,255,0.08);
     backdrop-filter: blur(4px);
   }
-
   .btn-gold {
     @apply rounded-full font-bold px-8 h-12 text-black/80;
     background-color: var(--c-accent-gold);
     box-shadow: 0 0 10px rgba(214,198,155,0.3);
     transition: all 0.3s ease;
   }
-
   .btn-gold:hover {
     box-shadow: 0 0 18px rgba(214,198,155,0.5);
     filter: brightness(1.1);

@@ -13,6 +13,11 @@ class DailyNotesController < ApplicationController
 
   def create
     @daily_note = current_user.daily_notes.build(daily_note_params)
+    moon_data = MoonApiService.fetch(@daily_note.date)
+    if moon_data.present?
+      @daily_note.moon_phase_name = moon_data[:moon_phase_name]
+      @daily_note.moon_phase_emoji = moon_data[:moon_phase_emoji]
+    end
     if @daily_note.save
       redirect_to daily_notes_path, notice: "日記を保存しました", status: :see_other
     else

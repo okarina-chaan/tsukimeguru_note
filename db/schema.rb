@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_15_120610) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_22_062328) do
   create_table "daily_notes", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "date", null: false
@@ -24,6 +24,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_15_120610) do
     t.string "moon_phase_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "moon_phase_emoji"
     t.index ["user_id", "date"], name: "index_daily_notes_on_user_id_and_date", unique: true
     t.index ["user_id"], name: "index_daily_notes_on_user_id"
   end

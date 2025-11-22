@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resource :account_name, only: [ :edit, :update ]
   resources :users, only: [ :show, :edit, :update ]
-  resources :daily_notes, only: [ :index, :create, :edit, :update, :destroy ]
+  resources :daily_notes, only: [ :index, :new, :create, :edit, :update, :destroy ]
   resources :moon_notes, only: [ :index, :new, :create, :edit, :update, :destroy ]
 
   get "up" => "rails/health#show", as: :rails_health_check

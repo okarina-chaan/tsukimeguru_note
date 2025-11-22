@@ -1,0 +1,75 @@
+<% content_for :head do %>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<% end %>
+
+<div class="px-4 sm:px-8 md:px-16 lg:px-24 xl:px-40 flex flex-1 justify-center py-5">
+  <div class="layout-content-container flex flex-col w-full max-w-[960px]">
+
+    <div class="flex flex-wrap justify-between items-baseline gap-4">
+      <p class="text-accent-peach text-[32px] font-bold">月のサイクルとあなたの記録</p>
+
+      <div class="flex gap-2">
+        <%= link_to "#", class: "flex items-center justify-center h-8 px-4 rounded-full bg-accent-pink shadow-[0_0_15px_rgba(221,173,187,0.5)]" do %>
+          <p class="text-background-dark text-sm font-bold">1ヶ月</p>
+        <% end %>
+
+        <%# <button class="flex items-center justify-center h-8 px-4 rounded-full bg-accent-purple/40 text-accent-peach">3ヶ月</button> %>
+        <%# <button class="flex items-center justify-center h-8 px-4 rounded-full bg-accent-purple/40 text-accent-peach">6ヶ月</button> %>
+        <%# <button class="flex items-center justify-center h-8 px-4 rounded-full bg-accent-purple/40 text-accent-peach">1年</button> %>
+      </div>
+    </div>
+
+    <%# <%= render "calendar", month: Date.today %>
+
+    <div class="flex min-w-72 flex-1 flex-col gap-4 rounded-xl bg-accent-purple/20 p-4">
+
+      <p class="text-accent-peach text-base font-medium">体調と気分の変化</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="rounded-lg bg-accent-purple/40 p-3">
+          <p class="text-text-muted text-xs">体調の平均</p>
+          <p class="text-accent-peach text-2xl font-bold">
+            <%= @conditions.compact.sum / (@conditions.compact.size.nonzero? || 1) %>
+          </p>
+        </div>
+        <div class="rounded-lg bg-accent-purple/40 p-3">
+          <p class="text-text-muted text-xs">気分の平均</p>
+          <p class="text-accent-peach text-2xl font-bold">
+            <%= @moods.compact.sum / (@moods.compact.size.nonzero? || 1) %>
+          </p>
+        </div>
+      </div>
+
+      <div class="relative flex min-h-[180px] py-4">
+        <canvas
+          data-controller="analysis-chart"
+          data-analysis-chart-labels-value="<%= @dates.map(&:to_s).to_json %>"
+          data-analysis-chart-moods-value="<%= @moods.to_json %>"
+          data-analysis-chart-conditions-value="<%= @conditions.to_json %>"
+          data-analysis-chart-moon-events-value="<%= @moon_events.to_json %>"
+          class="w-full"
+        ></canvas>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-center gap-6 pt-2">
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-0.5 rounded-full" style="background-color: #F9DECD;"></div>
+          <p class="text-text-muted text-sm">体調</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="w-4 h-0.5 rounded-full" style="background-color: #AF8DB0;"></div>
+          <p class="text-text-muted text-sm">気分</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-accent-peach text-sm">🌑</span>
+          <p class="text-text-muted text-sm">新月</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-accent-peach text-sm">🌕</span>
+          <p class="text-text-muted text-sm">満月</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

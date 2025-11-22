@@ -9,7 +9,6 @@ Rails.application.routes.draw do
 
   root to: "home#index"
   get "home/index"
-  get "/pages/*id" => "high_voltage/pages#show", as: :page
   get "line_login_api/login", to: "line_login_api#login"
   get "line_login_api/callback", to: "line_login_api#callback"
   post "line_login_api/callback", to: "line_login_api#callback"
@@ -18,9 +17,13 @@ Rails.application.routes.draw do
   get "mypage",   to: "users#mypage",   as: :account_name_edit
   get "settings", to: "users#settings"
 
+  get "insights", to: "analysis#show", as: :analysis
+
+  get "/pages/*id" => "high_voltage/pages#show", as: :page
 
   if Rails.env.test?
     require "rack_session_access/capybara"
     mount RackSessionAccess::Middleware.new(Rails.application), at: "/rack_session"
   end
+
 end

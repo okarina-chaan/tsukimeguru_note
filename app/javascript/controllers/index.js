@@ -12,3 +12,6 @@ application.register("diary-entry", DiaryEntryController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import analysisChartController from "./analysis_chart_controller.js"
+application.register("analysis-chart", analysisChartController)

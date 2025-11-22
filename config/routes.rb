@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :users, only: [ :show, :edit, :update ]
   resources :daily_notes, only: [ :index, :new, :create, :edit, :update, :destroy ]
   resources :moon_notes, only: [ :index, :new, :create, :edit, :update, :destroy ]
+  resource :session, only: [ :destroy ]
 
   get "up" => "rails/health#show", as: :rails_health_check
 

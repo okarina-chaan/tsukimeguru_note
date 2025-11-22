@@ -14,11 +14,11 @@ class DailyNotesController < ApplicationController
   def create
     @daily_note = current_user.daily_notes.build(daily_note_params)
     if @daily_note.save
-      redirect_to daily_notes_path, notice: "今日の日記を保存しました"
+      redirect_to daily_notes_path, notice: "日記を保存しました", status: :see_other
     else
       @daily_notes = current_user.daily_notes.order(date: :desc)
       flash.now[:alert] = "日記の保存に失敗しました"
-      render "dashboard/index", status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -27,7 +27,7 @@ class DailyNotesController < ApplicationController
 
   def update
     if @daily_note.update(daily_note_params)
-      redirect_to daily_notes_path, notice: "日記を更新しました"
+      redirect_to daily_notes_path, notice: "日記を更新しました", status: :see_other
     else
       flash.now[:alert] = "日記の更新に失敗しました"
       render :edit, status: :unprocessable_entity

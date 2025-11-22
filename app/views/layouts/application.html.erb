@@ -24,23 +24,21 @@
 
   </head>
 
-  <body class="bg-base-100 text-base-content">
+  <body class="bg-base-100 text-base-content pt-16">
     <%= render 'shared/header' %>
 
-    <div class="toast toast-top toast-start z-20">
-      <% if notice %>
-        <div class="alert alert-success shadow-lg">
-          <div><span><%= notice %></span></div>
-        </div>
-      <% elsif alert %>
-        <div class="alert alert-error shadow-lg">
-          <div><span><%= alert %></span></div>
-        </div>
-      <% end %>
+    <div class="fixed top-20 left-4 right-4 z-[10000] pointer-events-none">
+      <div class="flex flex-col gap-2 items-start">
+        <% flash.each do |type, message| %>
+          <div class="alert <%= type == "notice" ? "alert-success" : "alert-error" %> shadow-lg max-w-md pointer-events-auto">
+            <span><%= message %></span>
+          </div>
+        <% end %>
+      </div>
     </div>
 
     <%= yield %>
 
-    <%= render "shared/footer" %>
+    <%= render 'shared/footer' %>
   </body>
 </html>

@@ -9,10 +9,10 @@ RSpec.describe "日記機能", type: :system do
 
   describe "日記作成" do
     it "正しく保存できる" do
-      visit dashboard_path
+      visit new_daily_note_path
 
-    find("input[name='daily_note[condition_score]']", visible: false).set("5")
-    find("input[name='daily_note[mood_score]']", visible: false).set("4")
+      find("input[name='daily_note[condition_score]']", visible: false).set("5")
+      find("input[name='daily_note[mood_score]']", visible: false).set("4")
 
       sleep 0.5
       click_button "保存する"
@@ -22,7 +22,7 @@ RSpec.describe "日記機能", type: :system do
     end
 
     it "バリデーションエラーで保存されない" do
-      visit dashboard_path
+      visit new_daily_note_path
       click_button "保存する"
 
       expect(page).to have_content("体調を入力してください")

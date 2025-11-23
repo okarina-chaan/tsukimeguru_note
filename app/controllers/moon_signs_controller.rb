@@ -76,7 +76,7 @@ class MoonSignsController < ApplicationController
     end
 
     @message = moon_sign_message(@moon_sign)
-    @recommendations = DialyRecommendations::LIST[@moon_sign]
+    @recommendations = DiaryRecommendations::LIST[@moon_sign]
   end
 
   private

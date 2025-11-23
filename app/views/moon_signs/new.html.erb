@@ -1,0 +1,35 @@
+<div class="container mx-auto px-4 py-10 max-w-lg">
+  <h1 class="text-3xl font-display text-center mb-8">月星座診断</h1>
+
+  <div class="card bg-base-200 shadow-lg">
+    <div class="card-body space-y-6">
+
+      <p class="text-sm opacity-80">
+        生まれた瞬間の「月の位置」から、あなたの内側の性質（感情・心のクセ）を読み解きます。
+      </p>
+
+      <%= form_with url: moon_sign_path, method: :post, data: { turbo: false } do |f| %>
+
+        <div class="form-control">
+          <%= f.label :birth_date, "生年月日", class: "label font-bold" %>
+          <%= f.date_field :birth_date, required: true, class: "input input-bordered" %>
+        </div>
+
+        <div class="form-control">
+          <%= f.label :birth_time, "出生時間（任意）", class: "label font-bold" %>
+          <%= f.time_field :birth_time, class: "input input-bordered" %>
+        </div>
+
+        <div class="form-control">
+          <%= f.label :prefecture, "生誕地（都道府県）", class: "label font-bold" %>
+          <%= f.select :prefecture, Prefecture::LIST, include_blank: "選択してください", class: "select select-bordered" %>
+        </div>
+
+        <div class="pt-4">
+          <%= f.submit "診断する", class: "btn btn-primary w-full" %>
+        </div>
+
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :daily_notes, only: [ :index, :new, :create, :edit, :update, :destroy ]
   resources :moon_notes, only: [ :index, :new, :create, :edit, :update, :destroy ]
   resource :session, only: [ :destroy ]
+  resource :moon_sign, only: [ :new, :create, :show ]
 
   get "up" => "rails/health#show", as: :rails_health_check
 
@@ -25,5 +26,4 @@ Rails.application.routes.draw do
     require "rack_session_access/capybara"
     mount RackSessionAccess::Middleware.new(Rails.application), at: "/rack_session"
   end
-
 end

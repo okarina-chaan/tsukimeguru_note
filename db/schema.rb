@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_22_062328) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_23_024655) do
   create_table "daily_notes", force: :cascade do |t|
     t.integer "user_id", null: false
     t.date "date", null: false
@@ -41,12 +41,18 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_22_062328) do
     t.index ["user_id"], name: "index_moon_notes_on_user_id"
   end
 
+  create_table "prefectures", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "line_user_id", null: false
     t.string "name"
     t.boolean "account_registered", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "moon_sign"
     t.index ["line_user_id"], name: "index_users_on_line_user_id", unique: true
   end
 

@@ -1,7 +1,12 @@
 import daisyui from "daisyui"
 
 export default {
-  content: ["./app/views/**/*.{erb,html}", "./app/javascript/**/*.js"],
+  content: [
+    './app/views/**/*.html.erb',
+    './app/helpers/**/*.rb',
+    './app/assets/stylesheets/**/*.css',
+    './app/javascript/**/*.js'
+  ],
   theme: { extend: {} },
   plugins: [daisyui],
 }

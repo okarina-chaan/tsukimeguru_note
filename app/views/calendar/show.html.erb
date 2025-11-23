@@ -1,0 +1,124 @@
+<div class="container mx-auto px-4 py-8 max-w-6xl">
+  <!-- ヘッダー -->
+  <div class="card bg-base-100 shadow-xl mb-6">
+    <div class="card-body">
+      <div class="flex items-center justify-between">
+        <!-- 前月ボタン -->
+        <%= link_to calendar_path(year: @month == 1 ? @year - 1 : @year, month: @month == 1 ? 12 : @month - 1), 
+                    class: "btn btn-circle btn-ghost" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        <% end %>
+
+        <!-- 年月表示 -->
+        <div class="text-center">
+          <h2 class="text-3xl font-bold"><%= @year %>年 <%= @month %>月</h2>
+          <p class="text-sm text-base-content/60 mt-1">🌙 Moon Phase Calendar</p>
+        </div>
+
+        <!-- 次月ボタン -->
+        <%= link_to calendar_path(year: @month == 12 ? @year + 1 : @year, month: @month == 12 ? 1 : @month + 1), 
+                    class: "btn btn-circle btn-ghost" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- カレンダー -->
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body p-2 sm:p-6">
+      <!-- 曜日ヘッダー -->
+      <div class="grid grid-cols-7 gap-1 sm:gap-2 mb-2">
+        <% %w[月 火 水 木 金 土 日].each_with_index do |day, index| %>
+          <div class="text-center font-bold py-2 text-sm sm:text-base
+                      <%= 'text-info' if index == 5 %>
+                      <%= 'text-error' if index == 6 %>">
+            <%= day %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- 日付グリッド -->
+      <div class="grid grid-cols-7 gap-1 sm:gap-2">
+        <% @weeks.each do |week| %>
+          <% week.each_with_index do |day, wday| %>
+            <% if day.nil? %>
+              <!-- 空白セル -->
+              <div class="aspect-square"></div>
+            <% else %>
+              <!-- 日付セル -->
+              <div class="aspect-square relative">
+                <div class="absolute inset-0 rounded-lg transition-all duration-200 hover:shadow-lg
+                            <%= 'bg-primary/10 ring-2 ring-primary' if day[:date] == Date.today %>
+                            <%= 'bg-info/5' if wday == 5 %>
+                            <%= 'bg-error/5' if wday == 6 %>
+                            <%= 'bg-warning/20 ring-2 ring-warning' if day[:new_moon] %>
+                            <%= 'bg-secondary/20 ring-2 ring-secondary' if day[:full_moon] %>
+                            hover:bg-base-200">
+                  
+                  <div class="flex flex-col items-center justify-center h-full p-1 sm:p-2">
+                    <!-- 日付 -->
+                    <div class="text-xs sm:text-sm font-semibold mb-1
+                                <%= 'text-info' if wday == 5 %>
+                                <%= 'text-error' if wday == 6 %>
+                                <%= 'text-primary font-bold' if day[:date] == Date.today %>">
+                      <%= day[:date].day %>
+                    </div>
+
+                    <!-- 月の絵文字 -->
+                    <div class="text-2xl sm:text-3xl mb-1" title="<%= day[:moon_phase] %>">
+                      <%= day[:emoji] %>
+                    </div>
+
+                    <!-- 特別な日のバッジ -->
+                    <% if day[:new_moon] %>
+                      <div class="badge badge-warning badge-xs mt-1 hidden sm:inline-flex">新月</div>
+                    <% elsif day[:full_moon] %>
+                      <div class="badge badge-secondary badge-xs mt-1 hidden sm:inline-flex">満月</div>
+                    <% elsif day[:first_quarter] %>
+                      <div class="badge badge-info badge-xs mt-1 hidden sm:inline-flex">上弦</div>
+                    <% elsif day[:last_quarter] %>
+                      <div class="badge badge-accent badge-xs mt-1 hidden sm:inline-flex">下弦</div>
+                    <% end %>
+
+                    <!-- 今日のマーク -->
+                    <% if day[:date] == Date.today %>
+                      <div class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <!-- 凡例 -->
+      <div class="mt-6 pt-4 border-t border-base-300">
+        <div class="flex flex-wrap gap-4 justify-center text-xs sm:text-sm">
+          <div class="flex items-center gap-2">
+            <div class="w-4 h-4 rounded bg-primary/10 ring-2 ring-primary"></div>
+            <span>今日</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-4 h-4 rounded bg-warning/20 ring-2 ring-warning"></div>
+            <span>🌑 新月</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="w-4 h-4 rounded bg-secondary/20 ring-2 ring-secondary"></div>
+            <span>🌕 満月</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 今月ボタン -->
+  <div class="text-center mt-6">
+    <%= link_to "今月に戻る", calendar_path, class: "btn btn-outline btn-primary" %>
+  </div>
+</div>

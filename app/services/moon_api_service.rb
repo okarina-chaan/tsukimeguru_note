@@ -5,12 +5,15 @@ class MoonApiService
   BASE_URL = "http://labs.bitmeister.jp/ohakon/json/"
 
   SYNODIC_MONTH = 29.530588
-  EVENT_RANGES = {
-    new_moon:       -0.5..0.5,
-    first_quarter_moon:  6.88..7.88,
-    full_moon:      14.27..15.27,
-    last_quarter_moon:   21.65..22.65
-  }
+  DEGREES_PER_DAY = 360.0 / SYNODIC_MONTH
+  EVENT_TOLERANCE_DAYS = 1.0
+  EVENT_TOLERANCE_DEGREES = DEGREES_PER_DAY * EVENT_TOLERANCE_DAYS
+  EVENT_ANGLE_CENTERS = {
+    new_moon: 0.0,
+    first_quarter_moon: 90.0,
+    full_moon: 180.0,
+    last_quarter_moon: 270.0
+  }.freeze
 
   def self.fetch(date = Date.today)
     year  = date.year
@@ -23,16 +26,21 @@ class MoonApiService
     Rails.logger.info("Moon API raw response: #{response}")
 
     data = JSON.parse(response)
+
     angle = data["moon_phase"].to_f % 360.0
     moon_age = angle / 360.0 * SYNODIC_MONTH
-    event = detect_event(moon_age)
+
+    # 角度ベースで判定
+    event = detect_event(angle)
+
+    event_name = phase_name_for_event(event)
 
     {
       date: date,
       angle: angle,
       moon_age: moon_age,
       event: event,
-      moon_phase_name: phase_name_for_event(event),
+      moon_phase_name: event_name || phase_name(angle),
       moon_phase_emoji: phase_emoji(angle)
     }
   rescue => e
@@ -40,21 +48,28 @@ class MoonApiService
     nil
   end
 
-  def self.detect_event(moon_age)
-    EVENT_RANGES.each do |event, range|
-      return event if range.include?(moon_age)
+  def self.detect_event(angle)
+    normalized = angle % 360
+
+    EVENT_ANGLE_CENTERS.each do |event, center|
+      return event if angular_difference(normalized, center) <= EVENT_TOLERANCE_DEGREES
     end
     nil
   end
 
+  def self.angular_difference(value, target)
+    diff = (value - target).abs
+    [ diff, 360 - diff ].min
+  end
+
   def self.phase_name_for_event(event)
     case event
-    when :new_moon          then "新月"
+    when :new_moon           then "新月"
     when :first_quarter_moon then "上弦の月"
-    when :full_moon         then "満月"
+    when :full_moon          then "満月"
     when :last_quarter_moon  then "下弦の月"
     else
-      "その他の月相"
+      nil
     end
   end
 

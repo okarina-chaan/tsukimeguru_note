@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   get "insights", to: "analysis#show", as: :analysis
 
+  get "calendar", to: "calendar#show", as: :calendar
+
   get "/pages/*id" => "high_voltage/pages#show", as: :page
 
   if Rails.env.test?

@@ -59,17 +59,17 @@
     </ul>
   </div>
 
-  <div class="dropdown dropdown-end">
-    <label tabindex="0" class="btn btn-ghost px-2 text-2xl cursor-pointer">⋯</label>
-    <ul tabindex="0"
-        class="menu dropdown-content bg-base-100 rounded-box w-52 mt-3 p-2 shadow">
-      <li><%= link_to "月めぐるノートとは？", page_path("about") %></li>
-      <li><%= link_to "使い方", page_path("howto") %></li>
-      <li><%= link_to "お問い合わせ", page_path("contact") %></li>
-      <li><%= link_to "リリースノート", page_path("releases") %></li>
-      <li><%= link_to "フィードバック", page_path("feedback") %></li>
-    </ul>
-  </div>
+  <%# <div class="dropdown dropdown-end">
+  <%#   <label tabindex="0" class="btn btn-ghost px-2 text-2xl cursor-pointer">⋯</label>
+  <%#   <ul tabindex="0" %>
+  <%#       class="menu dropdown-content bg-base-100 rounded-box w-52 mt-3 p-2 shadow">
+  <%#     <li><%= link_to "月めぐるノートとは？", page_path("about") %></li>
+  <%#     <li><%= link_to "使い方", page_path("howto") %></li>
+  <%#     <li><%= link_to "お問い合わせ", page_path("contact") %></li>
+  <%#     <li><%= link_to "リリースノート", page_path("releases") %></li>
+  <%#     <li><%= link_to "フィードバック", page_path("feedback") %></li>
+  <%#   </ul> %>
+  <%# </div> %>
 
   <div class="navbar-end">
     <% if current_user %>

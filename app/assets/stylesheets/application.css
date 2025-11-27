@@ -3,19 +3,3 @@
  * so any styles placed here override the generated utilities/components.
  * DaisyUI の色をここで上書きしたい場合は、data-theme を対象に CSS 変数を再定義してください。
  */
-
-:root:has(input.theme-controller[value="tsukimeguru-dark"]:checked),
-[data-theme="tsukimeguru-dark"] {
-  --color-base-100: #1c1b2f;
-  --color-base-200: #2a274e;
-  --color-base-content: #f4ecd8; /* 柔らかい生成り */
-  --color-primary: #f6b87e;      /* 月の橙光 */
-  --color-primary-content: #2b2020;
-  --color-secondary: #e2c4a8;
-  --color-accent: #b19dd5;       /* 月夜の薄紫 */
-  --color-neutral: #3a3548;
-  --color-info: #a6c8ec;
-  --color-success: #b8d7b0;
-  --color-warning: #f0e68c;
-  --color-error: #f79e9d;
-}

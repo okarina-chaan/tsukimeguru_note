@@ -1,7 +1,9 @@
-@import "tailwindcss" source(none);
-@source "../../views/**/*.html.erb";
-@source "../../helpers/**/*.rb";
-@source "../../javascript/**/*.js";
+@import "tailwindcss";
+
+@source "./app/views/**/*.html.erb";
+@source "./app/helpers/**/*.rb";
+@source "./app/javascript/**/*.js";
+@source "./app/assets/stylesheets/**/*.css";
 @source not "./daisyui{,*}.mjs";
 
 

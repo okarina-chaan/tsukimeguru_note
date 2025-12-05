@@ -34,7 +34,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_23_024655) do
     t.date "date", null: false
     t.float "moon_age", null: false
     t.integer "moon_phase", null: false
-    t.text "content"
+    t.text "content", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id", "date"], name: "index_moon_notes_on_user_id_and_date", unique: true

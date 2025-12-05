@@ -2,7 +2,7 @@
   "name": "app",
   "private": true,
   "devDependencies": {
-    "esbuild": "^0.25.11"
+    "esbuild": "^0.27.1"
   },
   "scripts": {
     "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets"
@@ -12,7 +12,10 @@
     "@hotwired/stimulus-webpack-helpers": "^1.0.1",
     "@hotwired/turbo-rails": "^8.0.18",
     "chart.js": "^4.5.1",
-    "daisyui": "^5.3.7"
+    "daisyui": "^5.5.8",
+    "dotenv": "^17.2.3",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1"
   },
   "version": "1.0.0",
   "description": "This README would normally document whatever steps are necessary to get the application up and running.",

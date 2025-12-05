@@ -47,7 +47,6 @@ gem "omniauth-auth0"
 gem "omniauth-rails_csrf_protection"
 gem "faraday"
 
-gem "importmap-rails", "~> 2.2"
 
 gem "rails-i18n"
 

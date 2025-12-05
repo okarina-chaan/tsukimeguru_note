@@ -12,18 +12,18 @@ class MoonNotesController < ApplicationController
     data = MoonApiService.fetch(Date.today)
     if data[:event].blank?
       redirect_to dashboard_path, alert: "今日のMoon Noteはありません。"
-    else
-      @moon_note.moon_phase = data[:event]
-      @moon_phase_name = data[:moon_phase_name]
-      @moon_phase_emoji = data[:moon_phase_emoji]
-      @moon_age = data[:moon_age]
+      return
+    end
+    @moon_note.moon_phase = data[:event]
+    @moon_phase_name = data[:moon_phase_name]
+    @moon_phase_emoji = data[:moon_phase_emoji]
+    @moon_age = data[:moon_age]
 
     theme = MoonNoteThemeService.for(data[:event])
-      @moon_theme = theme[:title]
-      @moon_theme_description = theme[:description]
-      flash.now[:notice] = "今日は#{data[:moon_phase_name]}です。Moon Noteを作成しましょう！"
-      render :new
-    end
+    @moon_theme = theme[:title]
+    @moon_theme_description = theme[:description]
+    flash.now[:notice] = "今日は#{data[:moon_phase_name]}です。Moon Noteを作成しましょう！"
+    render :new
   end
 
   def create

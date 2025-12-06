@@ -18,7 +18,7 @@ RSpec.describe 'Dashboard', type: :system do
       expect(page).to have_current_path new_daily_note_path
     end
 
-    
+
     it '特定の月相のときにMoon Note作成ページに遷移できること' do
         allow(MoonApiService).to receive(:fetch).and_return(
           event: :full_moon,
@@ -52,4 +52,3 @@ RSpec.describe 'Dashboard', type: :system do
     end
   end
 end
-

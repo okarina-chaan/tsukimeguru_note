@@ -1,17 +1,31 @@
-export default function Dashboard({ today, moonPhase, event, moonPhaseEmoji }) {
-
+export default function Dashboard({
+  today,
+  moonPhase,
+  event,
+  eventName,
+  moonPhaseEmoji,
+  canCreateMoonNote
+}) {
   return (
     <div className="min-h-screen py-10 px-4 bg-base-100 text-base-content">
-      <div className="max-w-3xl mx-auto space-y-8">
+      <div className="max-w-3xl mx-auto space-y-10">
 
-        {/* ① 日付と月相の表示 */}
-        <div className="text-center space-y-2">
-
+        {/* 日付 & 月相表示 */}
+        <div className="text-center space-y-3">
           <h2 className="text-xl font-display">{today}</h2>
 
-          {moonPhase && (
-            <p className="text-primary text-lg">
-              今日は {moonPhase} です <span>{moonPhaseEmoji}</span>
+          {event ? (
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full
+                            bg-primary text-primary-content shadow-lg
+                            border border-primary-content/20">
+              <span className="text-2xl">{moonPhaseEmoji}</span>
+              <span className="font-semibold text-lg">
+                今日は {eventName} です
+              </span>
+            </div>
+          ) : (
+            <p className="text-lg text-base-content/80">
+              今日はどんな1日でしたか？
             </p>
           )}
 
@@ -20,15 +34,13 @@ export default function Dashboard({ today, moonPhase, event, moonPhaseEmoji }) {
           </p>
         </div>
 
-        {/* ② カードを2カラムで配置 */}
+        {/* カード部分 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-          {/* ③ Daily Note カード */}
+          {/* Daily Note */}
           <a
             href="/daily_notes/new"
             className="card bg-base-200 shadow-lg rounded-2xl p-6 border border-base-300
-                       transition-all duration-300
-                       hover:shadow-[0_0_20px_rgba(200,200,255,0.35)]
+                       transition-all duration-300 hover:shadow-[0_0_20px_rgba(200,200,255,0.35)]
                        hover:border-primary cursor-pointer"
           >
             <div className="text-center space-y-3">
@@ -38,21 +50,31 @@ export default function Dashboard({ today, moonPhase, event, moonPhaseEmoji }) {
             </div>
           </a>
 
-          {/* ④ Moon Note カード（event の有無で分岐） */}
+          {/* Moon Note 判定 */}
           {event ? (
             <a
               href="/moon_notes/new"
               className="card bg-primary text-primary-content shadow-lg rounded-2xl p-6 border border-primary/40
-                         transition-all duration-300
-                         hover:shadow-[0_0_25px_rgba(250,240,180,0.45)]
+                         transition-all duration-300 hover:shadow-[0_0_25px_rgba(250,240,180,0.45)]
                          hover:border-primary-content cursor-pointer"
             >
               <div className="text-center space-y-3">
                 <div className="text-3xl">🌙</div>
                 <h3 className="text-xl font-bold">Moon Noteを書く</h3>
-                <p className="text-sm opacity-90">
-                  {moonPhase} のメッセージを書きましょう
-                </p>
+                <p className="text-sm opacity-90">{eventName} のメッセージを書きましょう</p>
+              </div>
+            </a>
+          ) : canCreateMoonNote ? (
+            <a
+              href="/moon_notes/new"
+              className="card bg-base-200 text-base-content shadow-md rounded-2xl p-6 border border-primary/30
+                         transition-all duration-300 hover:shadow-[0_0_20px_rgba(200,200,255,0.2)]
+                         hover:border-primary cursor-pointer"
+            >
+              <div className="text-center space-y-3">
+                <div className="text-3xl">🌙</div>
+                <h3 className="text-xl font-bold">Moon Noteを書く</h3>
+                <p className="text-sm opacity-80">今日は作成できます</p>
               </div>
             </a>
           ) : (
@@ -67,7 +89,6 @@ export default function Dashboard({ today, moonPhase, event, moonPhaseEmoji }) {
               </div>
             </div>
           )}
-
         </div>
       </div>
     </div>

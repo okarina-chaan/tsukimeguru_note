@@ -1,18 +1,14 @@
+import React from "react"
 import { createRoot } from "react-dom/client"
 import Dashboard from "../components/dashboard/Dashboard.jsx"
 
-const rootElement = document.getElementById("dashboard-react-root")
+document.addEventListener("DOMContentLoaded", () => {
+  const rootElement = document.getElementById("dashboard-react-root")
 
-if (rootElement) {
-  const root = createRoot(rootElement)
+  if (rootElement) {
+    const data = window.dashboardData || {}
 
-  const data = window.dashboardData || {}
-
-  root.render(
-    <Dashboard
-      today={data.today}
-      moonPhase={data.moonPhase}
-    />
-  )
-}
-
+    const root = createRoot(rootElement)
+    root.render(<Dashboard {...data} />)
+  }
+})

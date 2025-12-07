@@ -6,8 +6,13 @@ class MoonApiService
 
   SYNODIC_MONTH = 29.530588
   DEGREES_PER_DAY = 360.0 / SYNODIC_MONTH
-  EVENT_TOLERANCE_DAYS = 1.0
-  EVENT_TOLERANCE_DEGREES = DEGREES_PER_DAY * EVENT_TOLERANCE_DAYS
+
+  # MoonNote 用（ ±1日で月相を取り扱い、MoonNoteを書きやすくする）
+  LOOSE_EVENT_TOLERANCE_DEGREES = DEGREES_PER_DAY * 1.0
+
+  # Dashboard 用（ 正確な月相を返す ）
+  STRICT_EVENT_TOLERANCE_DEGREES = 1.0
+
   EVENT_ANGLE_CENTERS = {
     new_moon: 0.0,
     first_quarter_moon: 90.0,
@@ -30,17 +35,19 @@ class MoonApiService
     angle = data["moon_phase"].to_f % 360.0
     moon_age = angle / 360.0 * SYNODIC_MONTH
 
-    # 角度ベースで判定
-    event = detect_event(angle)
+    # Dashboard 用：正確なイベント判定
+    strict_event = detect_event(angle, STRICT_EVENT_TOLERANCE_DEGREES)
 
-    event_name = phase_name_for_event(event)
+    # MoonNote 用：ゆるいイベント判定
+    loose_event = detect_event(angle, LOOSE_EVENT_TOLERANCE_DEGREES)
 
     {
       date: date,
       angle: angle,
       moon_age: moon_age,
-      event: event,
-      moon_phase_name: event_name || phase_name(angle),
+      event: strict_event,                        # Dashboard はこれを使う
+      loose_event: loose_event,                  # MoonNote はこれを使う
+      moon_phase_name: phase_name(angle),        # 基本の月相名称
       moon_phase_emoji: phase_emoji(angle)
     }
   rescue => e
@@ -48,20 +55,26 @@ class MoonApiService
     nil
   end
 
-  def self.detect_event(angle)
+
+  # strict / loose 両方で使える汎用 event 判定
+  def self.detect_event(angle, tolerance)
     normalized = angle % 360
 
     EVENT_ANGLE_CENTERS.each do |event, center|
-      return event if angular_difference(normalized, center) <= EVENT_TOLERANCE_DEGREES
+      return event if angular_difference(normalized, center) <= tolerance
     end
+
     nil
   end
 
+
   def self.angular_difference(value, target)
     diff = (value - target).abs
-    [ diff, 360 - diff ].min
+    [diff, 360 - diff].min
   end
 
+
+  # event → 日本語表記（Dashboard 専用でも使用可能）
   def self.phase_name_for_event(event)
     case event
     when :new_moon           then "新月"
@@ -73,6 +86,8 @@ class MoonApiService
     end
   end
 
+
+  # 通常の月相名称
   def self.phase_name(angle)
     case angle
     when 0...45   then "新月"
@@ -86,6 +101,7 @@ class MoonApiService
     end
   end
 
+
   def self.phase_emoji(angle)
     case angle
     when 0...45   then "🌑"
@@ -98,4 +114,11 @@ class MoonApiService
     else "🌑"
     end
   end
+
+
+  # MoonNote 作成可否（ゆるい）
+  def self.creatable_moon_note?(angle)
+    detect_event(angle, LOOSE_EVENT_TOLERANCE_DEGREES).present?
+  end
 end
+

@@ -5,7 +5,8 @@
     "esbuild": "^0.27.1"
   },
   "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets"
+    "build": "esbuild app/javascript/application.js app/javascript/components/*.jsx --bundle --sourcemap --format=esm --outdir=app/assets/builds --public-path=/assets --loader:.js=jsx --loader:.jsx=jsx --jsx=automatic",
+    "build:watch": "yarn build --watch"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
@@ -15,7 +16,8 @@
     "daisyui": "^5.5.8",
     "dotenv": "^17.2.3",
     "react": "^19.2.1",
-    "react-dom": "^19.2.1"
+    "react-dom": "^19.2.1",
+    "stimulus-vite-helpers": "^3.1.0"
   },
   "version": "1.0.0",
   "description": "This README would normally document whatever steps are necessary to get the application up and running.",

@@ -1,0 +1,31 @@
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  connect() {
+    this.timeout = setTimeout(() => {
+      this.fadeOut()
+    }, 3000);
+  }
+
+  disconnect() {
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+    }
+  }
+
+  remove() {
+    if (this.timeout) {
+      clearTimeout(this.timeout)
+    }
+    this.fadeOut()
+  }
+
+  fadeOut() {
+    this.element.style.transition = "opacity 0.5s ease-out"
+    this.element.style.opacity = "0"
+    
+    setTimeout(() => {
+      this.element.remove()
+    }, 500);
+  }
+}

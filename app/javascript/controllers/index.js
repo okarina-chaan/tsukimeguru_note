@@ -1,14 +1,14 @@
-
 import { application } from "./application"
 
 import DailyNoteToggleController from "./daily_note_toggle_controller"
-application.register("daily-note-toggle", DailyNoteToggleController)
-
 import DiaryEntryController from "./diary_entry_controller"
-application.register("diary-entry", DiaryEntryController)
-
 import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+import AnalysisChartController from "./analysis_chart_controller"
+import FlashController from "./flash_controller"
 
-import analysisChartController from "./analysis_chart_controller.js"
-application.register("analysis-chart", analysisChartController)
+application.register("daily-note-toggle", DailyNoteToggleController)
+application.register("diary-entry", DiaryEntryController)
+application.register("hello", HelloController)
+application.register("analysis-chart", AnalysisChartController)
+application.register("flash", FlashController)
+

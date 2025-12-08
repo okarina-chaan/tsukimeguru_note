@@ -1,96 +1,95 @@
-<section class="min-h-screen py-10 px-4 text-base-content" style="background-color: #1c1b2f;">
-  <header class="text-center mb-10">
-    <h1 class="text-3xl font-bold mb-2" style="color: #f6b87e;">日記一覧</h1>
-    <p class="text-sm opacity-70" style="color: #f4ecd8;">これまでの振り返り</p>
-  </header>
+<section class="min-h-screen bg-base-100 text-base-content py-14 px-4">
+  <div class="max-w-4xl mx-auto space-y-10">
+    <header class="text-center space-y-3">
+      <h1 class="text-4xl font-display tracking-widest">Daily Note一覧</h1>
+      <p class="text-base text-base-content/70">これまでの振り返り</p>
+    </header>
 
-  <div class="max-w-3xl mx-auto space-y-6">
-    <% @daily_notes.each do |note| %>
-      <article class="card shadow-lg rounded-2xl p-6" style="background-color: #2a274e;">
-        <div data-controller="daily-note-toggle">
+    <div class="space-y-6">
+      <% @daily_notes.each do |note| %>
+        <article class="card bg-base-200/70 text-base-content rounded-2xl p-6 border border-base-300/40 shadow-lg">
+          <div data-controller="daily-note-toggle">
 
-          <header class="flex justify-between items-center mb-3">
-            <h2 class="text-xl font-semibold" style="color: #b19dd5;">
-              <%= l(note.date, format: :long) %>
-            </h2>
-            <% if note.moon_phase_name.present? %>
-              <span class="text-sm opacity-70" style="color: #f0e68c;">
-                🌙 <%= note.moon_phase_name %>
-              </span>
-            <% end %>
-          </header>
+            <header class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
+              <h2 class="text-2xl font-serif"><%= l(note.date, format: :long) %></h2>
+              <% if note.moon_phase_name.present? %>
+                <span class="text-sm text-primary flex items-center gap-1">
+                  🌙 <%= note.moon_phase_name %>
+                </span>
+              <% end %>
+            </header>
 
-          <div class="flex items-center gap-8 mb-4 justify-center">
-            <div class="text-center">
-              <p class="text-sm opacity-80" style="color: #f4ecd8;">体調</p>
-              <p class="text-2xl"><%= %w[😰 😔 😐 😊 🥰][(note.condition_score || 3) - 1] %></p>
+            <div class="flex items-center gap-10 mb-4 justify-center">
+              <div class="text-center">
+                <p class="text-sm uppercase tracking-[0.3em] text-base-content/70">体調</p>
+                <p class="text-3xl"><%= %w[😰 😔 😐 😊 🥰][(note.condition_score || 3) - 1] %></p>
+              </div>
+              <div class="text-center">
+                <p class="text-sm uppercase tracking-[0.3em] text-base-content/70">気分</p>
+                <p class="text-3xl"><%= %w[😰 😔 😐 😊 🥰][(note.mood_score || 3) - 1] %></p>
+              </div>
             </div>
-            <div class="text-center">
-              <p class="text-sm opacity-80" style="color: #f4ecd8;">気分</p>
-              <p class="text-2xl"><%= %w[😰 😔 😐 😊 🥰][(note.mood_score || 3) - 1] %></p>
+
+            <button type="button"
+                    data-action="click->daily-note-toggle#toggle"
+                    data-daily-note-toggle-target="button"
+                    class="btn btn-ghost btn-sm w-full text-primary">
+              詳細を見る ↓
+            </button>
+
+            <div data-daily-note-toggle-target="details" class="hidden mt-4 space-y-3 text-sm leading-relaxed">
+              <% if note.did_today.present? %>
+                <p class="font-semibold text-primary/80">🌱 今日やったこと</p>
+                <p class="text-base"><%= note.did_today %></p>
+              <% end %>
+
+              <% if note.challenge.present? %>
+                <p class="font-semibold text-secondary/80">💭 うまくいかなかったこと</p>
+                <p class="text-base"><%= note.challenge %></p>
+              <% end %>
+
+              <% if note.good_things.present? %>
+                <p class="font-semibold text-accent">💫 よかったこと</p>
+                <p class="text-base"><%= note.good_things %></p>
+              <% end %>
+
+              <% if note.try_tomorrow.present? %>
+                <p class="font-semibold text-secondary/80">🌿 明日やってみたいこと</p>
+                <p class="text-base"><%= note.try_tomorrow %></p>
+              <% end %>
+
+              <% if note.memo.present? %>
+                <p class="font-semibold text-primary/80">📝 メモ</p>
+                <p class="whitespace-pre-wrap text-base"><%= note.memo %></p>
+              <% end %>
             </div>
+
+            <div class="flex flex-col gap-2 mt-5 text-sm font-semibold">
+              <div class="text-right">
+                <%= link_to edit_daily_note_path(note),
+                          class: "btn btn-sm btn-outline btn-primary" do %>
+                  編集する
+                <% end %>
+              </div>
+
+              <div class="text-right">
+                <%= link_to daily_note_path(note),
+                          data: { turbo_method: :delete, turbo_confirm: "本当にこの日記を削除しますか？" },
+                          class: "btn btn-sm btn-outline btn-error" do %>
+                  削除する
+                <% end %>
+              </div>
+            </div>
+
           </div>
+        </article>
+      <% end %>
 
-          <button type="button"
-                  data-action="click->daily-note-toggle#toggle"
-                  data-daily-note-toggle-target="button"
-                  class="btn btn-ghost btn-sm w-full transition-colors"
-                  style="background-color: transparent; color: #f6b87e; border: none;">
-            詳細を見る ↓
-          </button>
-
-          <div data-daily-note-toggle-target="details" class="hidden mt-4 space-y-3">
-            <% if note.did_today.present? %>
-              <p><span class="text-sm opacity-70" style="color:#a6c8ec;">🌱 今日やったこと</span></p>
-              <p style="color:#f4ecd8;"><%= note.did_today %></p>
-            <% end %>
-
-            <% if note.challenge.present? %>
-              <p><span class="text-sm opacity-70" style="color:#f79e9d;">💭 うまくいかなかったこと</span></p>
-              <p style="color:#f4ecd8;"><%= note.challenge %></p>
-            <% end %>
-
-            <% if note.good_things.present? %>
-              <p><span class="text-sm opacity-70" style="color:#e2c4a8;">💫 よかったこと</span></p>
-              <p style="color:#f4ecd8;"><%= note.good_things %></p>
-            <% end %>
-
-            <% if note.try_tomorrow.present? %>
-              <p><span class="text-sm opacity-70" style="color:#b8d7b0;">🌿 明日やってみたいこと</span></p>
-              <p style="color:#f4ecd8;"><%= note.try_tomorrow %></p>
-            <% end %>
-
-            <% if note.memo.present? %>
-              <p><span class="text-sm opacity-70" style="color:#b19dd5;">📝 メモ</span></p>
-              <p class="leading-relaxed whitespace-pre-wrap" style="color:#f4ecd8;"><%= note.memo %></p>
-            <% end %>
-          </div>
-
-          <div class="text-right mt-3">
-            <%= link_to edit_daily_note_path(note),
-                        class: "btn btn-sm btn-outline btn-accent",
-                        style: "border: 1px solid #b19dd5; color: #b19dd5; background-color: transparent; text-decoration: none;" do %>
-               編集する
-            <% end %>
-          </div>
-
-          <div class="text-right mt-2">
-            <%= link_to daily_note_path(note),
-                        data: { turbo_method: :delete, turbo_confirm: "本当にこの日記を削除しますか？" },
-                        class: "btn btn-sm btn-outline btn-error",
-                        style: "border: 1px solid #f79e9d; color: #f79e9d; background-color: transparent; text-decoration: none;" do %>
-               削除する
-            <% end %>
-          </div>
-
+      <% if @daily_notes.empty? %>
+        <div class="text-center text-sm text-base-content/70">
+          まだ日記がありません。
         </div>
-      </article>
-    <% end %>
-
-    <% if @daily_notes.empty? %>
-      <div class="text-center text-sm opacity-70" style="color: #f4ecd8;">
-        まだ日記がありません。<br>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </section>

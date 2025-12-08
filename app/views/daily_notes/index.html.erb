@@ -39,27 +39,27 @@
 
             <div data-daily-note-toggle-target="details" class="hidden mt-4 space-y-3 text-sm leading-relaxed">
               <% if note.did_today.present? %>
-                <p class="font-semibold text-primary/80">🌱 今日やったこと</p>
+                <p class="font-semibold text-primary/80">今日やったこと</p>
                 <p class="text-base"><%= note.did_today %></p>
               <% end %>
 
               <% if note.challenge.present? %>
-                <p class="font-semibold text-secondary/80">💭 うまくいかなかったこと</p>
+                <p class="font-semibold text-secondary/80">うまくいかなかったこと</p>
                 <p class="text-base"><%= note.challenge %></p>
               <% end %>
 
               <% if note.good_things.present? %>
-                <p class="font-semibold text-accent">💫 よかったこと</p>
+                <p class="font-semibold text-accent">よかったこと</p>
                 <p class="text-base"><%= note.good_things %></p>
               <% end %>
 
               <% if note.try_tomorrow.present? %>
-                <p class="font-semibold text-secondary/80">🌿 明日やってみたいこと</p>
+                <p class="font-semibold text-secondary/80">明日やってみたいこと</p>
                 <p class="text-base"><%= note.try_tomorrow %></p>
               <% end %>
 
               <% if note.memo.present? %>
-                <p class="font-semibold text-primary/80">📝 メモ</p>
+                <p class="font-semibold text-primary/80">メモ</p>
                 <p class="whitespace-pre-wrap text-base"><%= note.memo %></p>
               <% end %>
             </div>

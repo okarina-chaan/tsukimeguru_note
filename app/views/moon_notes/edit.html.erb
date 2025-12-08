@@ -1,63 +1,48 @@
-<main class="min-h-screen px-4 py-10" style="background-color: #1c1b2f;">
+<section class="min-h-screen bg-base-100 text-base-content py-14 px-4">
+  <div class="max-w-3xl mx-auto space-y-8">
 
-  <header class="text-center mb-10">
-    <h1 class="text-3xl font-bold mb-2" style="color: #f6b87e;">Moon Note 編集</h1>
-  </header>
+    <header class="text-center space-y-2">
+      <h1 class="text-4xl font-display tracking-widest">Moon Note 編集</h1>
+      <p class="text-base text-base-content/70"><%= @moon_theme[:title] %></p>
+    </header>
 
-  <div class="w-full max-w-xl mx-auto space-y-16">
-
-    <section class="p-6 rounded-2xl border" 
-      style="background-color: #2a274e; border-color: rgba(255,255,255,0.15); margin-bottom: 4px;">
-
-      <h2 class="text-center text-2xl font-bold" style="color:#f6b87e;">
-        <%= @moon_theme[:title] %>
-      </h2>
-      <p class="text-center mt-2" style="color:#f4ecd8;">
-        <%= @moon_theme[:description] %>
-      </p>
-
+    <section class="card bg-base-200/70 border border-base-300/40">
+      <div class="card-body text-center space-y-2">
+        <p class="text-sm uppercase tracking-[0.4em] text-base-content/60">Theme</p>
+        <h2 class="text-2xl font-serif text-primary"><%= @moon_theme[:title] %></h2>
+        <p class="text-base text-base-content/80 leading-relaxed"><%= @moon_theme[:description] %></p>
+      </div>
     </section>
 
-    <section class="p-6 rounded-2xl border"
-      style="background-color: #2a274e; border-color: rgba(255,255,255,0.15);">
-      <% if @moon_note.errors.any? %>
-        <div class="mb-4 p-3 rounded-lg"
-            style="background-color: #4a3c5a; border:1px solid #d98bb6;">
-          <p class="font-bold mb-1 text-sm" style="color:#f6b87e;">
-            入力内容にエラーがあります
-          </p>
+    <section class="card bg-base-200/70 border border-base-300/40">
+      <div class="card-body space-y-4">
+        <% if @moon_note.errors.any? %>
+          <div class="alert alert-error">
+            <p class="font-semibold mb-2">入力内容にエラーがあります</p>
+            <ul class="text-sm space-y-1">
+              <% @moon_note.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
 
-          <ul class="list-none pl-0 text-sm" style="color:#f4ecd8;">
-            <% @moon_note.errors.full_messages.each do |msg| %>
-              <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
+        <%= form_with model: @moon_note, local: true do |f| %>
+          <label class="block space-y-2">
+            <span class="text-sm text-base-content/80">この日のMoon Note</span>
+            <%= f.text_area :content,
+                rows: 8,
+                class: "textarea textarea-bordered w-full bg-base-100/80",
+                placeholder: "思っていること・願い・手放したいものなどを書いてください…" %>
+          </label>
 
-      <%= form_with model: @moon_note, local: true do |f| %>
-
-        <label class="block mb-3">
-          <p class="text-sm mb-2" style="color:#f4ecd8;">この日のMoon Note</p>
-
-          <%= f.text_area :content,
-              rows: 8,
-              class: "w-full rounded-lg p-4 leading-relaxed focus:outline-none",
-              style: "background-color: #1c1b2f; color: #f4ecd8; border:1px solid rgba(255,255,255,0.15);" %>
-        </label>
-
-        <div class="text-center pt-4">
-          <%= f.submit "更新する",
-                class: "px-6 py-3 rounded-lg font-bold",
-                style: "background-color:#f6b87e; color:#1c1b2f;" %>
-          <%= link_to "キャンセル",
-            moon_notes_path,
-            class: "btn btn-ghost",
-            style: "color: #f4ecd8;" %>
-        </div>
-
-      <% end %>
-
+          <div class="text-center pt-4 space-x-3">
+            <%= f.submit "更新する", class: "btn btn-primary px-8" %>
+            <%= link_to "キャンセル", moon_notes_path, class: "btn btn-ghost" %>
+          </div>
+        <% end %>
+      </div>
     </section>
+
   </div>
-</main>
+</section>

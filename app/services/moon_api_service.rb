@@ -70,7 +70,7 @@ class MoonApiService
 
   def self.angular_difference(value, target)
     diff = (value - target).abs
-    [diff, 360 - diff].min
+    [ diff, 360 - diff ].min
   end
 
 
@@ -121,4 +121,3 @@ class MoonApiService
     detect_event(angle, LOOSE_EVENT_TOLERANCE_DEGREES).present?
   end
 end
-

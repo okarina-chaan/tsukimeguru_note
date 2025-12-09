@@ -1,6 +1,6 @@
 <%= render "daily_note_form",
           daily_note: @daily_note,
-          form_title: "日記を編集する",
+          form_title: "Daily noteを編集する",
           form_subtitle: "#{l(@daily_note.date, format: :long)} の記録",
           submit_label: "更新する",
           form_url: daily_note_path(@daily_note),

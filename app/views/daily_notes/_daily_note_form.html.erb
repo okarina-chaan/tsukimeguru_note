@@ -1,148 +1,142 @@
-<section class="min-h-screen text-base-content py-10 px-4" style="background-color: #1c1b2f;">
-  <header class="text-center mb-10">
-    <h1 class="text-3xl font-bold mb-2" style="color: #f6b87e;">今日のノート</h1>
-    <p class="text-sm" style="color: #f4ecd8; opacity: 0.6;">
-      <%= l(Date.today, format: :long) %>
-    </p>
-  </header>
+<%
+  form_title = local_assigns[:form_title] || "今日のDaily Note"
+  form_subtitle = local_assigns[:form_subtitle] || l(Date.today, format: :long)
+  submit_label = local_assigns[:submit_label] || "保存する"
+  form_url = local_assigns[:form_url]
+  form_method = local_assigns[:form_method]
+%>
 
-  <div class="max-w-2xl mx-auto space-y-4">
-    <%= form_with model: daily_note, url: daily_notes_path, data: { controller: "diary-entry" } do |f| %>
+<section class="min-h-screen bg-base-100 text-base-content py-14 px-4">
+  <div class="max-w-3xl mx-auto space-y-10">
+    <header class="text-center space-y-2">
+      <h1 class="text-4xl font-display tracking-widest"><%= form_title %></h1>
+      <p class="text-base text-base-content/70"><%= form_subtitle %></p>
+    </header>
 
-      <% if @daily_note.errors.any? %>
-        <div class="alert alert-error rounded-xl p-4 mb-6 text-sm" style="background-color:#f79e9d; color:#2b2020;">
-          <p class="font-semibold mb-2"><%= pluralize(@daily_note.errors.count, "件") %>のエラーがあります:</p>
-          <ul class="list-disc list-inside">
-            <% @daily_note.errors.full_messages.each do |message| %>
+    <%= form_with model: daily_note,
+                  url: form_url,
+                  method: form_method,
+                  data: { controller: "diary-entry" } do |f| %>
+
+      <% if daily_note.errors.any? %>
+        <div class="alert alert-error rounded-xl mb-6">
+          <p class="font-semibold mb-2"><%= pluralize(daily_note.errors.count, "件") %>のエラーがあります:</p>
+          <ul class="list-disc list-inside text-sm space-y-1">
+            <% daily_note.errors.full_messages.each do |message| %>
               <li><%= message %></li>
             <% end %>
           </ul>
         </div>
       <% end %>
 
-      <div class="card shadow-lg p-6 rounded-2xl space-y-6" style="background-color: #2a274e;">
-        <h2 class="text-xl font-semibold flex items-center gap-2" style="color: #b19dd5;">
-          今日の調子はどう？
-        </h2>
+      <div class="space-y-6">
+        <div class="card bg-base-200/70 rounded-2xl p-6 border border-base-300/40 space-y-6">
+          <h2 class="text-xl font-semibold">今日の調子はどう？</h2>
 
-        <div data-diary-entry-target="healthSection" data-group="health">
-          <div class="flex justify-between items-center mb-3">
-            <span class="text-sm" style="color: #f4ecd8; opacity: 0.8;">体調</span>
-            <span class="text-4xl" data-diary-entry-target="healthEmoji">😐</span>
+          <div data-diary-entry-target="healthSection" data-group="health">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-sm text-base-content/80">体調</span>
+              <span class="text-4xl" data-diary-entry-target="healthEmoji">😐</span>
+            </div>
+
+            <div class="grid grid-cols-5 gap-2">
+              <% [1, 2, 3, 4, 5].each do |value| %>
+                <button
+                  type="button"
+                  data-action="click->diary-entry#selectHealth"
+                  data-value="<%= value %>"
+                  data-group="health"
+                  class="score-btn flex flex-col items-center justify-center p-3 rounded-lg border border-base-300 bg-base-100/80 transition"
+                >
+                  <span class="text-3xl mb-1"><%= %w[😰 😔 😐 😊 🥰][value - 1] %></span>
+                  <span class="text-xs text-base-content/70"><%= value %></span>
+                </button>
+              <% end %>
+            </div>
+
+            <%= f.hidden_field :condition_score, data: { diary_entry_target: "healthInput" } %>
           </div>
 
-          <div class="grid grid-cols-5 gap-2">
-            <% [1, 2, 3, 4, 5].each do |value| %>
-              <button
-                type="button"
-                data-action="click->diary-entry#selectHealth"
-                data-value="<%= value %>"
-                data-group="health"
-                class="score-btn flex flex-col items-center justify-center p-3 rounded-lg transition-all border border-base-content border-opacity-10"
-                style="background-color: #1c1b2f;"
-              >
-                <span class="text-3xl mb-1"><%= %w[😰 😔 😐 😊 🥰][value - 1] %></span>
-                <span class="text-xs" style="color: #f4ecd8; opacity: 0.6;"><%= value %></span>
-              </button>
-            <% end %>
-          </div>
+          <div data-diary-entry-target="moodSection" data-group="mood">
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-sm text-base-content/80">気分</span>
+              <span class="text-4xl" data-diary-entry-target="moodEmoji">😐</span>
+            </div>
 
-          <%= f.hidden_field :condition_score, data: { diary_entry_target: "healthInput" } %>
+            <div class="grid grid-cols-5 gap-2">
+              <% [1, 2, 3, 4, 5].each do |value| %>
+                <button
+                  type="button"
+                  data-action="click->diary-entry#selectMood"
+                  data-value="<%= value %>"
+                  data-group="mood"
+                  class="score-btn flex flex-col items-center justify-center p-3 rounded-lg border border-base-300 bg-base-100/80 transition"
+                >
+                  <span class="text-3xl mb-1"><%= %w[😰 😔 😐 😊 🥰][value - 1] %></span>
+                  <span class="text-xs text-base-content/70"><%= value %></span>
+                </button>
+              <% end %>
+            </div>
+
+            <%= f.hidden_field :mood_score, data: { diary_entry_target: "moodInput" } %>
+          </div>
         </div>
 
-        <div data-diary-entry-target="moodSection" data-group="mood">
-          <div class="flex justify-between items-center mb-3">
-            <span class="text-sm" style="color: #f4ecd8; opacity: 0.8;">気分</span>
-            <span class="text-4xl" data-diary-entry-target="moodEmoji">😐</span>
+        <div class="card bg-base-200/70 rounded-2xl p-6 border border-base-300/40 space-y-4">
+          <h2 class="text-xl font-semibold">今日はどんな日だった？</h2>
+
+          <%= f.text_field :did_today,
+            placeholder: "今日やったことは？",
+            class: "input input-bordered w-full bg-base-100/80" %>
+
+          <%= f.text_field :try_tomorrow,
+            placeholder: "明日やってみたいことは？",
+            class: "input input-bordered w-full bg-base-100/80" %>
+
+          <div data-diary-entry-target="moreFields" class="hidden space-y-4 pt-2">
+            <%= f.text_field :challenge,
+              placeholder: "うまくいかなかったことは？",
+              class: "input input-bordered w-full bg-base-100/80" %>
+
+            <%= f.text_field :good_things,
+              placeholder: "よかったことは？",
+              class: "input input-bordered w-full bg-base-100/80" %>
           </div>
 
-          <div class="grid grid-cols-5 gap-2">
-            <% [1, 2, 3, 4, 5].each do |value| %>
-              <button
-                type="button"
-                data-action="click->diary-entry#selectMood"
-                data-value="<%= value %>"
-                data-group="mood"
-                class="score-btn flex flex-col items-center justify-center p-3 rounded-lg transition-all border border-base-content border-opacity-10"
-                style="background-color: #1c1b2f;"
-              >
-                <span class="text-3xl mb-1"><%= %w[😰 😔 😐 😊 🥰][value - 1] %></span>
-                <span class="text-xs" style="color: #f4ecd8; opacity: 0.6;"><%= value %></span>
-              </button>
-            <% end %>
-          </div>
-
-          <%= f.hidden_field :mood_score, data: { diary_entry_target: "moodInput" } %>
-        </div>
-      </div>
-
-      <div class="card shadow-lg p-6 rounded-2xl space-y-4" style="background-color: #2a274e;">
-        <h2 class="text-xl font-semibold flex items-center gap-2" style="color: #b19dd5;">
-           今日はどんな日だった？
-        </h2>
-
-        <%= f.text_field :did_today, 
-          placeholder: "今日やったことは？",
-          class: "w-full text-base px-4 py-3 rounded-lg border focus:outline-none focus:border-opacity-40 transition-colors",
-          style: "background-color: #1c1b2f; border-color: #f4ecd8; border-width: 1px; border-opacity: 0.1; color: #f4ecd8;" %>
-
-
-        <%= f.text_field :try_tomorrow, 
-          placeholder: "明日やってみたいことは？",
-          class: "w-full text-base px-4 py-3 rounded-lg border focus:outline-none focus:border-opacity-40 transition-colors",
-          style: "background-color: #1c1b2f; border-color: #f4ecd8; border-width: 1px; border-opacity: 0.1; color: #f4ecd8;" %>
-
-        <div data-diary-entry-target="moreFields" class="hidden space-y-4 pt-2">
-
-          <%= f.text_field :challenge,
-            placeholder: "うまくいかなかったことは？",
-            class: "w-full text-base px-4 py-3 rounded-lg border focus:outline-none focus:border-opacity-40 transition-colors",
-            style: "background-color: #1c1b2f; border-color: #f4ecd8; border-width: 1px; border-opacity: 0.1; color: #f4ecd8;" %>
-
-          <%= f.text_field :good_things, 
-          placeholder: "よかったことは？",
-          class: "w-full text-base px-4 py-3 rounded-lg border focus:outline-none focus:border-opacity-40 transition-colors",
-          style: "background-color: #1c1b2f; border-color: #f4ecd8; border-width: 1px; border-opacity: 0.1; color: #f4ecd8;" %>
-
-
+          <button
+            type="button"
+            data-action="click->diary-entry#toggleMore"
+            data-diary-entry-target="moreButton"
+            class="btn btn-ghost btn-sm w-full text-primary"
+          >
+            もっと書く ↓
+          </button>
         </div>
 
-        <button 
+        <button
           type="button"
-          data-action="click->diary-entry#toggleMore"
-          data-diary-entry-target="moreButton"
-          class="btn btn-ghost btn-sm w-full transition-colors"
-          style="color: #f6b87e;"
+          data-action="click->diary-entry#toggleMemo"
+          data-diary-entry-target="memoButton"
+          class="card bg-base-200/70 rounded-2xl p-6 w-full text-left border border-base-300/40 hover:bg-base-200"
         >
-          もっと書く ↓
+          <span class="text-lg font-semibold flex items-center gap-2 text-primary">
+            メモを追加する +
+          </span>
         </button>
-      </div>
 
-      <button 
-        type="button"
-        data-action="click->diary-entry#toggleMemo"
-        data-diary-entry-target="memoButton"
-        class="card shadow-lg p-6 rounded-2xl w-full text-left hover:bg-opacity-80 transition-colors"
-        style="background-color: #2a274e;"
-      >
-        <span class="text-lg font-semibold flex items-center gap-2" style="color: #b19dd5;">
-           メモを追加する +
-        </span>
-      </button>
+        <div data-diary-entry-target="memoArea" class="hidden card bg-base-200/70 rounded-2xl p-6 border border-base-300/40 space-y-3">
+          <h2 class="text-lg font-semibold flex items-center gap-2 text-primary">
+            💬 メモ
+          </h2>
+          <%= f.text_area :memo,
+            rows: 6,
+            placeholder: "今日感じたことや気づきを自由に...",
+            class: "textarea textarea-bordered w-full bg-base-100/80" %>
+        </div>
 
-      <div data-diary-entry-target="memoArea" class="hidden card shadow-lg p-6 rounded-2xl space-y-3" style="background-color: #2a274e;">
-        <h2 class="text-lg font-semibold flex items-center gap-2" style="color: #b19dd5;">
-          💬メモ
-        </h2>
-        <%= f.text_area :memo,
-          rows: 6,
-          placeholder: "今日感じたことや気づきを自由に...",
-          class: "w-full font-serif text-base px-4 py-3 rounded-lg border focus:outline-none focus:border-opacity-40 transition-colors",
-          style: "background-color: #1c1b2f; border-color: #f4ecd8; border-width: 1px; border-opacity: 0.1; color: #f4ecd8;" %>
-      </div>
-
-      <div class="mt-6 text-center">
-        <%= f.submit "保存する", class: "btn btn-primary rounded-full px-8 text-lg", style: "background-color: #b19dd5; color: #1c1b2f;" %>
+        <div class="text-center pt-4">
+          <%= f.submit submit_label, class: "btn btn-primary rounded-full px-10" %>
+        </div>
       </div>
     <% end %>
   </div>
@@ -150,10 +144,10 @@
 
 <style>
   .score-btn.active {
-    background-color: rgba(177, 157, 213, 0.2) !important;
-    border: 2px solid #b19dd5 !important;
+    border-color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 15%, transparent);
   }
-  
+
   .score-btn.active span:first-child {
     transform: scale(1.1);
   }

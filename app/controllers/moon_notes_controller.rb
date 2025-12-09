@@ -10,10 +10,10 @@ class MoonNotesController < ApplicationController
   def new
     @moon_note = current_user.moon_notes.build
     data = MoonApiService.fetch(Date.today)
-    # if data[:event].blank?
-    #   redirect_to dashboard_path, alert: "今日のMoon Noteはありません。"
-    #   return
-    # end
+    if data[:event].blank?
+      redirect_to dashboard_path, alert: "今日はMoon Noteを作成できません。"
+      return
+    end
     @moon_note.moon_phase = data[:event]
     @moon_phase_name = data[:moon_phase_name]
     @moon_phase_emoji = data[:moon_phase_emoji]

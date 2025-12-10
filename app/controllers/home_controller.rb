@@ -1,6 +1,10 @@
 class HomeController < ApplicationController
   def index
-    redirect_to dashboard_path if current_user.present?
+    if current_user.present?
+      redirect_to dashboard_path
+    else
+      render :index
+    end
   end
 
   def dashboard; end

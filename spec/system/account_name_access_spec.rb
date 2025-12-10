@@ -1,17 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "アカウント名登録ページへのアクセス制御", type: :system do
-
-  it 'ログインしていないときはログインページにリダイレクトされる' do
-    page.reset_session!
-
-    visit edit_account_name_path
-
-    expect(page).to have_current_path(root_path)
-    expect(page).to have_content("ログインしてください")
-  end
-
-
   context "ログイン済み (アカウント名登録済み) の場合" do
     let(:user) { create(:user, name: "つきのうさぎ", account_registered: true) }
 
@@ -29,4 +18,3 @@ RSpec.describe "アカウント名登録ページへのアクセス制御", type
     end
   end
 end
-

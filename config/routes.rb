@@ -15,7 +15,8 @@ Rails.application.routes.draw do
   post "line_login_api/callback", to: "line_login_api#callback"
   get "dashboard", to: "dashboard#index", as: :dashboard
 
-  get "mypage",   to: "users#mypage",   as: :account_name_edit
+  get "/mypage", to: "users#mypage", as: :mypage
+
   get "settings", to: "users#settings"
 
   get "insights", to: "analysis#show", as: :analysis

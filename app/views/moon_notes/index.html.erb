@@ -36,10 +36,17 @@
                       class: "btn btn-sm btn-outline btn-primary" do %>
               編集する
             <% end %>
-            <%= link_to moon_note_path(moon_note),
-                      data: { turbo_method: :delete, turbo_confirm: "本当にこのMoon Noteを削除しますか？" },
-                      class: "btn btn-sm btn-outline btn-error" do %>
-              削除する
+            <%= form_with url: moon_note_path(moon_note),
+                          method: :delete,
+                          data: { turbo_confirm: "本当にこのMoon Noteを削除しますか？" },
+                          class: "inline-block",
+                          local: true do %>
+              <button type="submit"
+                      id="delete_button"
+                      class="btn btn-sm btn-outline btn-error"
+                      data-testid="delete_button">
+                削除する
+              </button>
             <% end %>
           </div>
         </article>

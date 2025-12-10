@@ -11,7 +11,7 @@ class MoonNotesController < ApplicationController
     @moon_note = current_user.moon_notes.build
     data = MoonApiService.fetch(Date.today)
     if data[:event].blank?
-      redirect_to dashboard_path, alert: "今日はMoon Noteを作成できません。"
+      redirect_to dashboard_path, alert: "今日のMoon Noteはありません。"
       return
     end
     @moon_note.moon_phase = data[:event]
@@ -28,7 +28,7 @@ class MoonNotesController < ApplicationController
 
   def create
     data = MoonApiService.fetch(Date.today)
-    return redirect_to dashboard_path if data.nil? || data[:event].blank?
+    return redirect_to dashboard_path, alert: "今日のMoon Noteはありません。" if data.nil? || data[:event].blank?
     return redirect_to dashboard_path, alert: "今日のMoon Noteは作成済みです" if current_user.moon_notes.exists?(date: data[:date])
     @moon_note = current_user.moon_notes.build(moon_note_params)
     @moon_note.moon_phase = data[:event]

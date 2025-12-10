@@ -58,6 +58,8 @@ class MoonApiService
 
   # strict / loose 両方で使える汎用 event 判定
   def self.detect_event(angle, tolerance)
+    return nil if angle.nil?
+
     normalized = angle % 360
 
     EVENT_ANGLE_CENTERS.each do |event, center|
@@ -118,6 +120,8 @@ class MoonApiService
 
   # MoonNote 作成可否（ゆるい）
   def self.creatable_moon_note?(angle)
+    return false if angle.nil?
+
     detect_event(angle, LOOSE_EVENT_TOLERANCE_DEGREES).present?
   end
 end

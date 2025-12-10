@@ -97,16 +97,15 @@ RSpec.describe "Moon Note", type: :system do
     end
   end
 
-  describe "moon note削除", js: true do
+  describe "moon note削除" do
     let!(:moon_note) { create(:moon_note, user: user, date: Date.today - 1) }
 
     it "moon noteを正しく削除できる" do
       visit moon_notes_path
 
       expect do
-        accept_confirm "本当にこのMoon Noteを削除しますか？" do
-          click_on :delete_button
-        end
+        expect(page).to have_selector("form[data-turbo-confirm='本当にこのMoon Noteを削除しますか？']")
+        find("[data-testid='delete_button']", match: :first).click
         expect(page).to have_content("削除しました")
       end.to change(MoonNote, :count).by(-1)
 

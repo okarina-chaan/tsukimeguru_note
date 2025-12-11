@@ -11,6 +11,7 @@ ja:
         memo: メモ
       moon_note:
         content: 本文
+
     errors:
       blank: "を入力してください"
       taken: "は既に記入済みです"

@@ -60,6 +60,16 @@ RSpec.describe "Moon Note", type: :system do
         visit moon_notes_path
         expect(page).to have_content("今日は満月です。心が穏やかになります。")
       end
+
+      it "loose_eventで保存された月相が表示される" do
+        moon_note.update!(moon_phase: :new_moon, loose_moon_phase: :full_moon)
+
+        visit moon_notes_path
+
+        within first("article.card") do
+          expect(page).to have_content("満月")
+        end
+      end
     end
 
     context "moon noteが存在しない場合" do

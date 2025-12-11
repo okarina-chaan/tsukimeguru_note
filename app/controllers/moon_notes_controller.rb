@@ -10,11 +10,13 @@ class MoonNotesController < ApplicationController
   def new
     @moon_note = current_user.moon_notes.build
     data = MoonApiService.fetch(Date.today)
-    if data[:event].blank?
+    loose_event = data[:loose_event] || data[:event]
+    if loose_event.blank?
       redirect_to dashboard_path, alert: "今日のMoon Noteはありません。"
       return
     end
-    @moon_note.moon_phase = data[:event]
+    @moon_note.moon_phase = data[:event] || loose_event
+    @moon_note.loose_moon_phase = loose_event
     @moon_phase_name = data[:moon_phase_name]
     @moon_phase_emoji = data[:moon_phase_emoji]
     @moon_age = data[:moon_age]
@@ -28,14 +30,16 @@ class MoonNotesController < ApplicationController
 
   def create
     data = MoonApiService.fetch(Date.today)
-    return redirect_to dashboard_path, alert: "今日のMoon Noteはありません。" if data.nil? || data[:event].blank?
-    return redirect_to dashboard_path, alert: "今日のMoon Noteは作成済みです" if current_user.moon_notes.exists?(date: data[:date])
+    loose_event = data&.dig(:loose_event) || data&.dig(:event)
+    return redirect_to dashboard_path, alert: "今日のMoon Noteはありません。" if data.nil? || loose_event.blank?
+    return redirect_to dashboard_path, alert: "今日のMoon Noteは作成済みです。" if current_user.moon_notes.exists?(date: data[:date])
     @moon_note = current_user.moon_notes.build(moon_note_params)
-    @moon_note.moon_phase = data[:event]
+    @moon_note.moon_phase = data[:event] || loose_event
+    @moon_note.loose_moon_phase = loose_event
     @moon_note.date = data[:date]
     @moon_note.moon_age = data[:moon_age]
     if @moon_note.save
-      redirect_to dashboard_path, notice: "Moon Noteを保存しました"
+      redirect_to moon_notes_path, notice: "Moon Noteを保存しました"
     else
       flash.now[:alert] = "Moon Noteの保存に失敗しました"
       render :new, status: :unprocessable_entity
@@ -70,6 +74,7 @@ class MoonNotesController < ApplicationController
   end
 
   def set_moon_theme
-    @moon_theme = MoonNoteThemeService.for(@moon_note.moon_phase.to_sym)
+    phase = @moon_note.effective_moon_phase
+    @moon_theme = MoonNoteThemeService.for(phase.to_sym)
   end
 end

@@ -19,10 +19,10 @@ class DailyNotesController < ApplicationController
       @daily_note.moon_phase_emoji = moon_data[:moon_phase_emoji]
     end
     if @daily_note.save
-      redirect_to daily_notes_path, notice: "日記を保存しました", status: :see_other
+      redirect_to daily_notes_path, notice: "Daily noteを保存しました", status: :see_other
     else
       @daily_notes = current_user.daily_notes.order(date: :desc)
-      flash.now[:alert] = "日記の保存に失敗しました"
+      flash.now[:alert] = "Daily noteの保存に失敗しました"
       render :new, status: :unprocessable_entity
     end
   end
@@ -32,16 +32,16 @@ class DailyNotesController < ApplicationController
 
   def update
     if @daily_note.update(daily_note_params)
-      redirect_to daily_notes_path, notice: "日記を更新しました", status: :see_other
+      redirect_to daily_notes_path, notice: "Daily noteを更新しました", status: :see_other
     else
-      flash.now[:alert] = "日記の更新に失敗しました"
+      flash.now[:alert] = "Daily noteの更新に失敗しました"
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
       @daily_note.destroy
-      redirect_to daily_notes_path, notice: "日記を削除しました"
+      redirect_to daily_notes_path, notice: "Daily noteを削除しました"
   end
 
   private

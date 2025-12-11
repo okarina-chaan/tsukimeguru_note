@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Dashboard', type: :system do
+RSpec.describe 'Dashboard', type: :system, js: true do
   let(:user) { create(:user) }
   before do
     sign_in_as(user)
@@ -29,8 +29,7 @@ RSpec.describe 'Dashboard', type: :system do
         )
 
       visit dashboard_path
-      puts page.html
-      find('[data-testid="moon-note-card"]').click
+      click_on 'Moon Noteを書く'
 
       expect(page).to have_current_path new_moon_note_path
     end

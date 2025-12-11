@@ -7,15 +7,16 @@
 
     <div class="space-y-6">
       <% @moon_notes.each do |moon_note| %>
+        <% display_phase = moon_note.effective_moon_phase %>
         <article class="card bg-base-200/70 text-base-content rounded-2xl p-6 border border-base-300/40 shadow-lg space-y-5">
           <header class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="flex items-center gap-4">
               <div class="text-3xl">
-                <%= moon_phase_icon(moon_note.moon_phase) %>
+                <%= moon_phase_icon(display_phase) %>
               </div>
               <div>
                 <p class="text-xs uppercase tracking-[0.3em] text-base-content/70">Phase</p>
-                <h2 class="text-2xl font-serif"><%= moon_phase_name(moon_note.moon_phase) %></h2>
+                <h2 class="text-2xl font-serif"><%= moon_phase_name(display_phase) %></h2>
                 <time class="text-sm text-base-content/70" datetime="<%= moon_note.date %>">
                   <%= l(moon_note.date, format: :long) %>
                 </time>
@@ -36,10 +37,17 @@
                       class: "btn btn-sm btn-outline btn-primary" do %>
               編集する
             <% end %>
-            <%= link_to moon_note_path(moon_note),
-                      data: { turbo_method: :delete, turbo_confirm: "本当にこのMoon Noteを削除しますか？" },
-                      class: "btn btn-sm btn-outline btn-error" do %>
-              削除する
+            <%= form_with url: moon_note_path(moon_note),
+                          method: :delete,
+                          data: { turbo_confirm: "本当にこのMoon Noteを削除しますか？" },
+                          class: "inline-block",
+                          local: true do %>
+              <button type="submit"
+                      id="delete_button"
+                      class="btn btn-sm btn-outline btn-error"
+                      data-testid="delete_button">
+                削除する
+              </button>
             <% end %>
           </div>
         </article>

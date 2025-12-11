@@ -60,6 +60,16 @@ RSpec.describe "Moon Note", type: :system do
         visit moon_notes_path
         expect(page).to have_content("今日は満月です。心が穏やかになります。")
       end
+
+      it "loose_eventで保存された月相が表示される" do
+        moon_note.update!(moon_phase: :new_moon, loose_moon_phase: :full_moon)
+
+        visit moon_notes_path
+
+        within first("article.card") do
+          expect(page).to have_content("満月")
+        end
+      end
     end
 
     context "moon noteが存在しない場合" do
@@ -97,16 +107,15 @@ RSpec.describe "Moon Note", type: :system do
     end
   end
 
-  describe "moon note削除", js: true do
+  describe "moon note削除" do
     let!(:moon_note) { create(:moon_note, user: user, date: Date.today - 1) }
 
     it "moon noteを正しく削除できる" do
       visit moon_notes_path
 
       expect do
-        accept_confirm "本当にこのMoon Noteを削除しますか？" do
-          click_on :delete_button
-        end
+        expect(page).to have_selector("form[data-turbo-confirm='本当にこのMoon Noteを削除しますか？']")
+        find("[data-testid='delete_button']", match: :first).click
         expect(page).to have_content("削除しました")
       end.to change(MoonNote, :count).by(-1)
 

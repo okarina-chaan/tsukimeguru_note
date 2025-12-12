@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="turbo-prefetch" content="false">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -26,6 +27,7 @@
   </head>
 
   <body class="bg-base-100 text-base-content pt-16">
+    <%= render 'shared/loading' %>
     <%= render 'shared/header' %>
 
     <div class="fixed top-20 left-4 right-4 z-[10000] pointer-events-none">

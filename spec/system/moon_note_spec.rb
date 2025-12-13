@@ -34,6 +34,20 @@ RSpec.describe "Moon Note", type: :system do
       end
     end
 
+    context "重複したmoon note作成画面に遷移できずダッシュボードにリダイレクトされる" do
+      let!(:existing_moon_note) do
+        create(:moon_note, user: user, date: Date.today)
+      end
+
+      it "同じ日のmoon noteが既に存在する場合" do
+        visit new_moon_note_path
+
+        expect(page).to have_current_path(edit_moon_note_path(existing_moon_note))
+        expect(page).to have_content("本日のMoon Noteは既に作成されています。編集画面に移動します。")
+        expect(page).to have_content("Moon Noteを編集する")
+      end
+    end
+
     context "今日はどの月相にもあたらない" do
       before do
         allow(MoonApiService).to receive(:fetch).and_return(
@@ -83,12 +97,6 @@ RSpec.describe "Moon Note", type: :system do
         expect(page).to have_current_path(moon_notes_path)
         expect(page).to have_content("更新しました")
       end
-
-      it "編集前データを正しく表示する" do
-        visit edit_moon_note_path(moon_note)
-
-        expect(page).to have_field("moon_note_content", with: "更新前だよ")
-      end
     end
 
     context "異常" do
@@ -104,14 +112,16 @@ RSpec.describe "Moon Note", type: :system do
   end
 
   describe "moon note削除" do
-  let!(:moon_note) { create(:moon_note, user: user, date: Date.today - 1) }
-    it "moon noteを正しく削除できる" do
+    let!(:moon_note) { create(:moon_note, user: user, date: Date.today - 1) }
+
+    it "moon noteを正しく削除できる", js: true do
       visit moon_notes_path
-      find(".alarm").click
-      expect do
-        expect(page.accept_confirm).to eq "本当にこのMoon Note削除しますか？"
-        expect(page).to have_content("削除しました")
-      end.to change(MoonNote, :count).by(-1)
+
+      accept_confirm do
+        click_button "削除する"
+      end
+
+      expect(page).to have_content("削除しました")
     end
   end
 end

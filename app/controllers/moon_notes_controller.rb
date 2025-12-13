@@ -8,11 +8,15 @@ class MoonNotesController < ApplicationController
   end
 
   def new
+    if current_user.moon_notes.exists?(date: Date.current)
+      redirect_to edit_moon_note_path(current_user.moon_notes.find_by(date: Date.current)), alert: "本日のMoon Noteは既に作成されています。編集画面に移動します。"
+      return
+    end
     @moon_note = current_user.moon_notes.build
     data = MoonApiService.fetch(Date.today)
     loose_event = data[:loose_event] || data[:event]
     if loose_event.blank?
-      redirect_to dashboard_path, alert: "今日のMoon Noteはありません。"
+      redirect_to dashboard_path, alert: "今日のMoon Noteは作成できません。"
       return
     end
     @moon_note.moon_phase = data[:event] || loose_event

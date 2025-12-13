@@ -8,6 +8,11 @@ class DailyNotesController < ApplicationController
   end
 
   def new
+    if current_user.daily_notes.exists?(date: Date.current)
+      @daily_note = current_user.daily_notes.find_by(date: Date.current)
+      redirect_to edit_daily_note_path(@daily_note), alert: "本日のDaily Noteは既に作成されています。編集画面に移動します。"
+      return
+    end
     @daily_note = current_user.daily_notes.build(date: Date.current)
   end
 

@@ -72,4 +72,10 @@ RSpec.describe "Daily note機能", type: :system do
       expect(page).to have_content("Daily noteを削除しました")
     end
   end
+  describe "ローディングアニメーション" do
+    it "Daily note一覧ページでローディングアニメーションが表示される" do
+      visit daily_notes_path
+      expect(page).to have_css("[data-controller='loading']:not(.hidden)")
+    end
+  end
 end

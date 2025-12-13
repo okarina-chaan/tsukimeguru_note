@@ -14,19 +14,24 @@ export default class extends Controller {
 
     if (!Chart) {
       console.warn("Chart.js failed to load")
+      window.dispatchEvent(new Event("page:ready"))
       return
     }
 
+    // annotation plugin 登録（重複防止）
     if (annotationPlugin) {
       const pluginModule = annotationPlugin.default || annotationPlugin
       if (!Chart.registry.plugins.get("annotation")) {
         Chart.register(pluginModule)
       }
-    } else {
-      console.warn("Chart.js annotation plugin failed to load")
     }
 
     const ctx = this.element.getContext("2d")
+
+    // 念のため既存 chart を破棄
+    if (this.chart) {
+      this.chart.destroy()
+    }
 
     this.chart = new Chart(ctx, {
       type: "line",
@@ -54,12 +59,16 @@ export default class extends Controller {
         ]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: false,
+
         plugins: {
           legend: { display: false },
           annotation: {
             annotations: this.buildMoonAnnotations()
           }
         },
+
         scales: {
           x: {
             grid: { display: false },
@@ -71,6 +80,12 @@ export default class extends Controller {
             ticks: { color: "#F9DECD" },
             grid: { color: "rgba(249,222,205,0.2)" }
           }
+        },
+
+        animation: {
+          onComplete: () => {
+            window.dispatchEvent(new Event("page:ready"))
+          }
         }
       }
     })
@@ -79,6 +94,7 @@ export default class extends Controller {
   disconnect() {
     if (this.chart) {
       this.chart.destroy()
+      this.chart = null
     }
   }
 

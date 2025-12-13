@@ -4,16 +4,16 @@
 
     <!-- mobile menu -->
     <div class="dropdown lg:hidden">
-      <label tabindex="0" role="button" class="btn btn-ghost">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
-             viewBox="0 0 24 24" stroke="currentColor">
+      <label tabindex="0" class="btn btn-ghost">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round"
                 stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
         </svg>
       </label>
 
       <ul tabindex="0"
-          class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[999] mt-3 w-52 p-2 shadow">
+          class="menu menu-sm dropdown-content bg-base-100 rounded-box mt-3 w-52 p-2 shadow z-[999]">
 
         <% main_nav_items.each do |item| %>
           <li>
@@ -28,27 +28,31 @@
           <details>
             <summary>その他</summary>
             <ul class="p-2">
-              <li><%= link_to "フィードバック・お問い合わせ", page_path("contact") %></li>
+              <li>
+                <%= link_to "フィードバック",
+                    page_path("contact") %>
+              </li>
             </ul>
           </details>
         </li>
       </ul>
     </div>
 
+    <!-- logo -->
     <%= link_to dashboard_path,
-        class: "flex items-center gap-2 btn btn-ghost text-xl font-display" do %>
+        class: "btn btn-ghost text-xl font-display flex items-center gap-2" do %>
       <%= image_tag "logoimg.png", class: "h-8 w-8" %>
       <span>月めぐるノート</span>
     <% end %>
-
   </div>
 
-  <!-- navbar-center -->
+  <!-- navbar-center (PC) -->
   <div class="navbar-center hidden lg:flex">
-    <ul class="menu menu-horizontal px-1 gap-4">
+    <ul class="menu menu-horizontal gap-4">
+
       <% main_nav_items.each do |item| %>
         <li>
-          <%= link_to item[:path], class: "flex items-center gap-2 hover:text-primary transition" do %>
+          <%= link_to item[:path], class: "flex items-center gap-2" do %>
             <%= heroicon item[:icon], variant: :outline, options: { class: "w-5 h-5" } %>
             <%= item[:name] %>
           <% end %>
@@ -56,9 +60,18 @@
       <% end %>
 
       <li>
-        <%= link_to "フィードバック", page_path("contact"),
-            class: "hover:text-primary transition" %>
+        <details>
+          <summary>その他</summary>
+          <ul class="p-2 bg-base-100 rounded-box shadow">
+            <li>
+              <%= link_to "フィードバック",
+                page_path("contact"),
+                class: "whitespace-nowrap"%>
+            </li>
+          </ul>
+        </details>
       </li>
+
     </ul>
   </div>
 
@@ -68,11 +81,11 @@
       <%= link_to "ログアウト",
           session_path,
           data: { turbo_method: :delete },
-          class: "btn btn-secondary" %>
+          class: "btn btn-secondary btn-sm" %>
     <% else %>
       <%= link_to "ログイン",
           line_login_api_login_path,
-          class: "btn btn-primary" %>
+          class: "btn btn-primary btn-sm" %>
     <% end %>
   </div>
 

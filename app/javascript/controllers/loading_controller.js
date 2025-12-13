@@ -7,11 +7,13 @@ export default class extends Controller {
     this.hide()
     this._onBeforeFetch = () => this.show()
     this._onReady = () => this.hide()
+    this._onLoading = () => this.show()
 
     document.addEventListener(
       "turbo:before-fetch-request",
       this._onBeforeFetch
     )
+    window.addEventListener("page:loading", this._onLoading)
     window.addEventListener("page:ready", this._onReady)
   }
 

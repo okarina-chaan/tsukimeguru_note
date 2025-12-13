@@ -83,7 +83,6 @@ export default class extends Controller {
         },
 
         animation: {
-          // 👇 ここが「分析ページ完成」の定義
           onComplete: () => {
             window.dispatchEvent(new Event("page:ready"))
           }

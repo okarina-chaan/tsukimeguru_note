@@ -5,6 +5,9 @@
       <div class="flex items-center justify-between">
         <!-- 前月ボタン -->
         <%= link_to calendar_path(year: @month == 1 ? @year - 1 : @year, month: @month == 1 ? 12 : @month - 1), 
+                     data: {
+                      action: "click->calendar-page#startLoading"
+                      },
                     class: "btn btn-circle btn-ghost", id: "prev-month" do %>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -19,6 +22,9 @@
 
         <!-- 次月ボタン -->
         <%= link_to calendar_path(year: @month == 12 ? @year + 1 : @year, month: @month == 12 ? 1 : @month + 1), 
+                    data: {
+                        action: "click->calendar-page#startLoading"
+                      },
                     class: "btn btn-circle btn-ghost", id: "next-month" do %>
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />

@@ -1,3 +1,5 @@
+require "database_cleaner-active_record"
+
 Object.send(:remove_const, :Line) if Object.const_defined?(:Line)
 
 ENV['RAILS_ENV'] ||= 'test'
@@ -34,4 +36,19 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, type: :system) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end

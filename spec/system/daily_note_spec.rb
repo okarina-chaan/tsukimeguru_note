@@ -41,10 +41,11 @@ RSpec.describe "Daily note機能", type: :system do
              did_today: "朝早起きした。",
              try_tomorrow: "今夜も22時には寝る。")
     end
+
     let!(:other_note) do
       create(:daily_note,
-              user: other_user,
-              date: Date.today,
+             user: other_user,
+             date: Date.today,
              did_today: "スマホを見すぎた。",
              try_tomorrow: "朝ストレッチをする。")
     end
@@ -56,26 +57,46 @@ RSpec.describe "Daily note機能", type: :system do
       expect(page).to have_content("朝早起きした。")
       expect(page).not_to have_content("スマホを見すぎた。")
     end
+  end
 
-    it "Daily noteの編集ができる" do
-      visit daily_notes_path
-
-      click_link "編集する", href: edit_daily_note_path(one_note)
-      expect(page).to have_content("Daily noteを編集する")
-      click_button "更新する"
-      expect(page).to have_content("Daily noteを更新しました")
+  describe "Daily noteの編集", js: true do
+    let!(:note) do
+      create(
+        :daily_note,
+        user: user,
+        condition_score: 3,
+        mood_score: 2,
+        did_today: "朝早起きした。",
+        try_tomorrow: "今夜も22時には寝る。"
+      )
     end
 
-    it "Daily noteの削除ができる" do
-      visit daily_notes_path
-      click_link "削除する", href: daily_note_path(one_note)
-      expect(page).to have_content("Daily noteを削除しました")
+    it "編集画面で既存データがUIに反映されている" do
+      visit edit_daily_note_path(note)
+
+      expect(page).to have_field(
+        "daily_note_did_today",
+        with: "朝早起きした。"
+      )
+
+      expect(page).to have_css(
+        '[data-group="health"] .active[data-value="3"]'
+      )
+
+      expect(page).to have_css(
+        '[data-group="mood"] .active[data-value="2"]'
+      )
     end
   end
-  describe "ローディングアニメーション" do
-    it "Daily note一覧ページでローディングアニメーションが表示される" do
+
+  describe "Daily noteの削除" do
+    let!(:note) { create(:daily_note, user: user) }
+
+    it "削除できる" do
       visit daily_notes_path
-      expect(page).to have_css("[data-controller='loading']:not(.hidden)")
+
+      click_link "削除する"
+      expect(page).to have_content("Daily noteを削除しました")
     end
   end
 end

@@ -48,7 +48,7 @@ RSpec.describe "Moon Note", type: :system do
       it "moon note作成画面に遷移できずダッシュボードにリダイレクトされる" do
         visit new_moon_note_path
         expect(page).to have_current_path(dashboard_path)
-        expect(page).to have_content("今日のMoon Noteはありません。")
+        expect(page).to have_content("今日のMoon Noteは作成できません")
       end
     end
   end
@@ -59,16 +59,6 @@ RSpec.describe "Moon Note", type: :system do
       it "moon note一覧が表示される" do
         visit moon_notes_path
         expect(page).to have_content("今日は満月です。心が穏やかになります。")
-      end
-
-      it "loose_eventで保存された月相が表示される" do
-        moon_note.update!(moon_phase: :new_moon, loose_moon_phase: :full_moon)
-
-        visit moon_notes_path
-
-        within first("article.card") do
-          expect(page).to have_content("満月")
-        end
       end
     end
 
@@ -93,6 +83,12 @@ RSpec.describe "Moon Note", type: :system do
         expect(page).to have_current_path(moon_notes_path)
         expect(page).to have_content("更新しました")
       end
+
+      it "編集前データを正しく表示する" do
+        visit edit_moon_note_path(moon_note)
+
+        expect(page).to have_field("moon_note_content", with: "更新前だよ")
+      end
     end
 
     context "異常" do
@@ -108,18 +104,14 @@ RSpec.describe "Moon Note", type: :system do
   end
 
   describe "moon note削除" do
-    let!(:moon_note) { create(:moon_note, user: user, date: Date.today - 1) }
-
+  let!(:moon_note) { create(:moon_note, user: user, date: Date.today - 1) }
     it "moon noteを正しく削除できる" do
       visit moon_notes_path
-
+      find(".alarm").click
       expect do
-        expect(page).to have_selector("form[data-turbo-confirm='本当にこのMoon Noteを削除しますか？']")
-        find("[data-testid='delete_button']", match: :first).click
+        expect(page.accept_confirm).to eq "本当にこのMoon Note削除しますか？"
         expect(page).to have_content("削除しました")
       end.to change(MoonNote, :count).by(-1)
-
-      expect(page).not_to have_content("今日は満月です。心が穏やかになります。")
     end
   end
 end

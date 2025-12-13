@@ -2,6 +2,7 @@
 
   <div class="navbar-start">
 
+    <!-- mobile menu -->
     <div class="dropdown lg:hidden">
       <label tabindex="0" role="button" class="btn btn-ghost">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
@@ -27,25 +28,22 @@
           <details>
             <summary>その他</summary>
             <ul class="p-2">
-              <li><%= link_to "月めぐるノートとは？", page_path("about") %></li>
-              <li><%= link_to "使い方", page_path("howto") %></li>
-              <li><%= link_to "お問い合わせ", page_path("contact") %></li>
-              <li><%= link_to "リリースノート", page_path("releases") %></li>
-              <li><%= link_to "フィードバック", page_path("feedback") %></li>
+              <li><%= link_to "フィードバック・お問い合わせ", page_path("contact") %></li>
             </ul>
           </details>
         </li>
       </ul>
     </div>
 
-    <%= link_to dashboard_path, class: "flex items-center gap-2 btn btn-ghost text-xl font-display" do %>
+    <%= link_to dashboard_path,
+        class: "flex items-center gap-2 btn btn-ghost text-xl font-display" do %>
       <%= image_tag "logoimg.png", class: "h-8 w-8" %>
       <span>月めぐるノート</span>
     <% end %>
 
   </div>
 
-
+  <!-- navbar-center -->
   <div class="navbar-center hidden lg:flex">
     <ul class="menu menu-horizontal px-1 gap-4">
       <% main_nav_items.each do |item| %>
@@ -56,26 +54,25 @@
           <% end %>
         </li>
       <% end %>
+
+      <li>
+        <%= link_to "フィードバック", page_path("contact"),
+            class: "hover:text-primary transition" %>
+      </li>
     </ul>
   </div>
 
-  <%# <div class="dropdown dropdown-end">
-  <%#   <label tabindex="0" class="btn btn-ghost px-2 text-2xl cursor-pointer">⋯</label>
-  <%#   <ul tabindex="0" %>
-  <%#       class="menu dropdown-content bg-base-100 rounded-box w-52 mt-3 p-2 shadow">
-  <%#     <li><%= link_to "月めぐるノートとは？", page_path("about") %></li>
-  <%#     <li><%= link_to "使い方", page_path("howto") %></li>
-  <%#     <li><%= link_to "お問い合わせ", page_path("contact") %></li>
-  <%#     <li><%= link_to "リリースノート", page_path("releases") %></li>
-  <%#     <li><%= link_to "フィードバック", page_path("feedback") %></li>
-  <%#   </ul> %>
-  <%# </div> %>
-
+  <!-- navbar-end -->
   <div class="navbar-end">
     <% if current_user %>
-      <%= link_to "ログアウト", session_path, data: { turbo_method: :delete }, class: "btn btn-secondary" %>
+      <%= link_to "ログアウト",
+          session_path,
+          data: { turbo_method: :delete },
+          class: "btn btn-secondary" %>
     <% else %>
-      <%= link_to "ログイン", line_login_api_login_path, class: "btn btn-primary" %>
+      <%= link_to "ログイン",
+          line_login_api_login_path,
+          class: "btn btn-primary" %>
     <% end %>
   </div>
 

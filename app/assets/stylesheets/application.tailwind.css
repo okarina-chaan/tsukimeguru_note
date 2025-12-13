@@ -22,14 +22,6 @@
     background-attachment: fixed;
     background-repeat: no-repeat;
   }
-  .star-noise {
-    background-image:
-      linear-gradient(to bottom, var(--c-base-top) 0%, var(--c-base-bottom) 100%),
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08) 0%, transparent 70%),
-      url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.02'%3E%3Ccircle cx='10' cy='20' r='1'/%3E%3Ccircle cx='200' cy='120' r='1'/%3E%3Ccircle cx='350' cy='300' r='1'/%3E%3Ccircle cx='100' cy='350' r='1'/%3E%3Ccircle cx='270' cy='80' r='1'/%3E%3Ccircle cx='50' cy='180' r='1'/%3E%3C/g%3E%3C/svg%3E");
-    background-blend-mode: overlay;
-    background-size: cover, auto, 400px 400px;
-  }
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
   }

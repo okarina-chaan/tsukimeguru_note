@@ -32,10 +32,11 @@
       <div class="space-y-6">
         <div class="card bg-base-200/70 rounded-2xl p-6 border border-base-300/40 space-y-6">
           <h2 class="text-xl font-semibold">今日の調子はどう？</h2>
+          <p class="text-sm text-base-content/80">* 体調と気分は必須項目です</p>
 
           <div data-diary-entry-target="healthSection" data-group="health">
             <div class="flex justify-between items-center mb-3">
-              <span class="text-sm text-base-content/80">体調</span>
+              <span class="text-sm text-base-content/80">体調 *</span>
               <span class="text-4xl" data-diary-entry-target="healthEmoji">😐</span>
             </div>
 
@@ -59,7 +60,7 @@
 
           <div data-diary-entry-target="moodSection" data-group="mood">
             <div class="flex justify-between items-center mb-3">
-              <span class="text-sm text-base-content/80">気分</span>
+              <span class="text-sm text-base-content/80">気分 *</span>
               <span class="text-4xl" data-diary-entry-target="moodEmoji">😐</span>
             </div>
 
@@ -93,46 +94,21 @@
             placeholder: "明日やってみたいことは？",
             class: "input input-bordered w-full bg-base-100/80" %>
 
-          <div data-diary-entry-target="moreFields" class="hidden space-y-4 pt-2">
-            <%= f.text_field :challenge,
-              placeholder: "うまくいかなかったことは？",
-              class: "input input-bordered w-full bg-base-100/80" %>
+          <%= f.text_field :challenge,
+            placeholder: "うまくいかなかったことは？",
+            class: "input input-bordered w-full bg-base-100/80" %>
 
-            <%= f.text_field :good_things,
-              placeholder: "よかったことは？",
-              class: "input input-bordered w-full bg-base-100/80" %>
-          </div>
+          <%= f.text_field :good_things,
+            placeholder: "よかったことは？",
+            class: "input input-bordered w-full bg-base-100/80" %>
 
-          <button
-            type="button"
-            data-action="click->diary-entry#toggleMore"
-            data-diary-entry-target="moreButton"
-            class="btn btn-ghost btn-sm w-full text-primary"
-          >
-            もっと書く ↓
-          </button>
-        </div>
-
-        <button
-          type="button"
-          data-action="click->diary-entry#toggleMemo"
-          data-diary-entry-target="memoButton"
-          class="card bg-base-200/70 rounded-2xl p-6 w-full text-left border border-base-300/40 hover:bg-base-200"
-        >
-          <span class="text-lg font-semibold flex items-center gap-2 text-primary">
-            メモを追加する +
-          </span>
-        </button>
-
-        <div data-diary-entry-target="memoArea" class="hidden card bg-base-200/70 rounded-2xl p-6 border border-base-300/40 space-y-3">
           <h2 class="text-lg font-semibold flex items-center gap-2 text-primary">
-            💬 メモ
+             メモ
           </h2>
           <%= f.text_area :memo,
             rows: 6,
             placeholder: "今日感じたことや気づきを自由に...",
             class: "textarea textarea-bordered w-full bg-base-100/80" %>
-        </div>
 
         <div class="text-center pt-4">
           <%= f.submit submit_label, class: "btn btn-primary rounded-full px-10" %>

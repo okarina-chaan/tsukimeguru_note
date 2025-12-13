@@ -28,6 +28,7 @@ class DailyNotesController < ApplicationController
   end
 
   def edit
+    @daily_note = current_user.daily_notes.find(params[:id])
   end
 
   def update

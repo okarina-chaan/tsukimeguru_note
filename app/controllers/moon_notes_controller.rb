@@ -47,6 +47,7 @@ class MoonNotesController < ApplicationController
   end
 
   def edit
+    @moon_note = current_user.moon_notes.find(params[:id])
   end
 
   def update

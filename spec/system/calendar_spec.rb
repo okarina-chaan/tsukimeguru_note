@@ -41,4 +41,16 @@ RSpec.describe "カレンダー", type: :system do
       end
     end
   end
+
+  describe "カレンダーページでのローディングアニメーション" do
+    it "ローディングアニメーションが表示される" do
+      visit calendar_path
+      find("#next-month").click
+
+      expect(page).to have_css(
+        '[data-controller="loading"]:not(.hidden)',
+        wait: 2
+      )
+    end
+  end
 end

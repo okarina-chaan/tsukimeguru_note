@@ -1,4 +1,7 @@
 class MoonNote < ApplicationRecord
+
+  paginates_per 8
+  
   MOON_PHASE_EVENTS = {
     new_moon: 0,
     first_quarter_moon: 1,

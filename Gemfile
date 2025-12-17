@@ -52,6 +52,8 @@ gem "rails-i18n"
 
 gem "high_voltage"
 
+gem 'kaminari', git: 'https://github.com/kaminari/kaminari'
+
 group :development, :production do
   gem "omniauth-line"
 end

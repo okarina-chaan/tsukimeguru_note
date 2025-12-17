@@ -4,7 +4,8 @@ class MoonNotesController < ApplicationController
   before_action :set_moon_theme, only: %i[edit update]
 
   def index
-    @moon_notes = current_user.moon_notes.order(date: :desc)
+    @moon_notes = current_user.moon_notes.order(date: :desc).page params[:page]
+    
   end
 
   def new

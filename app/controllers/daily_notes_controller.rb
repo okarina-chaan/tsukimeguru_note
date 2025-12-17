@@ -4,7 +4,7 @@ class DailyNotesController < ApplicationController
 
   def index
     @daily_note ||= current_user.daily_notes.build
-    @daily_notes = current_user.daily_notes.order(date: :desc)
+    @daily_notes = current_user.daily_notes.order(date: :desc).page params[:page]
   end
 
   def new

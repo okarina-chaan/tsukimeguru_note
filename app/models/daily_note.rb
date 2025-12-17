@@ -1,4 +1,6 @@
 class DailyNote < ApplicationRecord
+  paginates_per 10
+  
   belongs_to :user
 
   validates :date, presence: true

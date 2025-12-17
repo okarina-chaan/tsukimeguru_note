@@ -1,3 +1,4 @@
+
 <% content_for :head do %>
   <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
@@ -8,6 +9,27 @@
 
     <div class="flex flex-wrap justify-between items-baseline gap-4">
       <p class="text-accent-peach text-[32px] font-bold">月のサイクルとあなたの記録</p>
+
+        <div class="flex gap-2 items-center">
+          <!-- 前月ボタン -->
+          <%= link_to analysis_path(year: @prev_date.year, month: @prev_date.month), 
+              class: "flex items-center justify-center w-10 h-10 rounded-full bg-accent-purple/40 hover:bg-accent-pink transition-colors" do %>
+            <span class="text-accent-peach text-xl">←</span>
+          <% end %>
+    
+          <!-- 現在の年月表示 -->
+          <div class="px-4 py-2 rounded-full bg-accent-pink shadow-[0_0_15px_rgba(221,173,187,0.5)]">
+            <p class="text-background-dark text-sm font-bold">
+              <%= @start_date.strftime('%Y年%m月') %>
+            </p>
+          </div>
+    
+          <!-- 次月ボタン -->
+          <%= link_to analysis_path(year: @next_date.year, month: @next_date.month), 
+              class: "flex items-center justify-center w-10 h-10 rounded-full bg-accent-purple/40 hover:bg-accent-pink transition-colors" do %>
+            <span class="text-accent-peach text-xl">→</span>
+          <% end %>
+        </div>
 
       <div class="flex gap-2">
         <%= link_to "#", class: "flex items-center justify-center h-8 px-4 rounded-full bg-accent-pink shadow-[0_0_15px_rgba(221,173,187,0.5)]" do %>
@@ -47,7 +69,7 @@
           data-analysis-chart-labels-value="<%= @dates.map(&:to_s).to_json %>"
           data-analysis-chart-moods-value="<%= @moods.to_json %>"
           data-analysis-chart-conditions-value="<%= @conditions.to_json %>"
-          data-analysis-chart-moon-events-value="<%= @moon_events.to_json %>"
+          data-analysis-chart-moon-markers-value="<%= @moon_markers.to_json %>"
           class="w-full"
         ></canvas>
       </div>

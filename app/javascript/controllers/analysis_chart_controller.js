@@ -5,10 +5,12 @@ export default class extends Controller {
     labels: Array,
     moods: Array,
     conditions: Array,
-    moonEvents: Array
+    moonMarkers: Array
   }
 
   connect() {
+    console.log("📅 Labels:", this.labelsValue);
+    console.log("🌙 Moon Markers:", this.moonMarkersValue);
     const Chart = window.Chart
     const annotationPlugin = window["chartjs-plugin-annotation"]
 
@@ -68,11 +70,21 @@ export default class extends Controller {
             annotations: this.buildMoonAnnotations()
           }
         },
-
         scales: {
           x: {
             grid: { display: false },
-            ticks: { color: "#F9DECD" }
+            ticks: { 
+              color: "#F9DECD",
+              callback: function(value, index, ticks) {
+                // "2025-12-01" から "12-01" に変換
+                const label = this.getLabelForValue(value);
+                if (label && label.includes('-')) {
+                  const parts = label.split('-');
+                  return `${parts[1]}/${parts[2]}`; // MM-DD
+                }
+                return label;
+              }
+            }
           },
           y: {
             min: 0,
@@ -99,7 +111,7 @@ export default class extends Controller {
   }
 
   buildMoonAnnotations() {
-    return this.moonEventsValue.reduce((acc, event, idx) => {
+    return this.moonMarkersValue.reduce((acc, event, idx) => {
       const color = event.type === "full_moon" ? "#ffd700" : "#87cefa"
 
       acc[`moon-${idx}`] = {

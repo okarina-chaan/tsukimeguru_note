@@ -11,7 +11,7 @@ class MoonApiService
   LOOSE_EVENT_TOLERANCE_DEGREES = DEGREES_PER_DAY * 1.0
 
   # Dashboard 用（ 正確な月相を返す ）
-  STRICT_EVENT_TOLERANCE_DEGREES = 1.0
+  STRICT_EVENT_TOLERANCE_DEGREES = 3.0
 
   EVENT_ANGLE_CENTERS = {
     new_moon: 0.0,
@@ -124,4 +124,33 @@ class MoonApiService
 
     detect_event(angle, LOOSE_EVENT_TOLERANCE_DEGREES).present?
   end
+
+  # グラフ用の月相を取得
+    def self.fetch_moon_markers(start_date, end_date)
+      moon_markers = []
+    
+      (start_date..end_date).each do |date|
+        result = fetch(date)
+        next if result.nil?
+      
+        # strict_event を使用
+        if result[:event] == :full_moon
+          moon_markers << {
+            date: date.to_s,
+            type: "full_moon",
+            emoji: "🌕"
+          }
+        elsif result[:event] == :new_moon
+          moon_markers << {
+            date: date.to_s,
+            type: "new_moon",
+            emoji: "🌑"
+          }
+        end
+    end
+  
+    Rails.logger.debug "🌙 Found #{moon_markers.size} moon markers: #{moon_markers.inspect}"
+    moon_markers
+  end
+
 end

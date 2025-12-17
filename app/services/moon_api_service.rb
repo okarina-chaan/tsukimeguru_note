@@ -125,14 +125,14 @@ class MoonApiService
     detect_event(angle, LOOSE_EVENT_TOLERANCE_DEGREES).present?
   end
 
-  # グラフ用の月相を取得
+    # グラフ用の月相を取得
     def self.fetch_moon_markers(start_date, end_date)
       moon_markers = []
-    
+
       (start_date..end_date).each do |date|
         result = fetch(date)
         next if result.nil?
-      
+
         # strict_event を使用
         if result[:event] == :full_moon
           moon_markers << {
@@ -148,9 +148,8 @@ class MoonApiService
           }
         end
     end
-  
+
     Rails.logger.debug "🌙 Found #{moon_markers.size} moon markers: #{moon_markers.inspect}"
     moon_markers
   end
-
 end

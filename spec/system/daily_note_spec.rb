@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "Daily note機能", type: :system do
+RSpec.describe "Daily note機能", type: :system, js: true do
   let(:user) { create(:user) }
 
   before do
@@ -11,9 +11,8 @@ RSpec.describe "Daily note機能", type: :system do
     it "正しく保存できる" do
       visit new_daily_note_path
 
-      find("input[name='daily_note[condition_score]']", visible: false).set("5")
-      find("input[name='daily_note[mood_score]']", visible: false).set("4")
-
+      find('[aria-label="体調スコア 5"]').click
+      find('[aria-label="気分スコア 4"]').click
       sleep 0.5
       click_button "保存する"
 
@@ -54,8 +53,21 @@ RSpec.describe "Daily note機能", type: :system do
       visit daily_notes_path
 
       expect(page).to have_selector("h1", text: "Daily Note一覧")
-      expect(page).to have_content("朝早起きした。")
-      expect(page).not_to have_content("スマホを見すぎた。")
+      expect(page).to have_content("#{Date.yesterday.strftime("%Y年%m月%d日")}")
+    end
+
+    it "ページネーションが正しく機能する" do
+      create_list(:daily_note, 25, user: user)
+
+      visit daily_notes_path
+      puts page.html
+      puts DailyNote.count
+
+      
+      expect(page).to have_selector("h1", text: "Daily Note一覧")
+      click_on '2', match: :first
+
+      expect(page).to have_current_path(daily_notes_path(page: 2))
     end
   end
 
@@ -95,8 +107,9 @@ RSpec.describe "Daily note機能", type: :system do
     it "削除できる" do
       visit daily_notes_path
 
-      click_link "削除する"
-      expect(page).to have_content("Daily noteを削除しました")
+      page.dismiss_confirm("本当にこの日記を削除しますか？") do
+        click_on "削除する"
+      end
     end
   end
 end

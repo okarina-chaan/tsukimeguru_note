@@ -44,6 +44,7 @@
               <% [1, 2, 3, 4, 5].each do |value| %>
                 <button
                   type="button"
+                  aria-label="体調スコア <%= value %>"
                   data-action="click->diary-entry#selectHealth"
                   data-value="<%= value %>"
                   data-group="health"
@@ -68,6 +69,7 @@
               <% [1, 2, 3, 4, 5].each do |value| %>
                 <button
                   type="button"
+                  aria-label="気分スコア <%= value %>"
                   data-action="click->diary-entry#selectMood"
                   data-value="<%= value %>"
                   data-group="mood"

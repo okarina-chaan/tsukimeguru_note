@@ -60,6 +60,14 @@ RSpec.describe "Moon Note", type: :system do
         visit moon_notes_path
         expect(page).to have_content("今日は満月です。心が穏やかになります。")
       end
+
+      it "ページネーションが正しく機能する" do
+        visit moon_notes_path
+
+        expect(page).to have_content("Moon Note一覧")
+        click_on"2", match: :first
+
+        expect(page).to have_current_path(moon_notes_path(page: 2))
     end
 
     context "moon noteが存在しない場合" do

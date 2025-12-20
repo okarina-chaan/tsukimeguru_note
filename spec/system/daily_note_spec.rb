@@ -60,8 +60,6 @@ RSpec.describe "Daily note機能", type: :system, js: true do
       create_list(:daily_note, 25, user: user)
 
       visit daily_notes_path
-      puts page.html
-      puts DailyNote.count
 
       
       expect(page).to have_selector("h1", text: "Daily Note一覧")

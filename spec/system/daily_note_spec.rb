@@ -61,7 +61,7 @@ RSpec.describe "Daily note機能", type: :system, js: true do
 
       visit daily_notes_path
 
-      
+
       expect(page).to have_selector("h1", text: "Daily Note一覧")
       click_on '2', match: :first
 

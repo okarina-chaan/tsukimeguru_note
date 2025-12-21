@@ -17,37 +17,50 @@ RSpec.describe 'Dashboard', type: :system, js: true do
 
       expect(page).to have_current_path new_daily_note_path
     end
+  end
 
-
-    it '特定の月相のときにMoon Note作成ページに遷移できること' do
+  describe 'dashboardでの月相毎の表示について' do
+    context '正常系' do
+      before do
         allow(MoonApiService).to receive(:fetch).and_return(
           event: :full_moon,
+          event_name: "満月",
           moon_phase_name: "満月",
           moon_phase_emoji: "🌕",
           moon_age: 14.3,
           date: Date.today
         )
+      end
 
-      visit dashboard_path
-      click_on 'Moon Noteを書く'
+      it '特定の月相のときにMoon Note作成ページに遷移できること' do
+        visit dashboard_path
+        click_on 'Moon Noteを書く'
 
-      expect(page).to have_current_path new_moon_note_path
+        expect(page).to have_current_path new_moon_note_path
+      end
+
+      it '特定の月相の当日はそのメッセージがdashboardに表示されること' do
+        visit dashboard_path
+        expect(page).to have_content("今日は 満月 です")
+      end
     end
 
-    before do
-      allow(MoonApiService).to receive(:fetch).and_return(
-        event: nil,
-        moon_phase_name: "その他",
-        moon_phase_emoji: "",
-        moon_age: 12.0,
-        date: Date.today
-      )
-    end
+    context '異常系' do
+      before do
+        allow(MoonApiService).to receive(:fetch).and_return(
+          event: nil,
+          moon_phase_name: "その他",
+          moon_phase_emoji: "",
+          moon_age: 12.0,
+          date: Date.today
+        )
+      end
 
-    it '特定の月相でないときにMoon Note作成ページに遷移できないこと' do
-      visit dashboard_path
-      expect(page).not_to have_link 'Moon Noteを書く'
-      expect(page).to have_content '対象日ではありません'
+      it '特定の月相でないときにMoon Note作成ページに遷移できないこと' do
+        visit dashboard_path
+        expect(page).not_to have_link 'Moon Noteを書く'
+        expect(page).to have_content '対象日ではありません'
+      end
     end
   end
 end

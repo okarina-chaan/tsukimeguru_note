@@ -52,7 +52,7 @@ gem "rails-i18n"
 
 gem "high_voltage"
 
-gem 'kaminari', git: 'https://github.com/kaminari/kaminari'
+gem "kaminari", git: "https://github.com/kaminari/kaminari"
 
 group :development, :production do
   gem "omniauth-line"
@@ -77,6 +77,8 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "capybara"
   gem "selenium-webdriver"
+
+  gem "pry-rails"
 end
 
 group :development do

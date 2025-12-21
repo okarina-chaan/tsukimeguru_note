@@ -1,8 +1,7 @@
 export default function Dashboard({
   today,
-  moonPhase,
   event,
-  eventName,
+  moonPhaseName,
   moonPhaseEmoji,
   canCreateMoonNote
 }) {
@@ -13,14 +12,13 @@ export default function Dashboard({
         {/* 日付 & 月相表示 */}
         <div className="text-center space-y-3">
           <h2 className="text-xl font-display">{today}</h2>
-
           {event ? (
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full
                             bg-primary text-primary-content shadow-lg
                             border border-primary-content/20">
               <span className="text-2xl">{moonPhaseEmoji}</span>
               <span className="font-semibold text-lg">
-                今日は {eventName} です
+                今日は {moonPhase} です
               </span>
             </div>
           ) : (

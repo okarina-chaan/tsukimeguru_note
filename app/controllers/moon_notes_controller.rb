@@ -5,7 +5,6 @@ class MoonNotesController < ApplicationController
 
   def index
     @moon_notes = current_user.moon_notes.order(date: :desc).page params[:page]
-    
   end
 
   def new

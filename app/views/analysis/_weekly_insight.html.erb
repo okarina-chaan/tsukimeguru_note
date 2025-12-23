@@ -2,7 +2,16 @@
   <div class="px-6 py-5">
     <div class="flex items-center gap-3 mb-4">
       <h3 class="text-sm font-semibold text-base-content/90">今週の変化</h3>
+
+      <% if current_user.weekly_insight_available? %>
+          <%= button_to "今週の変化をみる",
+            weekly_insight_analysis_path,
+            method: :post,
+            class: "btn btn-sm btn-outline btn-primary rounded-full px-5 tracking-wide hover:shadow-md hover:shadow-primary/20" %>
+      <% end %>
+
     </div>
+
 
     <% if insight.present? %>
       <div class="relative pl-5 py-3 before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:rounded-full before:bg-gradient-to-b before:from-primary/60 before:to-primary/20">

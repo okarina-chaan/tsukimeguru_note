@@ -7,4 +7,10 @@ class User < ApplicationRecord
   def account_registered?
     name.present?
   end
+
+  def weekly_insight_available?
+    return true if weekly_insight_generated_at.nil?
+
+    weekly_insight_generated_at < 7.days.ago
+  end
 end

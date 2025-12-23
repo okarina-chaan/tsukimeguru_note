@@ -41,5 +41,10 @@ class AnalysisController < ApplicationController
     Rails.logger.debug "📅 Date range: #{@start_date} to #{@end_date}"
     Rails.logger.debug "📊 Total dates: #{@dates.size}"
     Rails.logger.debug "🌙 Moon markers: #{@moon_markers.inspect}"
+
+    @weekly_insight = <<~TEXT
+      この1週間では4日分の記録がありました。
+      体調・気分スコアは、先週より高い日が多く見られました。
+    TEXT
   end
 end

@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   resource :session, only: [ :destroy ]
   resource :moon_sign, only: [ :new, :create, :show ]
 
+  resource :analysis, only: [ :show ], path: "insights", controller: "analysis" do
+    post :weekly_insight, on: :collection
+  end
+
+
   get "up" => "rails/health#show", as: :rails_health_check
 
   root to: "home#index"
@@ -18,8 +23,6 @@ Rails.application.routes.draw do
   get "/mypage", to: "users#mypage", as: :mypage
 
   get "settings", to: "users#settings"
-
-  get "insights", to: "analysis#show", as: :analysis
 
   get "calendar", to: "calendar#show", as: :calendar
 

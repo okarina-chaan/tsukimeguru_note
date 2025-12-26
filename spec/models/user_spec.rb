@@ -24,4 +24,22 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
   end
+  describe 'weekly_insight_available?' do
+    context '正常系' do
+      example 'weekly_insight_generated_atがnilの場合はtrue' do
+        user = User.new(weekly_insight_generated_at: nil)
+        expect(user.weekly_insight_available?).to eq(true)
+      end
+      example 'weekly_insight_generated_atが7日より前の場合はtrue' do
+        user = User.new(weekly_insight_generated_at: 8.days.ago)
+        expect(user.weekly_insight_available?).to eq(true)
+      end
+    end
+    context '異常系' do
+      example 'weekly_insight_generated_atが6日以内の場合はfalse' do
+        user = User.new(weekly_insight_generated_at: 6.days.ago)
+        expect(user.weekly_insight_available?).to eq(false)
+      end
+    end
+  end
 end

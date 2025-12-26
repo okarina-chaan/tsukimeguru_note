@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Analysis", type: :system, js: true do
+  include ActiveSupport::Testing::TimeHelpers
   let(:user) { create(:user) }
 
   before { sign_in_as(user) }
@@ -15,20 +16,23 @@ RSpec.describe "Analysis", type: :system, js: true do
 
       it "押したら更新されて次は押せなくなる" do
         user.update!(weekly_insight_generated_at: nil)
-        visit analysis_path
+        create(:daily_note, user: user, date: Time.zone.today)
 
+        visit analysis_path
         click_button "今週の変化をみる"
 
         visit analysis_path
         expect(page).to have_button("今週の変化をみる", disabled: true)
       end
     end
+
     context '異常系' do
       it "押せないときはボタンが無効" do
-        user.update!(weekly_insight_generated_at: Time.zone.now)
-        visit analysis_path
-
-        expect(page).to have_button("今週の変化をみる", disabled: true)
+        travel_to Time.zone.local(2024, 6, 10) do
+          user.update!(weekly_insight_generated_at: Time.zone.now.beginning_of_week + 1.day)
+          visit analysis_path
+          expect(page).to have_button("今週の変化をみる", disabled: true)
+        end
       end
     end
   end

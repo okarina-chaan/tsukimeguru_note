@@ -6,8 +6,18 @@
       <% if current_user.weekly_insight_available? %>
           <%= button_to "今週の変化をみる",
             weekly_insight_analysis_path,
-            method: :post,
+            data: { method: :post },
             class: "btn btn-sm btn-outline btn-primary rounded-full px-5 tracking-wide hover:shadow-md hover:shadow-primary/20" %>
+      <% else %>
+      <button
+        class="btn btn-sm btn-outline btn-primary rounded-full px-5 tracking-wide opacity-60"
+        disabled>
+        今週の変化をみる
+      </button>
+    
+      <p class="mt-2 text-xs text-base-content/60 cursor-not-allowed">
+          次の更新は <%= Time.zone.now.next_week(:monday).strftime('%Y-%m-%d') %> です
+      </p>
       <% end %>
 
     </div>
@@ -26,5 +36,6 @@
         </p>
       </div>
     <% end %>
+
   </div>
 </section>

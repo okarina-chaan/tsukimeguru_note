@@ -38,13 +38,44 @@ class AnalysisController < ApplicationController
     # 月相データ取得
     @moon_markers = MoonApiService.fetch_moon_markers(@start_date, @end_date)
 
-    Rails.logger.debug "📅 Date range: #{@start_date} to #{@end_date}"
-    Rails.logger.debug "📊 Total dates: #{@dates.size}"
-    Rails.logger.debug "🌙 Moon markers: #{@moon_markers.inspect}"
+    week_key = weekly_insight_week_key(current_user)
+    @weekly_insight = Rails.cache.read(week_key)
+  end
 
-    @weekly_insight = <<~TEXT
-      この1週間では4日分の記録がありました。
-      体調・気分スコアは、先週より高い日が多く見られました。
-    TEXT
+
+  # 分析ページを週1回更新できるように制御する
+  def weekly_insight
+    return redirect_to analysis_path unless current_user.weekly_insight_available?
+
+
+    current_user.update!(weekly_insight_generated_at: Time.zone.now)
+
+    insight = fetch_weekly_insight(current_user)
+    week_key = weekly_insight_week_key(current_user)
+
+    Rails.cache.write(week_key, insight, expires_in: 8.days) if insight.present?
+
+    redirect_to analysis_path
+  end
+
+  private
+
+  # キャッシュの生成が必要なときに使用するキーを生成する,今は使わない
+  # def weekly_insight_cache_key(user)
+  #   stamp = user.weekly_insight_generated_at ? user.weekly_insight_generated_at.beginning_of_day.to_i : "none"
+  #   "weekly_insight:user:#{user.id}:#{stamp}"
+  # end
+
+  def weekly_insight_week_key(user, at: Time.zone.now)
+    week_start = at.beginning_of_week.to_date.to_s
+    "weekly_insight:user:#{user.id}:week:#{week_start}"
+  end
+
+  def fetch_weekly_insight(user)
+    start_date = 7.days.ago.to_date
+    end_date = Time.zone.today
+    return nil unless user.daily_notes.where(date: 7.days.ago..Time.zone.now).exists?
+
+    "これが分析内容になる予定です\n改行しても大丈夫です"
   end
 end

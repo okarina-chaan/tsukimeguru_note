@@ -52,4 +52,9 @@ Rails.application.configure do
   config.action_controller.raise_on_missing_callback_actions = true
   config.assets.compile = true
   config.logger = Logger.new($stdout)
+
+  # Enable rack_session_access middleware to allow setting session in system tests
+  if defined?(RackSessionAccess)
+    config.middleware.use RackSessionAccess::Middleware
+  end
 end

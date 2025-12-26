@@ -3,6 +3,7 @@ Table users {
   line_user_id string [not null, unique, note: 'LINEのユーザー識別子']
   name string [note: 'LINEの表示名']
   account_resistered boolean [default: false, note: 'アカウント登録済みかどうか']
+  weekly_insight_generated_at datetime [note: '週毎の振り返りを最後に生成した日時']
   created_at datetime
   updated_at datetime
 }
@@ -15,7 +16,7 @@ Table daily_notes {
   mood_score int [note: '気分']
   did_today string [ note: '今日やったこと']
   challenges string [ note: '今日できなかったこと、伸びしろポイント']
-  good_things string [ note: '今日あった感謝や嬉しかったこと３つ']
+  good_things string [ note: '今日あった感謝や嬉しかったこと']
   try_tomorrow string [ note: '明日やってみたいこと']
   note text [ note: '自由記述メモ']
   moon_phase_name string [ note: 'APIから取った月相']

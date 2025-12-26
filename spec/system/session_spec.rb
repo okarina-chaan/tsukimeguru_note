@@ -4,7 +4,7 @@ RSpec.describe "セッション管理", type: :system do
   include LineAuthStub
 
   before do
-    driven_by(:rack_test)
+    driven_by(:selenium_chrome_headless)
   end
 
   it "LINEログインしてからログアウトできる" do
@@ -13,7 +13,7 @@ RSpec.describe "セッション管理", type: :system do
 
     visit root_path
 
-    click_on "ログイン"
+    find("a[href='/line_login_api/login']", visible: :all, match: :first).click
 
     expect(page).to have_current_path(dashboard_path)
 

@@ -38,7 +38,9 @@ class AnalysisController < ApplicationController
     # 月相データ取得
     @moon_markers = MoonApiService.fetch_moon_markers(@start_date, @end_date)
 
-    week_key = weekly_insight_week_key(current_user)
+    # 週次分析データの取得
+    # 週が変わるごとにキャッシュを切り替える
+    week_key = weekly_insight_week_key(current_user, at: Time.zone.now)
     @weekly_insight = Rails.cache.read(week_key)
   end
 
@@ -47,13 +49,22 @@ class AnalysisController < ApplicationController
   def weekly_insight
     return redirect_to analysis_path unless current_user.weekly_insight_available?
 
-
-    current_user.update!(weekly_insight_generated_at: Time.zone.now)
-
+    # insight生成処理
+    # insight生成に失敗した場合はリダイレクトのみ
+    # insight生成に成功した場合はキャッシュと更新日時の保存を行う
     insight = fetch_weekly_insight(current_user)
-    week_key = weekly_insight_week_key(current_user)
 
-    Rails.cache.write(week_key, insight, expires_in: 8.days) if insight.present?
+    if insight.blank?
+      flash[:alert] = "振り返り内容の生成に失敗しました。日記が記録されているか確認してください。"
+      return redirect_to analysis_path
+    end
+
+    generated_at = Time.zone.now
+
+    current_user.update!(weekly_insight_generated_at: generated_at)
+
+    week_key = weekly_insight_week_key(current_user, at: generated_at)
+    Rails.cache.write(week_key, insight, expires_in: 8.days)
 
     redirect_to analysis_path
   end
@@ -66,15 +77,18 @@ class AnalysisController < ApplicationController
   #   "weekly_insight:user:#{user.id}:#{stamp}"
   # end
 
+  # 週の振り返りデータのキャッシュキーを生成する
   def weekly_insight_week_key(user, at: Time.zone.now)
     week_start = at.beginning_of_week.to_date.to_s
     "weekly_insight:user:#{user.id}:week:#{week_start}"
   end
 
   def fetch_weekly_insight(user)
-    start_date = 7.days.ago.to_date
-    end_date = Time.zone.today
-    return nil unless user.daily_notes.where(date: 7.days.ago..Time.zone.now).exists?
+    # 月曜日から今日までのデータを取得する
+    today = Time.zone.today
+    start_date = today.beginning_of_week
+    end_date = today
+    return nil unless user.daily_notes.where(date: start_date..end_date).exists?
 
     "これが分析内容になる予定です\n改行しても大丈夫です"
   end

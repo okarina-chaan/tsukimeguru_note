@@ -8,9 +8,9 @@ class User < ApplicationRecord
     name.present?
   end
 
-  def weekly_insight_available?
+  def weekly_insight_available?(now: Time.zone.now)
     return true if weekly_insight_generated_at.nil?
 
-    weekly_insight_generated_at < 7.days.ago
+    (now - weekly_insight_generated_at) > 7.days
   end
 end

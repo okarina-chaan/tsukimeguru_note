@@ -1,0 +1,73 @@
+<div class="min-h-screen py-10 px-4 bg-base-100 text-base-content">
+  <div class="max-w-3xl mx-auto space-y-10">
+
+    <!-- 日付 & 月相表示 -->
+    <div class="text-center space-y-3">
+      <h2 class="text-xl font-display"><%= today %></h2>
+      <% if event %>
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full
+                        bg-primary text-primary-content shadow-lg
+                        border border-primary-content/20">
+          <span class="text-2xl"><%= moonPhaseEmoji %></span>
+          <span class="font-semibold text-lg">
+            今日は <%= moonPhase %> です
+          </span>
+        </div>
+      <% else %>
+        <p class="text-lg text-base-content/80">
+          今日はどんな1日でしたか？
+        </p>
+      <% end %>
+
+      <p class="text-lg mt-4 font-medium">
+        今日はどんな記録を残しますか？
+      </p>
+    </div>
+
+    <!-- カード部分 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Daily Note -->
+      <%= link_to new_daily_note_path, class: "card bg-base-200 shadow-lg rounded-2xl p-6 border border-base-300
+                       transition-all duration-300 hover:shadow-[0_0_20px_rgba(200,200,255,0.35)]
+                       hover:border-primary cursor-pointer" do %>
+        <div class="text-center space-y-3">
+          <div class="text-3xl">📝</div>
+          <h3 class="text-xl font-bold">Daily Noteを書く</h3>
+          <p class="text-sm opacity-80">気分・体調・振り返り・自由メモ</p>
+        </div>
+      <% end %>
+
+      <!-- Moon Note 判定 -->
+      <% if event %>
+        <%= link_to new_moon_note_path, class: "card bg-primary text-primary-content shadow-lg rounded-2xl p-6 border border-primary/40
+                       transition-all duration-300 hover:shadow-[0_0_25px_rgba(250,240,180,0.45)]
+                       hover:border-primary-content cursor-pointer" do %>
+          <div class="text-center space-y-3">
+            <div class="text-3xl">🌙</div>
+            <h3 class="text-xl font-bold">Moon Noteを書く</h3>
+            <p class="text-sm opacity-90"><%= eventName %> のメッセージを書きましょう</p>
+          </div>
+        <% end %>
+      <% elsif canCreateMoonNote %>
+        <%= link_to new_moon_note_path, class: "card bg-base-200 text-base-content shadow-md rounded-2xl p-6 border border-primary/30
+                       transition-all duration-300 hover:shadow-[0_0_20px_rgba(200,200,255,0.2)]
+                       hover:border-primary cursor-pointer" do %>
+          <div class="text-center space-y-3">
+            <div class="text-3xl">🌙</div>
+            <h3 class="text-xl font-bold">Moon Noteを書く</h3>
+            <p class="text-sm opacity-80">今日は作成できます</p>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="card bg-base-200 text-base-content/50 shadow-inner rounded-2xl p-6 border border-base-300
+                       opacity-60 cursor-not-allowed">
+          <div class="text-center space-y-3">
+            <div class="text-3xl">🌙</div>
+            <h3 class="text-xl font-bold">Moon Noteは作成できません</h3>
+            <p class="text-sm">今日は対象日ではありません</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

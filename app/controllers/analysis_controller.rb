@@ -42,6 +42,9 @@ class AnalysisController < ApplicationController
     # 週が変わるごとにキャッシュを切り替える
     week_key = weekly_insight_week_key(current_user, at: Time.zone.now)
     @weekly_insight = Rails.cache.read(week_key)
+
+    service = Reflection::MockService.new(daily_notes: daily_notes.values)
+    @reflection = service.call
   end
 
 

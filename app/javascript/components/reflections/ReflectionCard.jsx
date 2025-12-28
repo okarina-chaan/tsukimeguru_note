@@ -9,7 +9,22 @@ function ReflectionCard() {
         setStatus("loading");
         try {
             // APIの呼び出し
-            await new Promise((resolve) => setTimeout(resolve, 2000)); // ダミーの遅延
+            const response = await fetch("/api/weekly_insights", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            // 必要に応じてレスポンスデータを処理
+            const data = await response.json();
+            const id = data.id;
+            console.log("created id:", id);
+
             setStatus("success");
         } catch (error) {
             console.error(error);
@@ -17,6 +32,10 @@ function ReflectionCard() {
         }
       };
 
+    if (status === "success") {
+        return null;
+    }
+    
     return (
         <div className="reflection-card">
           <p>status: {status}</p>

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :weekly_insights, only: [:create]
+    resources :weekly_insights, only: [ :create ]
   end
 
 

@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     post :weekly_insight, on: :collection
   end
 
+  namespace :api do
+    resources :weekly_insights, only: [ :create ]
+  end
+
 
   get "up" => "rails/health#show", as: :rails_health_check
 

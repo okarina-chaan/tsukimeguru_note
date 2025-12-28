@@ -1,18 +1,15 @@
-// Turbo
-import "@hotwired/turbo-rails"
+// app/javascript/application.js
 
-// Stimulus
-import "./controllers"
+import "@hotwired/turbo-rails";
+import "./controllers";
 
-import "./pages/dashboard"
+import { mountReflection, unmountReflection } from "./components/reflections/mount_reflection_card";
 
-// React初期化をTurboに対応させる
 document.addEventListener("turbo:load", () => {
-  const root = document.getElementById("dashboard-root");
-  if (root) {
-    const { createRoot } = require("react-dom/client");
-    const Dashboard = require("./pages/dashboard").default;
-    createRoot(root).render(<Dashboard />);
-  }
+  mountReflection();
 });
 
+// ページキャッシュ前に React をアンマウントして二重マウントを防ぐ
+document.addEventListener("turbo:before-cache", () => {
+  unmountReflection();
+});

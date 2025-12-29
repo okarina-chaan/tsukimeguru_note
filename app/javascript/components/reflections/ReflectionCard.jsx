@@ -4,35 +4,42 @@ import { PuffLoader } from "react-spinners";
 function ReflectionCard() {
 
   const [status, setStatus] = useState("idle");
+  const [weeklyInsightId, setWeeklyInsightId] = useState(null);
 
     const fetchReflection = async () => {
         setStatus("loading");
         try {
-            // APIの呼び出し
-            const response = await fetch("/api/weekly_insights", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            const id_response = await fetch("/api/weekly_insights", {method: "POST"})
+            const data = await id_response.json();
+            setWeeklyInsightId(data.id);
 
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
+            // APIの呼び出し
+            const newId = data.id;
+            setWeeklyInsightId(newId);
+            const response = await fetch(`/api/weekly_insights/${newId}/fragment`)
+
+            if (response.status === 200) {
+                const html = await response.text();
+                const target = document.getElementById("weekly-insight-root");
+                if (target) target.innerHTML = html;
+                setStatus("done");
+                return;
             }
 
-            // 必要に応じてレスポンスデータを処理
-            const data = await response.json();
-            const id = data.id;
-            console.log("created id:", id);
+            if (response.status === 404) {
+              setStatus("idle");
+              return;
+            }
 
-            setStatus("success");
+
         } catch (error) {
-            console.error(error);
-            setStatus("error");
+            console.error("fetchReflection error:", error);
+            setStatus(error);
+            setStatus("idle");
         }
       };
 
-    if (status === "success") {
+    if (status === "done") {
         return null;
     }
     
@@ -53,7 +60,7 @@ function ReflectionCard() {
                 />
               </div>
             )}
-            {status === "success" && null}
+            {status === "done" && "Done!"}
             {status === "error" && "Error!"}
           </div>
 

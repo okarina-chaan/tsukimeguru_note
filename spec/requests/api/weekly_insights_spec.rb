@@ -1,7 +1,6 @@
 require "rails_helper"
 
 RSpec.describe "Api::WeeklyInsights", type: :request do
-  include LineAuthStub
   let(:user) { create(:user) }
   let(:reflection_result) do
     {

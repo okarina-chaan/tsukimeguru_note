@@ -11,4 +11,9 @@ class ApplicationController < ActionController::Base
   def require_login
     redirect_to root_path, alert: "ログインしてください" unless current_user
   end
+
+  def weekly_insight_week_key(user, at: Time.zone.today - 1.week)
+    week_start = at.beginning_of_week.to_date.to_s
+    "weekly_insight_user_#{user.id}_week_#{week_start}"
+  end
 end

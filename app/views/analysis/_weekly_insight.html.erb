@@ -35,7 +35,7 @@
     </div>
 
     <!-- return メッセージ -->
-    <% if @reflection[:highlights].any? { |h| h[:type] == :return } %>
+    <% if weekly_insight[:highlights].any? { |h| h[:type] == :return } %>
       <p class="mt-4 mb-3 text-lg font-semibold text-primary font-display leading-snug">
         また月めぐるノートを開いてくれてありがとう
       </p>
@@ -46,7 +46,7 @@
     <!-- highlight エリア -->
     <div class="mt-5 flex flex-wrap items-center gap-3">
 
-      <% @reflection[:highlights].each do |highlight| %>
+      <% weekly_insight[:highlights].each do |highlight| %>
         <% case highlight[:type] %>
         <% when :count %>
           <!-- 記録数：事実だけ伝える -->
@@ -81,7 +81,7 @@
 
 
     <!-- 週次インサイト -->
-    <% if @weekly_insight.present? %>
+    <% if weekly_insight.present? %>
       <div
         class="relative mt-2 pl-5 py-3
                before:content-['']
@@ -90,7 +90,7 @@
                before:bg-gradient-to-b before:from-primary/60 before:to-primary/20">
 
         <p class="text-sm font-normal leading-relaxed text-base-content/80 whitespace-pre-line">
-          <%= @weekly_insight %>
+          <%= weekly_insight[:html] %>
         </p>
       </div>
     <% else %>

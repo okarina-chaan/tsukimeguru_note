@@ -7,9 +7,9 @@ class Api::WeeklyInsightsController < ApplicationController
     week_key = weekly_insight_week_key(current_user)
     cached = Rails.cache.read(week_key)
 
-    
+
     if cached.present?
-      render json: {id: week_key}, status: :ok
+      render json: { id: week_key }, status: :ok
       return
     end
 
@@ -33,7 +33,7 @@ class Api::WeeklyInsightsController < ApplicationController
       render json: { error: "Not Found" }, status: :not_found
       return
     end
-    render partial: "analysis/weekly_insight", locals: { weekly_insight: weekly_insight }, formats: [:html]
+    render partial: "analysis/weekly_insight", locals: { weekly_insight: weekly_insight }, formats: [ :html ]
   end
 
   private

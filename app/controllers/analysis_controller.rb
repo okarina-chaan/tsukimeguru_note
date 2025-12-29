@@ -43,6 +43,5 @@ class AnalysisController < ApplicationController
     @weekly_insight = Rails.cache.read(week_key)
 
     @weekly_insight_html = @weekly_insight&.[](:html)
-
   end
 end

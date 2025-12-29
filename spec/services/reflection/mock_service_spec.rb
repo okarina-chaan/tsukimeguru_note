@@ -20,7 +20,6 @@ RSpec.describe Reflection::MockService do
       expect(result[:trends]).to have_key(:mood)
       expect(result[:trends][:condition]).to be_an(Array)
       expect(result[:trends][:mood]).to be_an(Array)
-
           end
 
     context "Daily noteが空のとき" do

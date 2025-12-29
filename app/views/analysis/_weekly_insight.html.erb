@@ -12,26 +12,11 @@
       <h3 class="text-sm font-display tracking-wide text-base-content/80">
         今週の変化
       </h3>
-
-      <% if current_user.weekly_insight_available? %>
-        <%= button_to "今週の変化をみる",
-          weekly_insight_analysis_path,
-          data: { method: :post },
-          class: "btn btn-sm btn-outline btn-primary rounded-full px-5 tracking-wide
-                  hover:shadow-md hover:shadow-primary/20" %>
-      <% else %>
-        <div class="flex items-center gap-3">
-          <button
-            class="btn btn-sm btn-outline btn-primary rounded-full px-5 tracking-wide opacity-60"
-            disabled>
-            今週の変化をみる
-          </button>
-
-          <p class="text-xs text-base-content/50">
-            次の更新は <%= Time.zone.now.next_week(:monday).strftime('%Y-%m-%d') %>
-          </p>
-        </div>
-      <% end %>
+      <div
+        id="reflection-card-root"
+        data-available="<%= current_user.weekly_insight_available? %>"
+        data-next-date="<%= Time.zone.now.next_week(:monday).strftime('%Y-%m-%d') %>">
+      </div>
     </div>
 
     <!-- return メッセージ -->
@@ -40,8 +25,6 @@
         また月めぐるノートを開いてくれてありがとう
       </p>
     <% end %>
-
-    <div id="reflection-card-root"></div>
 
     <!-- highlight エリア -->
     <div class="mt-5 flex flex-wrap items-center gap-3">

@@ -16,6 +16,16 @@ class Api::WeeklyInsightsController < ApplicationController
     
   end
 
+  def fragment
+    week_key = params[:id]
+    weekly_insight = Rails.cache.read(week_key)
+    if weekly_insight.nil?
+      render json: { error: "Not Found" }, status: :not_found
+      return
+    end
+    render partial: "api/weekly_insights/weekly_insight", locals: { weekly_insight: weekly_insight }, formats: [:html]
+  end
+
   private
 
   def api_require_login

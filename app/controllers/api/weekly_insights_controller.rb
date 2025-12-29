@@ -4,8 +4,16 @@ class Api::WeeklyInsightsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def create
-    # 仮実装（まずはReactと繋がるか確認）
-    render json: { id: 1 }, status: :created
+
+    week_key = weekly_insight_week_key(current_user, at: Time.zone.now)
+    weekly_insight = Rails.cache.fetch(week_key, expires_in: 8.days) {
+      reflection = Api::WeeklyInsightReflectionService.new(current_user).call
+      html = render_to_string(partial: "api/weekly_insights/weekly_insight", locals: { weekly_insight: reflection })
+      {id: week_key, html: html}
+    }
+
+    render json: { id: weekly_insight[:id]}
+    
   end
 
   private

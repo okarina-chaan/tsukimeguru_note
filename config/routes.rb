@@ -11,8 +11,14 @@ Rails.application.routes.draw do
   end
 
   namespace :api do
-    resources :weekly_insights, only: [ :create ]
+    resources :weekly_insights, only: [ :create ] do
+      member do
+        get :fragment
+      end
+    end
   end
+
+
 
 
   get "up" => "rails/health#show", as: :rails_health_check

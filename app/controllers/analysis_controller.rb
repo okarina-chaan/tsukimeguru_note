@@ -39,7 +39,7 @@ class AnalysisController < ApplicationController
     @moon_markers = MoonApiService.fetch_moon_markers(@start_date, @end_date)
 
     # 週次振り返りデータの取得
-    week_key = weekly_insight_week_key(current_user, at: Time.zone.now)
+    week_key = weekly_insight_week_key(current_user, at: Time.zone.now - 1.week)
     @weekly_insight = Rails.cache.read(week_key)
 
     @weekly_insight_html = @weekly_insight&.[](:html)

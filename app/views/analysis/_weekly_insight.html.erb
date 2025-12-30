@@ -5,18 +5,14 @@
          border border-base-content/15 hover:border-base-content/25
          transition-colors duration-300
          shadow-md shadow-base-content/5">
+
   <div class="px-6 py-5 font-sans">
 
     <!-- ヘッダー -->
-    <div class="flex items-center gap-3 mb-4">
+    <div class="flex items-center justify-between mb-3">
       <h3 class="text-sm font-display tracking-wide text-base-content/80">
-        今週の変化
+        先週の変化
       </h3>
-      <div
-        id="reflection-card-root"
-        data-available="<%= current_user.weekly_insight_available? %>"
-        data-next-date="<%= Time.zone.now.next_week(:monday).strftime('%Y-%m-%d') %>">
-      </div>
     </div>
 
     <!-- return メッセージ -->
@@ -79,7 +75,7 @@
     <% else %>
       <div class="mt-3 flex items-start gap-3 py-3 px-4 rounded-xl bg-base-content/5">
         <p class="text-sm leading-relaxed text-base-content/45">
-          今週の記録が集まると、ここに変化が表示されます。
+          ここに振り返りが表示されます。
         </p>
       </div>
     <% end %>

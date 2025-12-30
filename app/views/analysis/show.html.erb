@@ -9,8 +9,10 @@
       <h1 class="text-4xl font-display tracking-widest">月の満ち欠けとあなたの記録</h1>
       <p class="text-base text-base-content/70">過去の記録と月のサイクルの関係を見返しましょう</p>
     </header>
-    <div id="reflection-card-root"></div>
 
+    <div class="md:col-span-1">
+      <%= render "analysis/weekly_insight_card" %>
+    </div>
     <div class="flex items-center justify-center gap-4">
       <%= link_to analysis_path(year: @prev_date.year, month: @prev_date.month), 
           class: "flex items-center justify-center w-10 h-10 rounded-full bg-accent-purple/40 hover:bg-accent-pink transition-colors" do %>
@@ -28,13 +30,6 @@
         <span class="text-accent-peach text-xl">→</span>
       <% end %>
     </div>
-
-    <%# <%= render "calendar", month: Date.today %>
-    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Insight card -->
-      <div class="md:col-span-1">
-        <%= @weekly_insight_html.html_safe if @weekly_insight_html.present? %>
-      </div>
 
       <!-- Chart card -->
       <div class="md:col-span-2 rounded-2xl bg-accent-purple/20 p-5 shadow-sm">

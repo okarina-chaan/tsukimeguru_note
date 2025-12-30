@@ -1,0 +1,40 @@
+<section class="rounded-2xl bg-gradient-to-br from-base-100/15 to-base-100/5
+                border border-base-content/15 shadow-md p-6 space-y-4">
+
+  <!-- ヘッダー -->
+  <h3 class="text-sm font-display tracking-wide text-base-content/80">
+    今週の変化
+  </h3>
+
+  <!-- 事実データ（常時表示） -->
+  <% if @weekly_summary.any? %>
+    <div class="flex gap-6 text-sm text-base-content/70">
+      <span>記録数 <%= @weekly_summary.count %> 件</span>
+      <span>体調 平均 <%= @weekly_summary.avg_condition %></span>
+      <span>気分 平均 <%= @weekly_summary.avg_mood %></span>
+    </div>
+  <% else %>
+    <p class="text-sm text-base-content/45">
+      先週の記録がまだありません
+    </p>
+  <% end %>
+
+  <!-- React ボタン -->
+  <div
+    id="reflection-card-root"
+    data-available="<%= current_user.weekly_insight_available? %>"
+    data-next-date="<%= Time.zone.now.next_week(:monday).strftime('%Y-%m-%d') %>">
+  </div>
+
+  <!-- AI分析 -->
+  <div id="weekly-insight-root">
+    <% if @weekly_insight_html.present? %>
+      <%= @weekly_insight_html.html_safe %>
+    <% else %>
+      <p class="text-sm text-base-content/45">
+        AIによる振り返りは、週に1回生成されます。
+      </p>
+    <% end %>
+  </div>
+
+</section>

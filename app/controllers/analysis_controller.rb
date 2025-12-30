@@ -38,6 +38,13 @@ class AnalysisController < ApplicationController
     # 月相データ取得
     @moon_markers = MoonApiService.fetch_moon_markers(@start_date, @end_date)
 
+    # presentersの表示について
+    @weekly_summary = WeeklySummaryPresenter.new(current_user)
+
+    week_key = weekly_insight_week_key(current_user)
+    cached = Rails.cache.read(week_key)
+    @weekly_insight_html = cached&.dig(:html)
+
     # 週次振り返りデータの取得
     week_key = weekly_insight_week_key(current_user, at: Time.zone.now - 1.week)
     @weekly_insight = Rails.cache.read(week_key)

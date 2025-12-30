@@ -1,84 +1,11 @@
-<section
-  class="mt-6 rounded-2xl
-         bg-gradient-to-br from-base-100/15 to-base-100/5
-         backdrop-blur-sm
-         border border-base-content/15 hover:border-base-content/25
-         transition-colors duration-300
-         shadow-md shadow-base-content/5">
+<% if weekly_insight[:highlights]&.any? { |h| h[:type] == :return } %>
+  <p class="text-lg font-display tracking-widest font-semibold text-primary">
+    また月めぐるノートを開いてくれてありがとう
+  </p>
+<% end %>
 
-  <div class="px-6 py-5 font-sans">
-
-    <!-- ヘッダー -->
-    <div class="flex items-center justify-between mb-3">
-      <h3 class="text-sm font-display tracking-wide text-base-content/80">
-        先週の変化
-      </h3>
-    </div>
-
-    <!-- return メッセージ -->
-    <% if weekly_insight[:highlights].any? { |h| h[:type] == :return } %>
-      <p class="mt-4 mb-3 text-lg font-semibold text-primary font-display leading-snug">
-        また月めぐるノートを開いてくれてありがとう
-      </p>
-    <% end %>
-
-    <!-- highlight エリア -->
-    <div class="mt-5 flex flex-wrap items-center gap-3">
-
-      <% weekly_insight[:highlights].each do |highlight| %>
-        <% case highlight[:type] %>
-        <% when :count %>
-          <!-- 記録数：事実だけ伝える -->
-          <span
-            class="inline-flex items-center rounded-full
-                  border border-base-content/15
-                  px-4 py-[0.3rem]
-                  text-xs leading-snug
-                  text-base-content/70">
-            記録数 <%= highlight[:value] %>件
-          </span>
-
-        <% when :trend %>
-          <span
-            class="inline-flex items-center rounded-full
-                  border border-base-content/15
-                  px-4 py-[0.3rem]
-                  text-xs text-base-content/60">
-            <%=
-              case highlight[:value]
-              when :positive then "上向き"
-              when :negative then "少しゆっくり"
-              else "おだやか"
-              end
-            %>
-          </span>
-
-        <% end %>
-      <% end %>
-
-    </div>
-
-
-    <!-- 週次インサイト -->
-    <% if weekly_insight.present? %>
-      <div
-        class="relative mt-2 pl-5 py-3
-               before:content-['']
-               before:absolute before:left-0 before:top-0 before:bottom-0
-               before:w-1 before:rounded-full
-               before:bg-gradient-to-b before:from-primary/60 before:to-primary/20">
-
-        <p class="text-sm font-normal leading-relaxed text-base-content/80 whitespace-pre-line">
-          <%= weekly_insight[:html] %>
-        </p>
-      </div>
-    <% else %>
-      <div class="mt-3 flex items-start gap-3 py-3 px-4 rounded-xl bg-base-content/5">
-        <p class="text-sm leading-relaxed text-base-content/45">
-          ここに振り返りが表示されます。
-        </p>
-      </div>
-    <% end %>
-
-  </div>
-</section>
+<div class="mt-3 space-y-2">
+  <p class="text-sm whitespace-pre-line">
+    <%= weekly_insight[:summary] %>
+  </p>
+</div>

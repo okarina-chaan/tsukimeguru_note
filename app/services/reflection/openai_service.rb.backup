@@ -1,5 +1,5 @@
 module Reflection
-  class OpenaiService < Reflection::BaseService
+  class OpenAiService < Reflection::BaseService
     API_URL = "https://api.openai.com/v1/chat/completions".freeze
 
     def initialize(daily_notes:)
@@ -76,7 +76,7 @@ module Reflection
       - 「良い」「悪い」などの価値判断を含めないでください
       - 書き手が自分自身で答えを見つけられるような、オープンな問いを投げかけてください
       - 質問は一つだけ、JSON形式で返してください
-PROMPT
+      PROMPT
     end
 
     def parse_response(response)

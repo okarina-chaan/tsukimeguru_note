@@ -13,7 +13,7 @@ class Api::WeeklyInsightsController < ApplicationController
       return
     end
 
-    reflection = Reflection::MockService
+    reflection = Reflection::OpenaiService
     .new(daily_notes: fetch_weekly_notes(current_user))
     .call
 

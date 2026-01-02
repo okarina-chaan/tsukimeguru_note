@@ -1,44 +1,107 @@
 module Reflection
-  class OpenAiService
+  class OpenAiService < BaseService
+    API_URL = 'https://api.openai.com/v1/chat/completions'.freeze
+    
     def initialize(daily_notes:)
       @daily_notes = daily_notes
-    end
-
-    def new
+      @api_key = ENV['OPENAI_API_KEY']
+      @client = build_client
     end
 
     def call
-      prompt = <<-PROMPT
+      raise StandardError, 'OpenAI API key not found' if @api_key.blank?
+      
+      formatted_notes = format_daily_notes(@daily_notes)
+      return { error: '日記データがありません' } if formatted_notes.empty?
+      
+      request_body = build_request_body(formatted_notes)
+      
+      begin
+        response = @client.post(API_URL, request_body.to_json, headers)
+        parse_response(response)
+      rescue => e
+        handle_error(e)
+      end
+    end
+
+    private
+
+    def build_client
+      Faraday.new do |conn|
+        conn.request :json
+        conn.response :json
+        conn.adapter Faraday.default_adapter
+      end
+    end
+
+    def headers
+      {
+        'Authorization' => "Bearer #{@api_key}",
+        'Content-Type' => 'application/json'
+      }
+    end
+
+    def build_request_body(formatted_notes)
+      prompt = build_prompt(formatted_notes)
+      
+      {
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        max_tokens: 500,
+        temperature: 0.7
+      }
+    end
+
+    def build_prompt(formatted_notes)
+      <<-PROMPT
       あなたはユーザーが先週1週間で書いた日記を読んで、書き手自身が深く振り返るための「問い」を投げかける役割です。
       評価や助言は一切せず、書き手が自分で考えを深められるような質問を1つ提示してください。
 
       # 日記の内容
-       これらは事実データです。解釈することは禁止します。
-      - ユーザーはここで今日行動して良かった・成功したと思えたことを書いています
-      #{daily_note.good_things}
-      - ユーザーはここで明日やりたいことを書いています
-      #{daily_note.try_tomorrow}
-      - ユーザーはここで今日なにを行動したのかを書いています
-      #{daily_note.did_today}
-      - ユーザーはここで、うまく行かなかったことを書いています
-      #{daily_note.challenge}
-      - ユーザーはここで、上記で書ききれなかった内容について書いています
-      #{daily_note.memo}
+      これらは事実データです。解釈することは禁止します。
+      #{formatted_notes.join("\n\n")}
 
       # 出力
       {
-        question: “....?”
+        "question": "...?"
       }
 
       # 重要な制約
-       - 日記の内容を評価したり、アドバイスしたりしないでください
-       - 「良い」「悪い」などの価値判断を含めないでください
-       - 書き手が自分自身で答えを見つけられるような、オープンな問いを投げかけてください
-       - 質問は一つだけ、JSON形式で返してください
+      - 日記の内容を評価したり、アドバイスしたりしないでください
+      - 「良い」「悪い」などの価値判断を含めないでください
+      - 書き手が自分自身で答えを見つけられるような、オープンな問いを投げかけてください
+      - 質問は一つだけ、JSON形式で返してください
       PROMPT
     end
 
-    private
+    def parse_response(response)
+      if response.status == 200 && response.body['choices']&.any?
+        content = response.body['choices'][0]['message']['content']
+        JSON.parse(content)
+      else
+        { error: 'OpenAI APIからの応答が不正です' }
+      end
+    rescue JSON::ParserError
+      { error: 'レスポンスの解析に失敗しました' }
+    end
+
+    def handle_error(error)
+      case error
+      when Faraday::TimeoutError
+        { error: 'API呼び出しがタイムアウトしました' }
+      when Faraday::ConnectionFailed
+        { error: 'OpenAI APIへの接続に失敗しました' }
+      when Faraday::UnauthorizedError
+        { error: 'OpenAI API認証に失敗しました' }
+      else
+        { error: "予期しないエラーが発生しました: #{error.message}" }
+      end
+    end
 
     def format_daily_notes(daily_notes)
       result = []

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PuffLoader } from "react-spinners";
+import axios from "axios";
 
 function ReflectionCard() {
   const [status, setStatus] = useState("idle");
@@ -22,13 +23,12 @@ function ReflectionCard() {
   const fetchReflection = async () => {
     setStatus("loading");
     try {
-      const res = await fetch("/api/weekly_insights", { method: "POST" });
-      const { id } = await res.json();
+      const res = await axios.post("/api/weekly_insights");
+      const { id } = res.data;
 
-      const fragment = await fetch(`/api/weekly_insights/${id}/fragment`);
-      if (!fragment.ok) throw new Error("fragment fetch failed");
-
-      const html = await fragment.text();
+      const fragment = await axios.get(`/api/weekly_insights/${id}/fragment`);
+      
+      const html = fragment.data;
       const target = document.getElementById("weekly-insight-root");
       if (target) target.innerHTML = html;
 

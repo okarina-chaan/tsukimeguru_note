@@ -1,7 +1,5 @@
 class Api::WeeklyInsightsController < ApplicationController
   before_action :api_require_login
-  # X-CSRF-Tokenを　Reactで実装したら外す
-  skip_before_action :verify_authenticity_token
 
   def create
     week_key = weekly_insight_week_key(current_user)

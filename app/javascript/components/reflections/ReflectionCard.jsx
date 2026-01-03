@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { PuffLoader } from "react-spinners";
-import axios from "axios";
 
 function ReflectionCard() {
   const [status, setStatus] = useState("idle");
@@ -22,22 +21,56 @@ function ReflectionCard() {
 
   const fetchReflection = async () => {
     setStatus("loading");
+    
+    // 前の内容をクリア
+    const target = document.getElementById("weekly-insight-root");
+    if (target) {
+      target.innerHTML = '';
+    }
+    
     try {
-      const res = await axios.post("/api/weekly_insights");
-      const { id } = res.data;
+      // CSRFトークンを手動で取得
+      const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+      const headers = {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': token
+      };
 
-      const fragment = await axios.get(`/api/weekly_insights/${id}/fragment`);
+      const res = await fetch("/api/weekly_insights", {
+        method: "POST",
+        headers: headers
+      });
       
-      const html = fragment.data;
-      const target = document.getElementById("weekly-insight-root");
-      if (target) target.innerHTML = html;
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("API error response:", errorText);
+        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      }
+      
+      const { id } = await res.json();
+
+      const fragment = await fetch(`/api/weekly_insights/${id}/fragment`, {
+        headers: headers
+      });
+      
+      if (!fragment.ok) {
+        const errorText = await fragment.text();
+        console.error("Fragment error response:", errorText);
+        throw new Error("fragment fetch failed");
+      }
+
+      const html = await fragment.text();
+      
+      if (target) {
+        target.innerHTML = html;
+      }
 
       setAvailable(false);
       setCreated(true);
       setStatus("done");
     } catch (e) {
-      console.error(e);
-      setStatus("idle");
+      console.error("振り返り生成エラー:", e);
+      setStatus("error");
     }
   };
 
@@ -76,13 +109,29 @@ function ReflectionCard() {
       )}
 
       {status === "loading" && (
-        <div className="flex justify-center py-4">
+        <div className="flex flex-col items-center gap-3 py-4">
           <PuffLoader
           color="#E2E8F0" 
           loading size={45} 
           aria-label="Loading Spinner" 
           data-testid="loader"
           />
+          <p className="text-sm text-base-content/60">
+            振り返りを生成中です...
+          </p>
+        </div>
+      )}
+
+      {status === "error" && (
+        <div className="flex flex-col gap-2 items-center py-4">
+          <p className="text-sm text-error">
+            エラーが発生しました
+          </p>
+          <button
+            onClick={() => setStatus("idle")}
+            className="btn btn-sm btn-outline rounded-full px-4">
+            再試行
+          </button>
         </div>
       )}
     </div>

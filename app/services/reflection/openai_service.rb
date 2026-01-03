@@ -1,5 +1,5 @@
 module Reflection
-  class OpenAiService < BaseService
+  class OpenaiService < BaseService
     API_URL = "https://api.openai.com/v1/chat/completions".freeze
 
     def initialize(daily_notes:)

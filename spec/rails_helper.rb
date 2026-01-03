@@ -1,4 +1,5 @@
 require "database_cleaner-active_record"
+require "stub_env"
 
 Object.send(:remove_const, :Line) if Object.const_defined?(:Line)
 

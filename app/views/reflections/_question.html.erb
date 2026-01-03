@@ -2,6 +2,11 @@
   <p class="text-sm font-medium text-base-content/80 mb-2">
     ちょっと立ち止まってみる
   </p>
+  <% if summary.present? %>
+    <div class="text-sm text-base-content whitespace-pre-line mb-3 pb-3 border-b border-base-300">
+      <%= summary %>
+    </div>
+  <% end %>
   <p class="text-sm text-base-content whitespace-pre-line">
     <%= question %>
   </p>

@@ -1,5 +1,5 @@
 module Reflection
-  class OpenaiService < Reflection::BaseService
+  class OpenAiService < BaseService
     API_URL = "https://api.openai.com/v1/chat/completions".freeze
 
     def initialize(daily_notes:)
@@ -9,27 +9,17 @@ module Reflection
     end
 
     def call
-      Rails.logger.info "OpenAI API call started"
       raise StandardError, "OpenAI API key not found" if @api_key.blank?
 
       formatted_notes = format_daily_notes(@daily_notes)
-      Rails.logger.info "Formatted notes count: #{formatted_notes.length}"
       return { error: "日記データがありません" } if formatted_notes.empty?
 
       request_body = build_request_body(formatted_notes)
-      Rails.logger.info "Request body: #{request_body.inspect}"
 
       begin
         response = @client.post(API_URL, request_body.to_json, headers)
-        Rails.logger.info "OpenAI response status: #{response.status}"
-        Rails.logger.info "OpenAI response body: #{response.body.inspect}"
-        
-        result = parse_response(response)
-        Rails.logger.info "Parsed result: #{result.inspect}"
-        result
+        parse_response(response)
       rescue => e
-        Rails.logger.error "OpenAI API error: #{e.class}: #{e.message}"
-        Rails.logger.error e.backtrace.join("\n")
         handle_error(e)
       end
     end
@@ -59,6 +49,7 @@ module Reflection
         messages: [
           {
             role: "user",
+
             content: prompt
           }
         ],
@@ -70,7 +61,8 @@ module Reflection
     def build_prompt(formatted_notes)
       <<-PROMPT
       あなたはユーザーが先週1週間で書いた日記を読んで、書き手自身が深く振り返るための「問い」を投げかける役割です。
-      評価や助言は一切せず、書き手が自分で考えを深められるような質問を1つ提示してください。
+      まずは先週の日記の要約を事実データから客観的に返してください。
+      次に、評価や助言は一切せず、書き手が自分で考えを深められるような質問を1つ提示してください。
 
       # 日記の内容
       これらは事実データです。解釈することは禁止します。
@@ -78,6 +70,7 @@ module Reflection
 
       # 出力
       {
+        "summary": "...",
         "question": "...?"
       }
 
@@ -86,7 +79,8 @@ module Reflection
       - 「良い」「悪い」などの価値判断を含めないでください
       - 書き手が自分自身で答えを見つけられるような、オープンな問いを投げかけてください
       - 質問は一つだけ、JSON形式で返してください
-PROMPT
+      - 要約と質問はそれぞれ一つの文章で返してください
+      PROMPT
     end
 
     def parse_response(response)

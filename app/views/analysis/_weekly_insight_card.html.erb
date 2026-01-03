@@ -29,7 +29,7 @@
   <!-- AI分析 -->
   <div id="weekly-insight-root">
     <% if @question.present? %>
-      <%= render "reflections/question", question: @question %>
+      <%= render "reflections/question", question: @question, summary: @summary %>
     <% else %>
       <p class="text-sm text-base-content/45">
         AIによる振り返りは、週に1回生成されます。

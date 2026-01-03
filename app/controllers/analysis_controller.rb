@@ -48,6 +48,7 @@ class AnalysisController < ApplicationController
     # JSONをHTMLデータに変換（OpenAI結果の処理）
     if weekly_insight_result.present?
       @question = weekly_insight_result[:question] || weekly_insight_result["question"]
+      @summary = weekly_insight_result[:summary] || weekly_insight_result["summary"]
     end
   end
 end

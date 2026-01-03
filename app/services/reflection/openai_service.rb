@@ -9,17 +9,27 @@ module Reflection
     end
 
     def call
+      Rails.logger.info "OpenAI API call started"
       raise StandardError, "OpenAI API key not found" if @api_key.blank?
 
       formatted_notes = format_daily_notes(@daily_notes)
+      Rails.logger.info "Formatted notes count: #{formatted_notes.length}"
       return { error: "日記データがありません" } if formatted_notes.empty?
 
       request_body = build_request_body(formatted_notes)
+      Rails.logger.info "Request body: #{request_body.inspect}"
 
       begin
         response = @client.post(API_URL, request_body.to_json, headers)
-        parse_response(response)
+        Rails.logger.info "OpenAI response status: #{response.status}"
+        Rails.logger.info "OpenAI response body: #{response.body.inspect}"
+        
+        result = parse_response(response)
+        Rails.logger.info "Parsed result: #{result.inspect}"
+        result
       rescue => e
+        Rails.logger.error "OpenAI API error: #{e.class}: #{e.message}"
+        Rails.logger.error e.backtrace.join("\n")
         handle_error(e)
       end
     end

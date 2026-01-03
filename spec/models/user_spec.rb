@@ -24,21 +24,53 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
   end
-  describe 'weekly_insight_available?' do
-    context '正常系' do
-      example 'weekly_insight_generated_atがnilの場合はtrue' do
-        user = User.new(weekly_insight_generated_at: nil)
-        expect(user.weekly_insight_available?).to eq(true)
-      end
-      example 'weekly_insight_generated_atが7日より前の場合はtrue' do
-        user = User.new(weekly_insight_generated_at: 8.days.ago)
-        expect(user.weekly_insight_available?).to eq(true)
+
+  describe '#weekly_insight_available?' do
+    let(:user) { create(:user) }
+    let(:now) { Time.zone.parse('2026-01-10 12:00:00') }  # 金曜日
+
+    before do
+      Rails.cache.clear  # 各テストの前にキャッシュをクリア
+    end
+
+    context 'weekly_insight_generated_atがnilの場合' do
+      it 'trueを返す' do
+        user.update(weekly_insight_generated_at: nil)
+
+        expect(user.weekly_insight_available?(now: now)).to eq(true)
       end
     end
-    context '異常系' do
-      example 'weekly_insight_generated_atが6日以内の場合はfalse' do
-        user = User.new(weekly_insight_generated_at: 6.days.ago)
-        expect(user.weekly_insight_available?).to eq(false)
+
+    context 'タイムスタンプが7日以上前の場合' do
+      context 'キャッシュが存在しない場合' do
+        it 'trueを返す' do
+          user.update(weekly_insight_generated_at: now - 8.days)
+
+          # キャッシュは存在しない（Rails.cache.clearしたので）
+
+          expect(user.weekly_insight_available?(now: now)).to eq(true)
+        end
+      end
+
+      context 'キャッシュが存在する場合' do
+        it 'falseを返す' do
+          user.update(weekly_insight_generated_at: now - 8.days)
+
+          # キャッシュをセット
+          week_start = (now - 1.week).beginning_of_week.to_date.to_s
+          week_key = "weekly_insight_user_#{user.id}_week_#{week_start}"
+          Rails.cache.write(week_key, { question: "テスト質問" })
+
+          expect(user.weekly_insight_available?(now: now)).to eq(false)
+        end
+      end
+    end
+
+    context 'タイムスタンプが7日未満の場合' do
+      it 'キャッシュに関係なくfalseを返す' do
+        user.update(weekly_insight_generated_at: now - 6.days)
+
+        expect(user.weekly_insight_available?(now: now)).to eq(false)
       end
     end
   end

@@ -21,12 +21,19 @@ class Api::WeeklyInsightsController < ApplicationController
       expires_in: 8.days
     )
 
+    # 振り返り生成成功時にユーザーの生成日時を更新
+    if reflection["question"].present?
+      current_user.update!(weekly_insight_generated_at: Time.current)
+    end
+
     render json: { id: week_key }, status: :created
   end
 
   def fragment
     week_key = params[:id]
     weekly_insight = Rails.cache.read(week_key)
+    Rails.logger.info "Fragment Key: #{week_key}"
+    Rails.logger.info "Fragment Cache Data: #{weekly_insight.inspect}"
     if weekly_insight.nil?
       render json: { error: "Not Found" }, status: :not_found
       return

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PuffLoader } from "react-spinners";
-import axios from "../../../utils/axios";
+import axios from "../../utils/axios";
 
 function ReflectionCard() {
     const [status, setStatus] = useState("idle");
@@ -27,12 +27,12 @@ function ReflectionCard() {
 
             const fragment = await axios.get(`/api/weekly_insights/${id}/fragment`);
             const html = fragment.data;
-            
+
             const target = document.getElementById("weekly-insight-root");
             if (target) target.innerHTML = html;
 
             setAvailable(false);
-            setStatus("done");
+            setStatus("idle");
         } catch (e) {
             console.error(e);
             setStatus("error");

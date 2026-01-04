@@ -37,9 +37,9 @@ class Api::WeeklyInsightsController < ApplicationController
   private
 
   def api_require_login
-    unless current_user
-      render json: { error: "Unauthorized" }, status: :unauthorized
-    end
+    return if current_user
+
+    render json: { error: "Unauthorized" }, status: :unauthorized
   end
 
   def fetch_weekly_notes(user)

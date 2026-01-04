@@ -10,11 +10,11 @@ daily_dates.each do |d|
     date: d,
     condition_score: rand(1..5),
     mood_score: rand(1..5),
-    good_things: Faker::Lorem.sentences(number: 2).join(" "),
-    try_tomorrow: Faker::Lorem.sentence(word_count: 10),
-    did_today: Faker::Lorem.sentence(word_count: 10),
-    challenge: Faker::Lorem.sentence(word_count: 10),
-    memo: Faker::Lorem.paragraph(sentence_count: 3)
+    good_things: Faker::Lorem.paragraph,
+    try_tomorrow: Faker::Lorem.paragraph,
+    did_today: Faker::Lorem.paragraph,
+    challenge: Faker::Lorem.paragraph,
+    memo: Faker::Lorem.paragraph
   )
 end
 

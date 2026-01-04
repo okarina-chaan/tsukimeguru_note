@@ -13,3 +13,5 @@ setCSRFToken();
 
 // Turboナビゲーション後にも再設定
 document.addEventListener('turbo:load', setCSRFToken);
+
+export default axios;

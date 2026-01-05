@@ -2,7 +2,9 @@ require "rails_helper"
 
 RSpec.describe "Api::WeeklyInsightsController", type: :request do
   let(:user) { create(:user) }
-  let(:reflection_result) { { "question" => "早起きについてどう感じますか？", "summary" => "早起きすることで学習時間を確保しようとしていましたね" } }
+  let(:reflection_result) { { "question" => "早起きについてどう感じますか？",
+    "summary" => "早起きすることで学習時間を確保しようとしていましたね" }
+     }
 
 
   describe "POST /api/weekly_insights" do

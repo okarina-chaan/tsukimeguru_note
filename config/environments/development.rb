@@ -1,7 +1,7 @@
 require "active_support/core_ext/integer/time"
-if Rails.env.development?
-  BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
-end
+# if Rails.env.development?
+#   BetterErrors::Middleware.allow_ip! "0.0.0.0/0"
+# end
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.

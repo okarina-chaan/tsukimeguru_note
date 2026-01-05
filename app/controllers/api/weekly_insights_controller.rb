@@ -32,8 +32,6 @@ class Api::WeeklyInsightsController < ApplicationController
   def fragment
     week_key = params[:id]
     weekly_insight = Rails.cache.read(week_key)
-    Rails.logger.info "Fragment Key: #{week_key}"
-    Rails.logger.info "Fragment Cache Data: #{weekly_insight.inspect}"
     if weekly_insight.nil?
       render json: { error: "Not Found" }, status: :not_found
       return

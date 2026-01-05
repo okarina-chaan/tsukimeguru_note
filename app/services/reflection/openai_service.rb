@@ -86,16 +86,11 @@ module Reflection
     def parse_response(response)
       if response.status == 200 && response.body["choices"]&.any?
         content = response.body["choices"][0]["message"]["content"]
-        Rails.logger.info "OpenAI Content: #{content.inspect}"
-        parsed = JSON.parse(content)
-        Rails.logger.info "Parsed Result: #{parsed.inspect}"
-        parsed
+        JSON.parse(content)
       else
-        Rails.logger.error "Invalid OpenAI Response: #{response.body.inspect}"
         { error: "OpenAI APIからの応答が不正です" }
       end
-    rescue JSON::ParserError => e
-      Rails.logger.error "JSON Parse Error: #{e.message}, Content: #{content.inspect}"
+    rescue JSON::ParserError
       { error: "レスポンスの解析に失敗しました" }
     end
 

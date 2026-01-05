@@ -36,7 +36,7 @@ module TsukimeguruNote
     config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}").to_s]
 
     # CSRFトークンの設定
-    config.action_controller.default_protect_from_forgery = true
+    config.action_controller.default_protect_from_forgery = !Rails.env.test?
 
     # Configuration for the application, engines, and railties goes here.
     #

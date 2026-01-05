@@ -44,7 +44,7 @@ class AnalysisController < ApplicationController
     # 週次振り返りデータの取得
     week_key = weekly_insight_week_key(current_user, at: Time.zone.now - 1.week)
     weekly_insight_result = Rails.cache.read(week_key)
-    
+
     # JSONをHTMLデータに変換（OpenAI結果の処理）
     if weekly_insight_result.present?
       @question = weekly_insight_result[:question] || weekly_insight_result["question"]

@@ -3,7 +3,7 @@
 
   <!-- ヘッダー -->
   <h3 class="text-sm font-display tracking-wide text-base-content/80">
-    今週の変化
+    先週の振り返り
   </h3>
 
   <!-- 事実データ（常時表示） -->
@@ -28,8 +28,8 @@
 
   <!-- AI分析 -->
   <div id="weekly-insight-root">
-    <% if @weekly_insight_html.present? %>
-      <%= @weekly_insight_html.html_safe %>
+    <% if @question.present? %>
+      <%= render "reflections/question", question: @question, summary: @summary %>
     <% else %>
       <p class="text-sm text-base-content/45">
         AIによる振り返りは、週に1回生成されます。

@@ -76,15 +76,17 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "capybara"
-  gem "selenium-webdriver"
+  gem "selenium-webdriver", "= 4.38.0"
 
   gem "pry-rails"
+
+  gem "stub_env", "~> 1.0", ">= 1.0.4"
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "better_errors"
-  gem "binding_of_caller"
+  # gem "better_errors"
+  # gem "binding_of_caller"
 end
 
 group :test do

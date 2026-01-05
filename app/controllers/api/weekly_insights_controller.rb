@@ -1,7 +1,5 @@
 class Api::WeeklyInsightsController < ApplicationController
   before_action :api_require_login
-  # X-CSRF-Tokenを　Reactで実装したら外す
-  skip_before_action :verify_authenticity_token
 
   def create
     week_key = weekly_insight_week_key(current_user)
@@ -13,7 +11,7 @@ class Api::WeeklyInsightsController < ApplicationController
       return
     end
 
-    reflection = Reflection::MockService
+    reflection = Reflection::OpenaiService
     .new(daily_notes: fetch_weekly_notes(current_user))
     .call
 
@@ -22,6 +20,11 @@ class Api::WeeklyInsightsController < ApplicationController
       reflection,
       expires_in: 8.days
     )
+
+    # 振り返り生成成功時にユーザーの生成日時を更新
+    if reflection["question"].present?
+      current_user.update!(weekly_insight_generated_at: Time.current)
+    end
 
     render json: { id: week_key }, status: :created
   end
@@ -39,9 +42,9 @@ class Api::WeeklyInsightsController < ApplicationController
   private
 
   def api_require_login
-    unless current_user
-      render json: { error: "Unauthorized" }, status: :unauthorized
-    end
+    return if current_user
+
+    render json: { error: "Unauthorized" }, status: :unauthorized
   end
 
   def fetch_weekly_notes(user)

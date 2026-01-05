@@ -41,14 +41,14 @@ class AnalysisController < ApplicationController
     # presentersの表示について
     @weekly_summary = WeeklySummaryPresenter.new(current_user)
 
-    week_key = weekly_insight_week_key(current_user)
-    cached = Rails.cache.read(week_key)
-    @weekly_insight_html = cached&.dig(:html)
-
     # 週次振り返りデータの取得
     week_key = weekly_insight_week_key(current_user, at: Time.zone.now - 1.week)
-    @weekly_insight = Rails.cache.read(week_key)
+    weekly_insight_result = Rails.cache.read(week_key)
 
-    @weekly_insight_html = @weekly_insight&.[](:html)
+    # JSONをHTMLデータに変換（OpenAI結果の処理）
+    if weekly_insight_result.present?
+      @question = weekly_insight_result[:question] || weekly_insight_result["question"]
+      @summary = weekly_insight_result[:summary] || weekly_insight_result["summary"]
+    end
   end
 end

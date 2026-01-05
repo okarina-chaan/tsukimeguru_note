@@ -11,6 +11,9 @@ class User < ApplicationRecord
   def weekly_insight_available?(now: Time.zone.now)
     return true if weekly_insight_generated_at.nil?
 
-    (now - weekly_insight_generated_at) > 7.days
+    # 前回生成した週と今週を比較して、異なる週であれば振り返り機能が使える
+    last_generated_week = weekly_insight_generated_at.beginning_of_week
+    current_week = now.beginning_of_week
+    last_generated_week < current_week
   end
 end

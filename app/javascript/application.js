@@ -1,5 +1,6 @@
 import "@hotwired/turbo-rails";
 import "./controllers";
+import "./utils/axios";
 
 import { mountReflection, unmountReflection } from "./components/reflections/mount_reflection_card";
 

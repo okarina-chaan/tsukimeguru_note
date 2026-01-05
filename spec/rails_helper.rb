@@ -1,8 +1,12 @@
+ENV['RAILS_ENV'] ||= 'test'
+
 require "database_cleaner-active_record"
+require "stub_env"
 
 Object.send(:remove_const, :Line) if Object.const_defined?(:Line)
 
-ENV['RAILS_ENV'] ||= 'test'
+
+
 require_relative '../config/environment'
 
 abort("The Rails environment is running in production mode!") if Rails.env.production?

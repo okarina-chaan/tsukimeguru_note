@@ -24,21 +24,49 @@ RSpec.describe User, type: :model do
       expect(user).to be_valid
     end
   end
-  describe 'weekly_insight_available?' do
-    context '正常系' do
-      example 'weekly_insight_generated_atがnilの場合はtrue' do
-        user = User.new(weekly_insight_generated_at: nil)
-        expect(user.weekly_insight_available?).to eq(true)
-      end
-      example 'weekly_insight_generated_atが7日より前の場合はtrue' do
-        user = User.new(weekly_insight_generated_at: 8.days.ago)
+
+
+  describe '#weekly_insight_available?' do
+    let(:user) { create(:user) }
+
+    context 'weekly_insight_generated_atがnilの場合' do
+      it 'trueを返す' do
+        user.update(weekly_insight_generated_at: nil)
+
         expect(user.weekly_insight_available?).to eq(true)
       end
     end
-    context '異常系' do
-      example 'weekly_insight_generated_atが6日以内の場合はfalse' do
-        user = User.new(weekly_insight_generated_at: 6.days.ago)
-        expect(user.weekly_insight_available?).to eq(false)
+
+    context '前回生成が今週の場合' do
+      it 'falseを返す' do
+        # 今週の月曜日に生成したとする
+        now = Time.zone.parse('2026-01-10 12:00:00')  # 金曜日
+        user.update(weekly_insight_generated_at: now.beginning_of_week)  # 月曜日
+
+        expect(user.weekly_insight_available?(now: now)).to eq(false)
+      end
+
+      it '今週の別の曜日に生成した場合もfalseを返す' do
+        now = Time.zone.parse('2026-01-10 12:00:00')  # 金曜日
+        user.update(weekly_insight_generated_at: now - 2.days)  # 水曜日
+
+        expect(user.weekly_insight_available?(now: now)).to eq(false)
+      end
+    end
+
+    context '前回生成が先週以前の場合' do
+      it 'trueを返す' do
+        now = Time.zone.parse('2026-01-10 12:00:00')  # 今週金曜日
+        user.update(weekly_insight_generated_at: now - 1.week)  # 先週金曜日
+
+        expect(user.weekly_insight_available?(now: now)).to eq(true)
+      end
+
+      it '2週間前でもtrueを返す' do
+        now = Time.zone.parse('2026-01-10 12:00:00')
+        user.update(weekly_insight_generated_at: now - 2.weeks)
+
+        expect(user.weekly_insight_available?(now: now)).to eq(true)
       end
     end
   end

@@ -61,6 +61,8 @@ gem "high_voltage"
 # ページネーション
 gem "kaminari", git: "https://github.com/kaminari/kaminari"
 
+# 月相を一括で保存することに使う
+gem 'activerecord-import'
 
 group :development, :production do
   # Lineログイン

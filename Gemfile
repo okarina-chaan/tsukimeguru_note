@@ -97,6 +97,10 @@ group :development, :test do
 
   # stubを効率的に（openAI APIの挙動確認で入れた）
   gem "stub_env", "~> 1.0", ">= 1.0.4"
+
+  # 冗長なクエリを検索
+  gem 'bullet'
+
 end
 
 group :development do
@@ -114,9 +118,6 @@ group :development do
   # 計測結果をグラフ表示させる
   gem 'stackprof'
   gem 'flamegraph'
-
-  # 冗長なクエリを検索
-  gem 'bullet'
 
 end
 

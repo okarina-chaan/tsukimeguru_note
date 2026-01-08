@@ -2,13 +2,10 @@ class CalendarController < ApplicationController
   before_action :require_login
 
   def show
-    year = (params[:year] || Date.today.year).to_i
-    month = (params[:month] || Date.today.month).to_i
+    @year = params[:year]&.to_i || Date.today.year
+    @month = params[:month]&.to_i || Date.today.month
 
-    @year = year
-    @month = month
-
-    start_date = Date.new(year, month, 1)
+    start_date = Date.new(@year, @month, 1)
     end_date = start_date.end_of_month
 
     days = (start_date..end_date).map do |date|

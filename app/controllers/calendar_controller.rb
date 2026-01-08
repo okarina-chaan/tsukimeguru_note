@@ -1,35 +1,37 @@
+# app/controllers/calendar_controller.rb
 class CalendarController < ApplicationController
   before_action :require_login
 
   def show
-    year = (params[:year] || Date.today.year).to_i
-    month = (params[:month] || Date.today.month).to_i
+    @year = params[:year]&.to_i || Date.today.year
+    @month = params[:month]&.to_i || Date.today.month
 
-    @year = year
-    @month = month
-
-    start_date = Date.new(year, month, 1)
+    start_date = Date.new(@year, @month, 1)
     end_date = start_date.end_of_month
 
+    moon_phases = MoonPhaseRepository.fetch_month(@year, @month)
+    moon_phases_by_date = moon_phases.index_by(&:date)
+
+    # 月の4大イベント日を取得（配列になる）
+    monthly_events = MoonApiService.fetch_monthly_events_with_range(@year, @month)
+
     days = (start_date..end_date).map do |date|
-      moon_data = MoonApiService.fetch(date)
-      Rails.logger.info "PHASE: #{moon_data&.dig(:moon_phase_name)}"
-      angle = moon_data&.dig(:moon_phase_angle).to_f
+      moon_phase = moon_phases_by_date[date]
 
       {
         date: date,
-        moon_phase:  moon_data&.dig(:moon_phase_name),
-        emoji:       moon_data&.dig(:moon_phase_emoji),
-        angle:       angle,
-        new_moon: moon_data&.dig(:event) == :new_moon,
-        full_moon: moon_data&.dig(:event) == :full_moon,
-        first_quarter: moon_data&.dig(:event) == :first_quarter_moon,
-        last_quarter: moon_data&.dig(:event) == :last_quarter_moon
+        moon_phase: moon_phase&.display_name,
+        emoji: moon_phase&.display_emoji,
+        angle: moon_phase&.angle,
+        new_moon: monthly_events[:new_moon].include?(date),
+        full_moon: monthly_events[:full_moon].include?(date),
+        first_quarter: monthly_events[:first_quarter_moon].include?(date),
+        last_quarter: monthly_events[:last_quarter_moon].include?(date),
+        creatable_moon_note: moon_phase&.creatable_for_moon_note?
       }
     end
 
     first_wday = (start_date.wday - 1) % 7
-
     blank_days = Array.new(first_wday) { nil }
     all_days = blank_days + days
 

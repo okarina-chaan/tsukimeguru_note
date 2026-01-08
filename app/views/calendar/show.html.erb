@@ -57,21 +57,19 @@
               <div class="aspect-square"></div>
             <% else %>
               <!-- 日付セル -->
-              <div class="aspect-square relative">
-                <div class="absolute inset-0 rounded-lg transition-all duration-200 hover:shadow-lg
-                            <%= 'bg-primary/10 ring-2 ring-primary' if day[:date] == Date.today %>
-                            <%= 'bg-info/5' if wday == 5 %>
-                            <%= 'bg-error/5' if wday == 6 %>
-                            <%= 'bg-warning/20 ring-2 ring-warning' if day[:new_moon] %>
-                            <%= 'bg-secondary/20 ring-2 ring-secondary' if day[:full_moon] %>
-                            hover:bg-base-200">
+              <div class="relative aspect-square">
+                <div class="absolute inset-0 rounded-lg transition-all duration-200 hover:shadow-lg hover:bg-base-200
+                           <%= 'bg-info/5' if wday == 5 %>
+                           <%= 'bg-error/5' if wday == 6 %>"
+                     style="<%= 'background-color: #7eb0f220; border: 2px solid #7EB0F2;' if day[:date] == Date.today %>
+                            <%= 'border: 2px solid #F1ACF2;' if day[:creatable_moon_note] && day[:date] != Date.today %>">
                   
                   <div class="flex flex-col items-center justify-center h-full p-1 sm:p-2">
                     <!-- 日付 -->
                     <div class="text-xs sm:text-sm font-semibold mb-1
-                                <%= 'text-info' if wday == 5 %>
-                                <%= 'text-error' if wday == 6 %>
-                                <%= 'text-primary font-bold' if day[:date] == Date.today %>">
+                               <%= 'text-info' if wday == 5 %>
+                               <%= 'text-error' if wday == 6 %>
+                               <%= 'text-primary font-bold' if day[:date] == Date.today %>">
                       <%= day[:date].day %>
                     </div>
 
@@ -82,13 +80,13 @@
 
                     <!-- 特別な日のバッジ -->
                     <% if day[:new_moon] %>
-                      <div class="badge badge-warning badge-xs mt-1 hidden sm:inline-flex">新月</div>
+                      <div class="badge badge-xs mt-1" style="background-color: #b3a1f7; color: #1A1A1A;">新月</div>
                     <% elsif day[:full_moon] %>
-                      <div class="badge badge-secondary badge-xs mt-1 hidden sm:inline-flex">満月</div>
+                      <div class="badge badge-xs mt-1" style="background-color: #F2EDA0; color: #1A1A1A;">満月</div>
                     <% elsif day[:first_quarter] %>
-                      <div class="badge badge-info badge-xs mt-1 hidden sm:inline-flex">上弦</div>
+                      <div class="badge badge-xs mt-1" style="background-color: #F1ACF2; color: #1A1A1A;">上弦</div>
                     <% elsif day[:last_quarter] %>
-                      <div class="badge badge-accent badge-xs mt-1 hidden sm:inline-flex">下弦</div>
+                      <div class="badge badge-xs mt-1" style="background-color: #EFD5F2; color: #1A1A1A;">下弦</div>
                     <% end %>
 
                     <!-- 今日のマーク -->
@@ -107,21 +105,24 @@
       <div class="mt-6 pt-4 border-t border-base-300">
         <div class="flex flex-wrap gap-4 justify-center text-xs sm:text-sm">
           <div class="flex items-center gap-2">
-            <div class="w-4 h-4 rounded bg-primary/10 ring-2 ring-primary"></div>
-            <span>今日</span>
+            <div class="w-4 h-4 rounded" style="background-color: #7eb0f220; border: 2px solid #7EB0F2;"></div>
+            <span class="text-base-content/70">今日</span>
           </div>
           <div class="flex items-center gap-2">
-            <div class="w-4 h-4 rounded bg-warning/20 ring-2 ring-warning"></div>
-            <span>🌑 新月</span>
+            <div class="w-4 h-4 rounded" style="border: 2px solid #F1ACF2;"></div>
+            <span class="text-base-content/70">MoonNote対象日</span>
           </div>
-          <div class="flex items-center gap-2">
-            <div class="w-4 h-4 rounded bg-secondary/20 ring-2 ring-secondary"></div>
-            <span>🌕 満月</span>
+          <div class="flex items-center gap-3">
+            <div class="badge badge-xs" style="background-color: #b3a1f7; color: #1A1A1A;">新月</div>
+            <div class="badge badge-xs" style="background-color: #F1ACF2; color: #1A1A1A;">上弦</div>
+            <div class="badge badge-xs" style="background-color: #F2EDA0; color: #1A1A1A;">満月</div>
+            <div class="badge badge-xs" style="background-color: #EFD5F2; color: #1A1A1A;">下弦</div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 
   <!-- 今月ボタン -->
   <div class="text-center mt-6">

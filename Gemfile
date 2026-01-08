@@ -43,20 +43,32 @@ gem "kamal", require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 
+# 認証に使った
 gem "omniauth-auth0"
+
+# CSRF対策
 gem "omniauth-rails_csrf_protection"
+
+# HTTP通信に使う
 gem "faraday"
 
-
+# i18n
 gem "rails-i18n"
 
+# 静的なページを作る
 gem "high_voltage"
 
+# ページネーション
 gem "kaminari", git: "https://github.com/kaminari/kaminari"
 
+# 月相を一括で保存することに使う
+gem 'activerecord-import'
+
 group :development, :production do
+  # Lineログイン
   gem "omniauth-line"
 end
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
@@ -69,10 +81,13 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
+  # ダミーデータ作成
   gem "faker"
 
+  # .envファイルの読み込み
   gem "dotenv-rails"
 
+  # テスト関連
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "capybara"
@@ -80,13 +95,30 @@ group :development, :test do
 
   gem "pry-rails"
 
+  # stubを効率的に（openAI APIの挙動確認で入れた）
   gem "stub_env", "~> 1.0", ">= 1.0.4"
+
+  # 冗長なクエリを検索
+  gem 'bullet'
+
 end
 
 group :development do
-  # Use console on exceptions pages [https://github.com/rails/web-console]
-  # gem "better_errors"
-  # gem "binding_of_caller"
+  # デバッグを楽に
+  gem "better_errors"
+  gem "binding_of_caller"
+
+
+  # パフォーマンス計測
+  gem 'rack-mini-profiler', require: false
+
+  # メモリの計測
+  gem 'memory_profiler'
+
+  # 計測結果をグラフ表示させる
+  gem 'stackprof'
+  gem 'flamegraph'
+
 end
 
 group :test do

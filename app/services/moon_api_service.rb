@@ -8,10 +8,10 @@ class MoonApiService
   DEGREES_PER_DAY = 360.0 / SYNODIC_MONTH
 
   # MoonNote 用（ ±1日で月相を取り扱い、MoonNoteを書きやすくする）
-  LOOSE_EVENT_TOLERANCE_DEGREES = DEGREES_PER_DAY * 1.0
+  LOOSE_EVENT_TOLERANCE_DEGREES = DEGREES_PER_DAY * 0.8
 
   # Dashboard 用（ 正確な月相を返す ）
-  STRICT_EVENT_TOLERANCE_DEGREES = 3.0
+  STRICT_EVENT_TOLERANCE_DEGREES = 5.5
 
   EVENT_ANGLE_CENTERS = {
     new_moon: 0.0,
@@ -28,7 +28,6 @@ class MoonApiService
 
     uri = URI("#{BASE_URL}?mode=moon_phase&year=#{year}&month=#{month}&day=#{day}&hour=#{hour}")
     response = Net::HTTP.get(uri)
-    Rails.logger.info("Moon API raw response: #{response}")
 
     data = JSON.parse(response)
 
@@ -45,13 +44,12 @@ class MoonApiService
       date: date,
       angle: angle,
       moon_age: moon_age,
-      event: strict_event,                        # Dashboard はこれを使う
+      event: strict_event,                       # Dashboard はこれを使う
       loose_event: loose_event,                  # MoonNote はこれを使う
       moon_phase_name: phase_name(angle),        # 基本の月相名称
       moon_phase_emoji: phase_emoji(angle)
     }
   rescue => e
-    Rails.logger.error("Moon API error: #{e.message}")
     nil
   end
 
@@ -103,20 +101,28 @@ class MoonApiService
     end
   end
 
-
   def self.phase_emoji(angle)
-    case angle
-    when 0...45   then "🌑"
-    when 45...90  then "🌒"
-    when 90...135 then "🌓"
+    # イベント判定（±7度）
+    event = detect_event(angle, 7.0)
+
+    return "🌑" if event == :new_moon
+    return "🌓" if event == :first_quarter_moon
+    return "🌕" if event == :full_moon
+    return "🌗" if event == :last_quarter_moon
+
+    # イベントに該当しない場合は、従来の範囲判定
+    normalized = angle % 360
+    case normalized
+    when 0...45, 338..360  then "🌑"
+    when 45...90   then "🌒"
+    when 90...135  then "🌓"
     when 135...180 then "🌔"
     when 180...225 then "🌕"
-    when 225...270 then "🌗"
-    when 270...315 then "🌘"
+    when 225...270 then "🌖"
+    when 270...338 then "🌘"
     else "🌑"
     end
   end
-
 
   # MoonNote 作成可否（ゆるい）
   def self.creatable_moon_note?(angle)
@@ -125,31 +131,55 @@ class MoonApiService
     detect_event(angle, LOOSE_EVENT_TOLERANCE_DEGREES).present?
   end
 
-    # グラフ用の月相を取得
-    def self.fetch_moon_markers(start_date, end_date)
-      moon_markers = []
+  # グラフ用の月相を取得
+  def self.fetch_moon_markers(start_date, end_date)
+    moon_markers = []
 
-      (start_date..end_date).each do |date|
-        result = fetch(date)
-        next if result.nil?
+    (start_date..end_date).each do |date|
+      result = fetch(date)
+      next if result.nil?
 
-        # strict_event を使用
-        if result[:event] == :full_moon
-          moon_markers << {
-            date: date.to_s,
-            type: "full_moon",
-            emoji: "🌕"
-          }
-        elsif result[:event] == :new_moon
-          moon_markers << {
-            date: date.to_s,
-            type: "new_moon",
-            emoji: "🌑"
-          }
-        end
+      # strict_event を使用
+      if result[:event] == :full_moon
+        moon_markers << {
+          date: date.to_s,
+          type: "full_moon",
+          emoji: "🌕"
+        }
+      elsif result[:event] == :new_moon
+        moon_markers << {
+          date: date.to_s,
+          type: "new_moon",
+          emoji: "🌑"
+        }
+      end
     end
 
-    Rails.logger.debug "🌙 Found #{moon_markers.size} moon markers: #{moon_markers.inspect}"
     moon_markers
+  end
+
+  def self.fetch_monthly_events_with_range(year, month)
+    start_date = Date.new(year, month, 1)
+    end_date = start_date.end_of_month
+
+    moon_phases = MoonPhaseRepository.fetch_month(year, month)
+
+    events = {
+      new_moon: [],
+      first_quarter_moon: [],
+      full_moon: [],
+      last_quarter_moon: []
+    }
+
+    EVENT_ANGLE_CENTERS.each do |event, target_angle|
+      moon_phases.each do |moon_phase|
+        diff = angular_difference(moon_phase.angle % 360, target_angle)
+
+        # ±7度（約半日分）以内なら該当
+        events[event] << moon_phase.date if diff <= 7.0
+      end
+    end
+
+    events
   end
 end

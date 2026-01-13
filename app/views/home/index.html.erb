@@ -24,6 +24,12 @@
           </svg>
           <span class="ml-2">LINEでログイン</span>
         <% end %>
+        <%= link_to new_registration_path, class: "btn btn-primary" do %>
+          メールアドレスで新規登録
+        <% end %>
+        <%= link_to new_session_path, class: "btn btn-secondary" do %>
+          メールアドレスでログイン
+        <% end %>
       </div>
     </div>
   </section>

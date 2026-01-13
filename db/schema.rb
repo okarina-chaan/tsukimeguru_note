@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_12_132336) do
+ActiveRecord::Schema[8.0].define(version: 2026_01_13_134402) do
   create_table "authentications", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "provider", null: false
@@ -68,13 +68,15 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_12_132336) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "line_user_id", null: false
+    t.string "line_user_id"
     t.string "name"
     t.boolean "account_registered", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "moon_sign"
     t.datetime "weekly_insight_generated_at"
+    t.string "email"
+    t.index ["email"], name: "index_users_on_email", unique: true, where: "email IS NOT NULL"
     t.index ["line_user_id"], name: "index_users_on_line_user_id", unique: true
   end
 

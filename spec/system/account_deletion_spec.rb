@@ -37,7 +37,7 @@ RSpec.describe 'アカウント削除', type: :system do
 
       it '関連データも削除される' do
         # 関連データを作成
-        user.daily_notes.create!(date: Date.today)
+        user.daily_notes.create!(date: Date.today, condition_score: 3, mood_score: 4)
         user.moon_notes.create!(date: Date.today, moon_age: 1.0, moon_phase: 1, content: 'test')
 
         user_id = user.id

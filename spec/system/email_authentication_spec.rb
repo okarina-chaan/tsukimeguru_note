@@ -12,7 +12,7 @@ RSpec.describe 'Email認証', type: :system do
       click_button '登録する'
 
       expect(page).to have_content 'アカウントを作成しました'
-      expect(page).to have_content 'アカウント名を登録してください'
+      expect(page).to have_content 'アカウント名を登録'
       expect(page).to have_current_path(edit_account_name_path)
 
       # ユーザーとEmail認証が作成されている

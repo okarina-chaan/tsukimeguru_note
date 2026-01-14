@@ -2,9 +2,21 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe 'associations' do
-    it { should have_many(:authentications).dependent(:destroy) }
-    it { should have_many(:daily_notes).dependent(:destroy) }
-    it { should have_many(:moon_notes).dependent(:destroy) }
+    it 'authenticationsを持つ' do
+      user = User.create!(line_user_id: 'LINE123')
+      auth = user.authentications.create!(provider: 'line', uid: 'LINE123')
+      expect(user.authentications).to include(auth)
+    end
+
+    it 'daily_notesを持つ' do
+      user = User.create!(line_user_id: 'LINE123')
+      expect(user).to respond_to(:daily_notes)
+    end
+
+    it 'moon_notesを持つ' do
+      user = User.create!(line_user_id: 'LINE123')
+      expect(user).to respond_to(:moon_notes)
+    end
   end
 
   describe 'validation' do

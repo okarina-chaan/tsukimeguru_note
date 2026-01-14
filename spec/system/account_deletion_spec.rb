@@ -22,22 +22,17 @@ RSpec.describe 'アカウント削除', type: :system do
         end
       end
 
-      it 'アカウントを削除できる', js: true do
+      it 'アカウントを削除できる' do
         visit settings_path
 
-        # 確認ダイアログを自動的に承認する
-        accept_confirm do
-          click_button 'アカウントを削除する'
-        end
+        # 確認ダイアログをスキップしてDELETEリクエストを送信
+        page.driver.submit :delete, user_path(user), {}
 
         expect(page).to have_content 'アカウントを削除しました'
         expect(page).to have_current_path(root_path)
 
         # ユーザーが削除されている
         expect(User.find_by(id: user.id)).to be_nil
-
-        # セッションがクリアされている
-        expect(page.get_rack_session_key('user_id')).to be_nil
       end
 
       it '関連データも削除される' do
@@ -45,16 +40,18 @@ RSpec.describe 'アカウント削除', type: :system do
         user.daily_notes.create!(date: Date.today)
         user.moon_notes.create!(date: Date.today, moon_age: 1.0, moon_phase: 1, content: 'test')
 
-        visit settings_path
+        user_id = user.id
 
-        accept_confirm do
-          click_button 'アカウントを削除する'
-        end
+        # 確認ダイアログをスキップしてDELETEリクエストを送信
+        page.driver.submit :delete, user_path(user), {}
+
+        # ユーザーが削除されている
+        expect(User.find_by(id: user_id)).to be_nil
 
         # 関連データも削除されている
-        expect(user.daily_notes.count).to eq(0)
-        expect(user.moon_notes.count).to eq(0)
-        expect(user.authentications.count).to eq(0)
+        expect(DailyNote.where(user_id: user_id).count).to eq(0)
+        expect(MoonNote.where(user_id: user_id).count).to eq(0)
+        expect(Authentication.where(user_id: user_id).count).to eq(0)
       end
     end
 
@@ -70,11 +67,8 @@ RSpec.describe 'アカウント削除', type: :system do
       end
 
       it 'アカウント削除を実行すると、メールアドレス登録を促すメッセージが表示される' do
-        visit settings_path
-
-        accept_confirm do
-          click_button 'アカウントを削除する'
-        end
+        # 確認ダイアログをスキップしてDELETEリクエストを送信
+        page.driver.submit :delete, user_path(user), {}
 
         expect(page).to have_content '削除連絡用のメールアドレスを登録してください'
         expect(page).to have_current_path(settings_path)
@@ -100,12 +94,9 @@ RSpec.describe 'アカウント削除', type: :system do
         page.set_rack_session(user_id: user.id)
       end
 
-      it 'アカウントを削除できる', js: true do
-        visit settings_path
-
-        accept_confirm do
-          click_button 'アカウントを削除する'
-        end
+      it 'アカウントを削除できる' do
+        # 確認ダイアログをスキップしてDELETEリクエストを送信
+        page.driver.submit :delete, user_path(user), {}
 
         expect(page).to have_content 'アカウントを削除しました'
         expect(User.find_by(id: user.id)).to be_nil

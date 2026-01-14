@@ -2,7 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Authentication, type: :model do
   describe 'associations' do
-    it { should belong_to(:user) }
+    it 'userに属する' do
+      user = User.create!(line_user_id: 'LINE123')
+      auth = Authentication.new(user: user, provider: 'line', uid: 'LINE123')
+      expect(auth.user).to eq(user)
+    end
   end
 
   describe 'validations' do

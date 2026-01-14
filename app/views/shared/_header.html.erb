@@ -89,11 +89,11 @@
       <%= link_to "ログアウト",
           session_path,
           data: { turbo_method: :delete },
-          class: "btn btn-secondary btn-sm" %>
+          class: "text-sm text-base-content/70 hover:text-base-content transition" %>
     <% else %>
       <%= link_to "ログイン",
           new_session_path,
-          class: "btn btn-primary btn-sm" %>
+          class: "text-sm text-base-content/70 hover:text-base-content transition" %>
     <% end %>
   </div>
 

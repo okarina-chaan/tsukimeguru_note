@@ -6,7 +6,7 @@ class RegistrationsController < ApplicationController
   def create
     @user = User.new(email: registration_params[:email])
     @authentication = @user.authentications.build(
-      provider: 'email',
+      provider: "email",
       uid: registration_params[:email],
       password: registration_params[:password],
       password_confirmation: registration_params[:password_confirmation]

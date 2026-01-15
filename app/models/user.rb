@@ -17,11 +17,11 @@ class User < ApplicationRecord
 
   # ヘルパーメソッド
   def email_authentication
-    authentications.find_by(provider: 'email')
+    authentications.find_by(provider: "email")
   end
 
   def line_authentication
-    authentications.find_by(provider: 'line')
+    authentications.find_by(provider: "line")
   end
 
   def weekly_insight_available?(now: Time.zone.now)

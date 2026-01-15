@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
   def create
     # email/passwordでのログイン
-    authentication = Authentication.find_by(provider: 'email', uid: params[:email])
+    authentication = Authentication.find_by(provider: "email", uid: params[:email])
 
     if authentication&.authenticate(params[:password])
       session[:user_id] = authentication.user_id

@@ -25,14 +25,14 @@ class LineLoginApiController < ApplicationController
     line_user_id = ::LineAuth::IdTokenVerifier.new.verify_and_get_user_id(id_token)
 
     # authenticationsテーブルから検索
-    authentication = Authentication.find_by(provider: 'line', uid: line_user_id)
+    authentication = Authentication.find_by(provider: "line", uid: line_user_id)
 
     if authentication
       user = authentication.user
     else
       # 新規ユーザー作成
       user = User.create!(line_user_id: line_user_id)
-      user.authentications.create!(provider: 'line', uid: line_user_id)
+      user.authentications.create!(provider: "line", uid: line_user_id)
     end
 
     session[:user_id] = user.id

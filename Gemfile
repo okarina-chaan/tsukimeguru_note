@@ -76,7 +76,7 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", "~> 7.1.2"
 
-  gem "sqlite3", "~> 2.0"
+  gem "sqlite3", "~> 2.9"
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false

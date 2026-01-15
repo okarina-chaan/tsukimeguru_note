@@ -4,6 +4,12 @@ class MigrateToMultiProviderAuthentication < ActiveRecord::Migration[8.0]
     migrated_count = 0
     skipped_count = 0
 
+    # emailカラムを追加
+    add_column :users, :email, :string
+
+    # Userモデルをリロードする
+    User.reset_column_information
+
     # 既存ユーザーのLINE認証データを移行
     User.where.not(line_user_id: nil).find_each do |user|
       # 既に存在する場合はスキップ
@@ -26,8 +32,6 @@ class MigrateToMultiProviderAuthentication < ActiveRecord::Migration[8.0]
     # line_user_idをnullable化（新しいメール認証ユーザー用）
     change_column_null :users, :line_user_id, true
 
-    # emailカラムを追加
-    add_column :users, :email, :string
     # 条件付きユニークインデックス（nullは除外）
     add_index :users, :email, unique: true, where: "email IS NOT NULL"
   end

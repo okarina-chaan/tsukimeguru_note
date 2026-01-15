@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
   resource :account_name, only: [ :edit, :update ]
-  resources :users, only: [ :show, :edit, :update ]
+  resources :users, only: [ :show, :edit, :update, :destroy ]
   resources :daily_notes, only: [ :index, :new, :create, :edit, :update, :destroy ]
   resources :moon_notes, only: [ :index, :new, :create, :edit, :update, :destroy ]
-  resource :session, only: [ :destroy ]
+
+  # Email認証
+  resource :registration, only: [ :new, :create ]
+  resource :session, only: [ :new, :create, :destroy ]
+
+  # メールアドレス登録
+  resource :email, only: [ :edit, :update ]
+
   resource :moon_sign, only: [ :new, :create, :show ]
 
   resource :analysis, only: [ :show ], path: "insights", controller: "analysis" do

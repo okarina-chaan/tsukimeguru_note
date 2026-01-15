@@ -24,7 +24,7 @@ gem "tailwindcss-rails", "~> 4.3"
 gem "heroicon"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
+gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
@@ -62,7 +62,7 @@ gem "high_voltage"
 gem "kaminari", git: "https://github.com/kaminari/kaminari"
 
 # 月相を一括で保存することに使う
-gem 'activerecord-import'
+gem "activerecord-import"
 
 group :development, :production do
   # Lineログイン
@@ -99,8 +99,7 @@ group :development, :test do
   gem "stub_env", "~> 1.0", ">= 1.0.4"
 
   # 冗長なクエリを検索
-  gem 'bullet'
-
+  gem "bullet"
 end
 
 group :development do
@@ -110,15 +109,14 @@ group :development do
 
 
   # パフォーマンス計測
-  gem 'rack-mini-profiler', require: false
+  gem "rack-mini-profiler", require: false
 
   # メモリの計測
-  gem 'memory_profiler'
+  gem "memory_profiler"
 
   # 計測結果をグラフ表示させる
-  gem 'stackprof'
-  gem 'flamegraph'
-
+  gem "stackprof"
+  gem "flamegraph"
 end
 
 group :test do

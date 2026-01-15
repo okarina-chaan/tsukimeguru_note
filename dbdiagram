@@ -1,12 +1,29 @@
 Table users {
-  id integer [pk]
-  line_user_id string [not null, unique, note: 'LINEのユーザー識別子']
-  name string [note: 'LINEの表示名']
-  account_resistered boolean [default: false, note: 'アカウント登録済みかどうか']
-  weekly_insight_generated_at datetime [note: '週毎の振り返りを最後に生成した日時']
-  created_at datetime
-  updated_at datetime
+  id integer [primary key, increment]
+  name string
+  email string [null, note: '連絡先用のメールアドレス']
+  line_user_id string [null, note: '既存カラム。authenticationsに移すので将来的に削除予定']
+  account_registered boolean
+  moon_sign string [null]
+  weekly_insight_generated_at datetime [null]
+  created_at datetime [not null]
+  updated_at datetime [not null]
 }
+
+Table authentications {
+  id integer [primary key, increment]
+  user_id integer [not null, ref: > users.id]
+  provider string [not null, note: '認証方法、line or email']
+  uid string [not null, note: 'LINEならline_user_id、emailならメールアドレス']
+  password_digest string [null, note: 'email providerの場合のみ使用']
+  created_at datetime [not null]
+  updated_at datetime [not null]
+  
+  indexes {
+    (provider, uid) [unique, name: 'unique_provider_uid']
+  }
+}
+
 
 Table daily_notes {
   id bigint [pk]
@@ -20,6 +37,7 @@ Table daily_notes {
   try_tomorrow string [ note: '明日やってみたいこと']
   note text [ note: '自由記述メモ']
   moon_phase_name string [ note: 'APIから取った月相']
+
   created_at datetime
   updated_at datetime
 }
@@ -91,3 +109,6 @@ Table user_moon_message_settings {
   created_at datetime
   updated_at datetime
 }
+
+// リレーション
+Ref: authentications.user_id > users.id [delete: cascade]

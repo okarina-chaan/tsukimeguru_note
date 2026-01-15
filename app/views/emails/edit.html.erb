@@ -1,0 +1,18 @@
+<div class="container mx-auto px-4 py-8 pt-20">
+  <h1 class="text-2xl font-bold mb-6">メールアドレス登録</h1>
+
+  <%= form_with model: @user, url: email_path, method: :patch, local: true do |f| %>
+    <div class="form-control max-w-md">
+      <%= f.label :email, "メールアドレス", class: "label" %>
+      <%= f.email_field :email, class: "input input-bordered", required: true %>
+      <label class="label">
+        <span class="label-text-alt">アカウント削除時の連絡用です</span>
+      </label>
+    </div>
+
+    <div class="mt-6">
+      <%= f.submit "登録する", class: "btn btn-primary" %>
+      <%= link_to "キャンセル", settings_path, class: "btn btn-ghost" %>
+    </div>
+  <% end %>
+</div>

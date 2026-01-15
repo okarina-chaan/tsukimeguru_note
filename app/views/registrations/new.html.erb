@@ -1,0 +1,82 @@
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden px-4">
+  <!-- 背景エフェクト -->
+  <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[100px] animate-pulse"></div>
+  <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-secondary/10 rounded-full blur-[80px]"></div>
+
+  <div class="card w-full max-w-md bg-base-300/80 backdrop-blur-xl shadow-2xl border border-base-100/20 relative z-10 mx-auto">
+    <div class="card-body">
+      <!-- ヘッダー -->
+      <div class="text-center mb-6">
+        <h2 class="card-title text-3xl font-display justify-center mb-2">アカウントを作成</h2>
+        <p class="text-sm opacity-60">月の満ち欠けに合わせて、心と体のリズムを綴る</p>
+      </div>
+
+      <%= form_with model: @user, url: registration_path, local: true, class: "flex flex-col items-center" do |f| %>
+        <!-- メールアドレス -->
+        <div class="form-control w-full">
+          <label class="label justify-center">
+            <span class="label-text font-semibold">メールアドレス</span>
+          </label>
+          <label class="input input-bordered flex items-center gap-2 bg-base-200/50">
+            <%= heroicon "envelope", variant: :outline, options: { class: "w-5 h-5 opacity-70" } %>
+            <%= f.email_field :email,
+                class: "grow bg-transparent",
+                placeholder: "example@mail.com",
+                required: true %>
+          </label>
+        </div>
+
+        <!-- パスワード -->
+        <div class="form-control mt-4 w-full">
+          <label class="label justify-center">
+            <span class="label-text font-semibold">パスワード（6文字以上）</span>
+          </label>
+          <label class="input input-bordered flex items-center gap-2 bg-base-200/50">
+            <%= heroicon "lock-closed", variant: :outline, options: { class: "w-5 h-5 opacity-70" } %>
+            <%= f.password_field :password,
+                class: "grow bg-transparent",
+                placeholder: "••••••••",
+                required: true %>
+          </label>
+        </div>
+
+        <!-- パスワード確認 -->
+        <div class="form-control mt-4 w-full">
+          <label class="label justify-center">
+            <span class="label-text font-semibold">パスワード（確認）</span>
+          </label>
+          <label class="input input-bordered flex items-center gap-2 bg-base-200/50">
+            <%= heroicon "lock-closed", variant: :outline, options: { class: "w-5 h-5 opacity-70" } %>
+            <%= f.password_field :password_confirmation,
+                class: "grow bg-transparent",
+                placeholder: "••••••••",
+                required: true %>
+          </label>
+        </div>
+
+        <!-- 新規登録ボタン -->
+        <div class="form-control mt-6 w-full">
+          <%= f.submit "新規登録", class: "btn btn-primary w-full" %>
+        </div>
+      <% end %>
+
+      <div class="divider text-xs opacity-60">または</div>
+
+      <!-- LINEで登録 -->
+      <%= link_to line_login_api_login_path,
+          class: "btn text-white border-0 w-full",
+          style: "background-color: #06C755;" do %>
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975 1.765-1.89 2.547-3.807 2.547-5.968z"></path>
+        </svg>
+        LINEで新規登録
+      <% end %>
+
+      <!-- ログインリンク -->
+      <p class="text-center text-sm mt-6 opacity-60">
+        すでにアカウントをお持ちですか？
+        <%= link_to "ログイン", new_session_path, class: "link link-primary font-semibold" %>
+      </p>
+    </div>
+  </div>
+</div>

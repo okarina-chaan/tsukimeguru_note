@@ -1,27 +1,103 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'validation' do
-    example 'line_user_idは必須' do
-      user = User.new(line_user_id: '')
-      expect(user).to be_invalid
+  describe 'associations' do
+    it 'authenticationsを持つ' do
+      user = User.create!(line_user_id: 'LINE123')
+      auth = user.authentications.create!(provider: 'line', uid: 'LINE123')
+      expect(user.authentications).to include(auth)
+    end
 
-      user.line_user_id = '1'
-      expect(user).to be_valid
+    it 'daily_notesを持つ' do
+      user = User.create!(line_user_id: 'LINE123')
+      expect(user).to respond_to(:daily_notes)
     end
-    example 'line_user_idは一意' do
-      user1 = User.create!(line_user_id: '1')
-      user2 = User.new(line_user_id: '1')
-      expect(user2).to be_invalid
-      expect(user2.errors[:line_user_id]).to be_present
+
+    it 'moon_notesを持つ' do
+      user = User.create!(line_user_id: 'LINE123')
+      expect(user).to respond_to(:moon_notes)
     end
+  end
+
+  describe 'validation' do
+    context 'line_user_id' do
+      it 'NULLを許可する' do
+        user = User.new(email: 'test@example.com')
+        expect(user).to be_valid
+      end
+
+      it '一意である' do
+        User.create!(line_user_id: 'LINE123')
+        user2 = User.new(line_user_id: 'LINE123')
+        expect(user2).to be_invalid
+        expect(user2.errors[:line_user_id]).to be_present
+      end
+    end
+
+    context 'email' do
+      it 'NULLを許可する' do
+        user = User.new(line_user_id: 'LINE123')
+        expect(user).to be_valid
+      end
+
+      it '一意である' do
+        User.create!(email: 'test@example.com')
+        user2 = User.new(email: 'test@example.com')
+        expect(user2).to be_invalid
+        expect(user2.errors[:email]).to be_present
+      end
+
+      it '正しいメールフォーマットである必要がある' do
+        user = User.new(email: 'invalid-email')
+        expect(user).to be_invalid
+        expect(user.errors[:email]).to be_present
+      end
+
+      it '有効なメールフォーマット' do
+        user = User.new(email: 'valid@example.com')
+        expect(user).to be_valid
+      end
+    end
+
     example 'account_registeredのデフォルト値がfalse' do
-      user = User.new(line_user_id: '1')
+      user = User.new(line_user_id: 'LINE123')
       expect(user.account_registered).to eq(false)
     end
+
     example 'nameは任意' do
-      user = User.new(line_user_id: '1', name: '')
+      user = User.new(line_user_id: 'LINE123', name: '')
       expect(user).to be_valid
+    end
+  end
+
+  describe '#email_authentication' do
+    it 'Email認証を返す' do
+      user = User.create!(email: 'test@example.com')
+      auth = user.authentications.create!(
+        provider: 'email',
+        uid: 'test@example.com',
+        password: 'password123',
+        password_confirmation: 'password123'
+      )
+      expect(user.email_authentication).to eq(auth)
+    end
+
+    it 'Email認証がない場合nilを返す' do
+      user = User.create!(line_user_id: 'LINE123')
+      expect(user.email_authentication).to be_nil
+    end
+  end
+
+  describe '#line_authentication' do
+    it 'LINE認証を返す' do
+      user = User.create!(line_user_id: 'LINE123')
+      auth = user.authentications.create!(provider: 'line', uid: 'LINE123')
+      expect(user.line_authentication).to eq(auth)
+    end
+
+    it 'LINE認証がない場合nilを返す' do
+      user = User.create!(email: 'test@example.com')
+      expect(user.line_authentication).to be_nil
     end
   end
 

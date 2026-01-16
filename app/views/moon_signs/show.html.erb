@@ -1,3 +1,9 @@
+<% content_for :og_title do %>私の月星座は「<%= @moon_sign %>」でした<% end %>
+<% content_for :og_description do %><%= @message %> #月めぐるノート<% end %>
+<% if @ogp_image_url.present? %>
+  <% content_for :og_image do %><%= @ogp_image_url %><% end %>
+<% end %>
+
 <div class="container mx-auto px-4 py-10 max-w-2xl">
 
   <h1 class="text-3xl font-display text-center mb-8">

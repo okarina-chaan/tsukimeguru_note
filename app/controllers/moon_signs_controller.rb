@@ -63,6 +63,7 @@ class MoonSignsController < ApplicationController
     text = "私の月星座は#{@moon_sign}でした🌙\n#{@message}\n#月めぐるノート で日記を書いてみよう"
 
     @share_url = "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(text)}"
+    @ogp_image_url = ogp_image_url(@moon_sign)
 
     render :show
     current_user.update(moon_sign: @moon_sign)
@@ -77,6 +78,7 @@ class MoonSignsController < ApplicationController
 
     @message = moon_sign_message(@moon_sign)
     @recommendations = DiaryRecommendations::LIST[@moon_sign]
+    @ogp_image_url = ogp_image_url(@moon_sign)
   end
 
   private
@@ -116,5 +118,26 @@ class MoonSignsController < ApplicationController
       "水瓶座" => "独創的で常識にとらわれない。",
       "魚座" => "感受性豊かで思いやりのある人。"
     }[sign] || "あなたの感性が月に導かれています。"
+  end
+
+  def ogp_image_url(sign)
+    filename = {
+      "牡羊座" => "牡羊座.png",
+      "牡牛座" => "牡牛座.png",
+      "双子座" => "双子座.png",
+      "蟹座" => "蟹座.png",
+      "獅子座" => "しし座.png",
+      "乙女座" => "乙女座.png",
+      "天秤座" => "てんびん座.png",
+      "蠍座" => "蠍座.png",
+      "射手座" => "射手座.png",
+      "山羊座" => "山羊座.png",
+      "水瓶座" => "水瓶座.png",
+      "魚座" => "うお座.png"
+    }[sign]
+
+    return nil unless filename
+
+    "#{request.base_url}/ogp/#{ERB::Util.url_encode(filename)}"
   end
 end

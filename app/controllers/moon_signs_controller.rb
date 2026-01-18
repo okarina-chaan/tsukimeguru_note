@@ -79,6 +79,9 @@ class MoonSignsController < ApplicationController
     @message = moon_sign_message(@moon_sign)
     @recommendations = DiaryRecommendations::LIST[@moon_sign]
     @ogp_image_url = ogp_image_url(@moon_sign)
+
+    text = "私の月星座は#{@moon_sign}でした🌙\n#{@message}\n#月めぐるノート で日記を書いてみよう"
+    @share_url = "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(text)}"
   end
 
   private

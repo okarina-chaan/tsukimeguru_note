@@ -121,23 +121,9 @@ class MoonSignsController < ApplicationController
   end
 
   def ogp_image_url(sign)
-    filename = {
-      "牡羊座" => "牡羊座.png",
-      "牡牛座" => "牡牛座.png",
-      "双子座" => "双子座.png",
-      "蟹座" => "蟹座.png",
-      "獅子座" => "しし座.png",
-      "乙女座" => "乙女座.png",
-      "天秤座" => "てんびん座.png",
-      "蠍座" => "蠍座.png",
-      "射手座" => "射手座.png",
-      "山羊座" => "山羊座.png",
-      "水瓶座" => "水瓶座.png",
-      "魚座" => "うお座.png"
-    }[sign]
+    valid_signs = %w[牡羊座 牡牛座 双子座 蟹座 獅子座 乙女座 天秤座 蠍座 射手座 山羊座 水瓶座 魚座]
+    return nil unless valid_signs.include?(sign)
 
-    return nil unless filename
-
-    "#{request.base_url}/ogp/#{ERB::Util.url_encode(filename)}"
+    "#{request.base_url}/ogp/#{ERB::Util.url_encode(sign)}.png"
   end
 end

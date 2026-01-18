@@ -1,59 +1,110 @@
-<div class="container mx-auto px-4 py-10 max-w-2xl">
+<% content_for :og_title do %>
+  私の月星座は「<%= @moon_sign %>」でした
+<% end %>
 
-  <h1 class="text-3xl font-display text-center mb-8">
+<% content_for :og_description do %>
+  <%= @message %> #月めぐるノート
+<% end %>
+
+<% if @ogp_image_url.present? %>
+  <% content_for :og_image do %>
+    <%= @ogp_image_url %>
+  <% end %>
+<% end %>
+
+<div class="container mx-auto px-4 py-12 max-w-2xl">
+
+  <h1 class="text-3xl font-display text-center mb-10">
     月星座診断・結果
   </h1>
 
+  <!-- 結果カード -->
   <div class="
-    card 
-    bg-gradient-to-br 
-    from-indigo-500/20 
-    via-purple-600/20 
-    to-indigo-900/20 
-    shadow-xl 
-    backdrop-blur-md 
-    border border-white/10
+    card
+    bg-base-100
+    shadow-2xl
+    border border-primary/20
   ">
-    <div class="card-body space-y-8">
+    <div class="card-body space-y-10">
 
-      <div class="text-center">
-        <p class="text-lg">あなたの月星座は</p>
-        <p class="text-5xl font-extrabold text-primary mt-2 tracking-wide">
-          <%= @moon_sign %>
-        </p>
-      </div>
+      <!-- 月星座 -->
+      <p class="text-sm opacity-60 mb-1 text-center">
+        あなたの月星座
+      </p>
 
-      <p class="text-center text-base opacity-90 leading-relaxed px-4">
+      <p class="
+        font-display
+        text-center
+        text-3xl
+        font-medium
+        text-base-content
+        tracking-wide
+      ">
+        <%= @moon_sign %>
+      </p>
+
+      <!-- メッセージ -->
+      <p class="
+        text-center
+        text-base
+        text-base-content/80
+        leading-relaxed
+        px-6
+      ">
         <%= @message %>
       </p>
 
-      <div class="divider">おすすめの振り返りテーマ</div>
+      <div class="divider text-sm opacity-60">
+        おすすめの振り返りテーマ
+      </div>
 
+      <!-- 振り返りテーマ -->
       <% recommendations = DiaryRecommendations::LIST[@moon_sign] %>
 
       <% if recommendations.present? %>
-        <div class="space-y-3">
+        <div class="space-y-4">
           <% recommendations.each do |rec| %>
-            <div class="p-4 rounded-xl bg-base-200 shadow-sm border border-base-300/40">
-              <p class="text-sm leading-relaxed opacity-90"><%= rec %></p>
+            <div class="
+              p-4
+              rounded-2xl
+              bg-primary/5
+              border border-primary/10
+              shadow-sm
+              hover:shadow-md
+              transition
+            ">
+              <p class="text-sm leading-relaxed text-base-content/80">
+                <%= rec %>
+              </p>
             </div>
           <% end %>
         </div>
       <% else %>
-        <p class="text-center opacity-60">この月星座のおすすめテーマは準備中です。</p>
+        <p class="text-center opacity-60">
+          この月星座のおすすめテーマは準備中です。
+        </p>
       <% end %>
 
-      <div class="flex flex-col gap-3 pt-6">
+      <!-- ボタン -->
+      <div class="flex flex-col gap-4 pt-6">
 
         <% if @share_url.present? %>
           <a href="<%= @share_url %>"
-            class="btn btn-neutral w-full"
-            target="_blank" rel="noopener">
+             class="btn btn-primary w-full gap-2"
+             target="_blank"
+             rel="noopener">
+            <svg aria-label="X logo" width="16" height="12" viewBox="0 0 300 271"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill="currentColor"
+                    d="m236 0h46l-101 115 118 156h-92.6l-72.5-94.8-83 94.8h-46l107-123-113-148h94.9l65.5 86.6zm-16.1 244h25.5l-165-218h-27.4z"/>
+            </svg>
             Xで共有する
           </a>
         <% end %>
 
-        <%= link_to "もう一度診断する", new_moon_sign_path, class: "btn btn-outline w-full" %>
+        <%= link_to "もう一度診断する",
+          new_moon_sign_path,
+          class: "btn btn-outline btn-primary w-full" %>
 
       </div>
 

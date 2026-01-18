@@ -5,7 +5,7 @@
     <div class="card-body space-y-6">
 
       <p class="text-sm opacity-80">
-        生まれた瞬間の「月の位置」から、あなたの内側の性質（感情・心のクセ）を読み解きます。
+        あなたの「内側の性質」を表す月星座を診断してみましょう
       </p>
 
       <%= form_with url: moon_sign_path, method: :post, data: { turbo: false } do |f| %>
@@ -21,7 +21,7 @@
         </div>
 
         <div class="form-control">
-          <%= f.label :prefecture, "生誕地（都道府県）", class: "label font-bold" %>
+          <%= f.label :prefecture, "生誕地（任意）", class: "label font-bold" %>
           <%= f.select :prefecture, Prefecture::LIST, include_blank: "選択してください", class: "select select-bordered" %>
         </div>
 

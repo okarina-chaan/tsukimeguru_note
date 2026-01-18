@@ -11,6 +11,24 @@
 
     <%= yield :head %>
 
+    <%# OGP メタタグ %>
+    <meta property="og:site_name" content="月めぐるノート">
+    <meta property="og:title" content="<%= content_for?(:og_title) ? yield(:og_title) : '月めぐるノート' %>">
+    <meta property="og:description" content="<%= content_for?(:og_description) ? yield(:og_description) : '月のリズムに寄り添う、心のセルフケア日記' %>">
+    <meta property="og:type" content="<%= content_for?(:og_type) ? yield(:og_type) : 'website' %>">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <% if content_for?(:og_image) %>
+      <meta property="og:image" content="<%= yield(:og_image) %>">
+    <% end %>
+
+    <%# Twitter Card %>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<%= content_for?(:og_title) ? yield(:og_title) : '月めぐるノート' %>">
+    <meta name="twitter:description" content="<%= content_for?(:og_description) ? yield(:og_description) : '月のリズムに寄り添う、心のセルフケア日記' %>">
+    <% if content_for?(:og_image) %>
+      <meta name="twitter:image" content="<%= yield(:og_image) %>">
+    <% end %>
+
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 

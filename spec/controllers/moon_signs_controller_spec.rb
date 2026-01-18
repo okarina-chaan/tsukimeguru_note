@@ -40,5 +40,4 @@ RSpec.describe MoonSignsController, type: :controller do
       end
     end
   end
-
 end

@@ -9,21 +9,27 @@ class MoonSignsController < ApplicationController
   end
 
   def create
+    # フォームから生年月日・出生時刻・出生地（都道府県）を取得
     birth_date = params[:birth_date]
     birth_time = params[:birth_time].presence || "00:00"
     prefecture = params[:prefecture]
 
+    # 都道府県名から緯度・経度を取得
     lat, lon = prefecture_to_coords(prefecture)
 
+    # 日時を年・月・日・時・分に分解
     year, month, day = birth_date.split("-").map(&:to_i)
     hour, min = birth_time.split(":").map(&:to_i)
     sec = 0
 
+    # 占星術API（Free Astrology API）へのリクエストを準備
     uri = URI("https://json.freeastrologyapi.com/western/planets")
 
     req = Net::HTTP::Post.new(uri, { "Content-Type" => "application/json" })
     req["x-api-key"] = ENV["FREE_ASTROLOGY_API_KEY"]
 
+    # APIリクエストボディを構築
+    # 出生日時・場所・タイムゾーンを指定し、西洋占星術（tropical）の惑星位置を取得
     req.body = {
       year: year,
       month: month,
@@ -41,23 +47,23 @@ class MoonSignsController < ApplicationController
       }
     }.to_json
 
-  begin
-    res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(req) }
-    Rails.logger.info("API response status: #{res.code}")
-    Rails.logger.info("API response body: #{res.body}")
-    data = JSON.parse(res.body)
-  rescue => e
+    # APIリクエストを送信し、レスポンスを取得
+    begin
+      res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(req) }
+      Rails.logger.info("API response status: #{res.code}")
+      Rails.logger.info("API response body: #{res.body}")
+      data = JSON.parse(res.body)
+    rescue => e
+      # API通信エラー時はログに記録し、空のデータで続行
+      Rails.logger.error("API通信エラー: #{e.message}")
+      Rails.logger.error(e.backtrace.join("\n"))
+      data = {}
+    end
 
-
-
-
-    Rails.logger.error("API通信エラー: #{e.message}")
-    Rails.logger.error(e.backtrace.join("\n"))
-    data = {}
-  end
-
+    # APIレスポンスから月（Moon）のデータを抽出
     moon_data = data.dig("output")&.find { |p| p.dig("planet", "en") == "Moon" }
 
+    # 月星座を判定し、日本語に変換
     if moon_data
       sign_en = moon_data.dig("zodiac_sign", "name", "en")
       @moon_sign = translate_sign(sign_en)
@@ -67,11 +73,13 @@ class MoonSignsController < ApplicationController
       @message = "月星座の情報が取得できませんでした。"
     end
 
+    # X共有用のテキストとURLを生成
     text = "私の月星座は#{@moon_sign}でした🌙\n#{@message}\n#月めぐるノート で日記を書いてみよう"
 
     @share_url = "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(text)}"
     @ogp_image_url = ogp_image_url(@moon_sign)
 
+    # 結果ページにリダイレクトし、ユーザーの月星座を保存
     redirect_to "/moon_sign/#{sign_en.downcase}"
     current_user.update(moon_sign: @moon_sign)
   end
@@ -112,6 +120,7 @@ class MoonSignsController < ApplicationController
   private
 
   def prefecture_to_coords(prefecture)
+    # 各県の県庁所在地の緯度・経度のリスト
     coords = {
       "北海道" => [ 43.0642, 141.3469 ],
       "青森県" => [ 40.8244, 140.7400 ],

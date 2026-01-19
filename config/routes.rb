@@ -45,6 +45,8 @@ Rails.application.routes.draw do
 
   get "/pages/*id" => "high_voltage/pages#show", as: :page
 
+  get "/moon_sign/:sign", to: "moon_signs#show"
+
   if Rails.env.test?
     require "rack_session_access/capybara"
     mount RackSessionAccess::Middleware.new(Rails.application), at: "/rack_session"

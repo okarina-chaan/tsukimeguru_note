@@ -2,6 +2,9 @@ require "net/http"
 require "json"
 
 class MoonSignsController < ApplicationController
+  before_action :require_login
+  skip_before_action :require_login, only: [ :show ]
+
   def new
   end
 
@@ -44,6 +47,10 @@ class MoonSignsController < ApplicationController
     Rails.logger.info("API response body: #{res.body}")
     data = JSON.parse(res.body)
   rescue => e
+
+
+
+
     Rails.logger.error("API通信エラー: #{e.message}")
     Rails.logger.error(e.backtrace.join("\n"))
     data = {}
@@ -65,14 +72,32 @@ class MoonSignsController < ApplicationController
     @share_url = "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(text)}"
     @ogp_image_url = ogp_image_url(@moon_sign)
 
-    render :show
+    redirect_to "/moon_sign/#{sign_en.downcase}"
     current_user.update(moon_sign: @moon_sign)
   end
 
   def show
-    @moon_sign ||= current_user.moon_sign
-    if @moon_sign.blank?
-      redirect_to new_moon_sign_path, alert: "まずは月星座を診断してください。"
+    # パラメータ無しでアクセスされた場合
+    if params[:sign].blank?
+      # ログイン済みなら、診断ページへ
+      if current_user
+        redirect_to new_moon_sign_path, alert: "まずは月星座診断してください。"
+      # ログインしていないときは、トップページへ
+      else
+        redirect_to root_path, alert: "ログインしてください"
+      end
+      return
+    end
+
+    # 英語の星座名を取得して、URL用に小文字に直す
+    english_sign = params[:sign]
+    @sign = english_sign.capitalize
+
+    @moon_sign = translate_sign(@sign)
+
+    # 月星座が診断されていないときは、トップページにリダイレクトする
+    if @moon_sign == "不明"
+      redirect_to root_path, alert: "無効な星座名です。"
       return
     end
 

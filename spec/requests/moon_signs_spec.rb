@@ -18,7 +18,7 @@ RSpec.describe "MoonSigns", type: :request do
 
       it 'X共有リンクが表示される' do
         get moon_sign_path
-        expect(response.body).to include("twitter.com/intent/tweet")
+        expect(response.body).to include("x.com/intent/tweet")
       end
 
       it 'OGP画像のメタタグが出力される' do

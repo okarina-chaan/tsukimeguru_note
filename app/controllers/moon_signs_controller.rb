@@ -87,8 +87,12 @@ class MoonSignsController < ApplicationController
   def show
     # パラメータ無しでアクセスされた場合
     if params[:sign].blank?
-      # ログイン済みなら、診断ページへ
-      if current_user
+      # ログイン済みなら、診断結果ページへ
+      if current_user && current_user.moon_sign.present?
+        english_sign = reverse_translate_sign(current_user.moon_sign)
+        redirect_to "/moon_sign/#{english_sign}"
+      # ログイン済みで診断していないときは、診断ページへ
+      elsif current_user
         redirect_to new_moon_sign_path, alert: "まずは月星座診断してください。"
       # ログインしていないときは、トップページへ
       else
@@ -174,6 +178,7 @@ class MoonSignsController < ApplicationController
     coords[prefecture] || [ 35.6895, 139.6917 ]
   end
 
+  # 英語の星座名を日本語に直す
   def translate_sign(sign)
     {
       "Aries" => "牡羊座", "Taurus" => "牡牛座", "Gemini" => "双子座",
@@ -205,5 +210,15 @@ class MoonSignsController < ApplicationController
     return nil unless valid_signs.include?(sign)
 
     "#{request.base_url}/ogp/#{ERB::Util.url_encode(sign)}.png"
+  end
+
+  # DBに保存された月星座名を使って、英語に直したいときに使う
+  def reverse_translate_sign(japanese_sign)
+    {
+      "牡羊座" => "aries", "牡牛座" => "taurus", "双子座" => "gemini",
+      "蟹座" => "cancer", "獅子座" => "leo", "乙女座" => "virgo",
+      "天秤座" => "libra", "蠍座" => "scorpio", "射手座" => "sagittarius",
+      "山羊座" => "capricorn", "水瓶座" => "aquarius", "魚座" => "pisces"
+    }[japanese_sign]
   end
 end

@@ -69,8 +69,8 @@ class MoonSignsController < ApplicationController
       @moon_sign = translate_sign(sign_en)
       @message = moon_sign_message(@moon_sign)
     else
-      @moon_sign = "不明"
-      @message = "月星座の情報が取得できませんでした。"
+      redirect_to new_moon_sign_path, alert: "診断に失敗しました。もう一度お試しください。"
+      return
     end
 
     # X共有用のテキストとURLを生成

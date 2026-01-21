@@ -3,8 +3,8 @@ class AnalysisController < ApplicationController
 
   def show
     # パラメータから年月を取得、なければ今月
-    year = params[:year]&.to_i || Date.today.year
-    month = params[:month]&.to_i || Date.today.month
+    year = params[:year]&.to_i || Time.zone.today.year
+    month = params[:month]&.to_i || Time.zone.today.month
 
     # 指定された年月の1日を基準日とする
     base_date = Date.new(year, month, 1)

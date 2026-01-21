@@ -61,15 +61,15 @@
                 <div class="absolute inset-0 rounded-lg transition-all duration-200 hover:shadow-lg hover:bg-base-200
                            <%= 'bg-info/5' if wday == 5 %>
                            <%= 'bg-error/5' if wday == 6 %>"
-                     style="<%= 'background-color: #7eb0f220; border: 2px solid #7EB0F2;' if day[:date] == Date.today %>
-                            <%= 'border: 2px solid #F1ACF2;' if day[:creatable_moon_note] && day[:date] != Date.today %>">
+                     style="<%= 'background-color: #7eb0f220; border: 2px solid #7EB0F2;' if day[:date] == Time.zone.today %>
+                            <%= 'border: 2px solid #F1ACF2;' if day[:creatable_moon_note] && day[:date] != Time.zone.today %>">
                   
                   <div class="flex flex-col items-center justify-center h-full p-1 sm:p-2">
                     <!-- 日付 -->
                     <div class="text-xs sm:text-sm font-semibold mb-1
                                <%= 'text-info' if wday == 5 %>
                                <%= 'text-error' if wday == 6 %>
-                               <%= 'text-primary font-bold' if day[:date] == Date.today %>">
+                               <%= 'text-primary font-bold' if day[:date] == Time.zone.today %>">
                       <%= day[:date].day %>
                     </div>
 
@@ -90,7 +90,7 @@
                     <% end %>
 
                     <!-- 今日のマーク -->
-                    <% if day[:date] == Date.today %>
+                    <% if day[:date] == Time.zone.today %>
                       <div class="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full"></div>
                     <% end %>
                   </div>

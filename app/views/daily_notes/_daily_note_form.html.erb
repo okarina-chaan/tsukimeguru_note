@@ -1,6 +1,6 @@
 <%
   form_title = local_assigns[:form_title] || "今日のDaily Note"
-  form_subtitle = local_assigns[:form_subtitle] || l(Date.today, format: :long)
+  form_subtitle = local_assigns[:form_subtitle] || l(Time.zone.today, format: :long)
   submit_label = local_assigns[:submit_label] || "保存する"
   form_url = local_assigns[:form_url]
   form_method = local_assigns[:form_method]

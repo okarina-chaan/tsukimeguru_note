@@ -3,8 +3,8 @@ class CalendarController < ApplicationController
   before_action :require_login
 
   def show
-    @year = params[:year]&.to_i || Date.today.year
-    @month = params[:month]&.to_i || Date.today.month
+    @year = params[:year]&.to_i || Time.zone.today.year
+    @month = params[:month]&.to_i || Time.zone.today.month
 
     start_date = Date.new(@year, @month, 1)
     end_date = start_date.end_of_month

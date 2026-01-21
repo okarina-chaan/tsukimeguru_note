@@ -44,7 +44,7 @@ RSpec.describe "Daily note機能", type: :system, js: true do
     let!(:other_note) do
       create(:daily_note,
              user: other_user,
-             date: Date.today,
+             date: Time.zone.today,
              did_today: "スマホを見すぎた。",
              try_tomorrow: "朝ストレッチをする。")
     end
@@ -59,7 +59,7 @@ RSpec.describe "Daily note機能", type: :system, js: true do
     it "ページネーションが正しく機能する" do
       # 既に let! で Date.yesterday のノートが作られているため、ループで同じ日付を再作成しないようにして作成する
       20.times do |i|
-        create(:daily_note, user: user, date: Date.today - (i + 2))
+        create(:daily_note, user: user, date: Time.zone.today - (i + 2))
       end
 
       visit daily_notes_path

@@ -6,10 +6,10 @@ class DashboardController < ApplicationController
     @daily_note ||= current_user.daily_notes.build
 
     # Repository経由で取得
-    moon_phase = MoonPhaseRepository.fetch_date(Date.today)
+    moon_phase = MoonPhaseRepository.fetch_date(Time.zone.today)
 
     # 今月のイベント日を取得
-    today = Date.today
+    today = Time.zone.today
     monthly_events = MoonApiService.fetch_monthly_events_with_range(today.year, today.month)
 
     # 今日がどのイベントか判定
@@ -20,7 +20,7 @@ class DashboardController < ApplicationController
     event = :last_quarter_moon if monthly_events[:last_quarter_moon].include?(today)
 
     @dashboard_data = {
-      today: Date.today.strftime("%Y年 %m月 %d日 (%a)"),
+      today: Time.zone.today.strftime("%Y年 %m月 %d日 (%a)"),
       moonPhase: moon_phase&.display_name,
       moonPhaseEmoji: moon_phase&.display_emoji,
       event: event,

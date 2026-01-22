@@ -28,7 +28,7 @@ RSpec.describe 'Dashboard', type: :system, js: true do
           moon_phase_name: "満月",
           moon_phase_emoji: "🌕",
           moon_age: 14.3,
-          date: Date.today
+          date: Time.zone.today
         )
       end
 
@@ -52,7 +52,7 @@ RSpec.describe 'Dashboard', type: :system, js: true do
           moon_phase_name: "その他",
           moon_phase_emoji: "",
           moon_age: 12.0,
-          date: Date.today
+          date: Time.zone.today
         )
       end
 

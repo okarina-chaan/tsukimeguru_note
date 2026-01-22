@@ -13,7 +13,7 @@ RSpec.describe "Moon Note", type: :system, js: true do
           moon_phase_name: "満月",
           moon_phase_emoji: "🌕",
           moon_age: 14.3,
-          date: Date.today
+          date: Time.zone.today
         )
       end
 
@@ -41,7 +41,7 @@ RSpec.describe "Moon Note", type: :system, js: true do
           moon_phase_name: "その他",
           moon_phase_emoji: "",
           moon_age: 12.0,
-          date: Date.today
+          date: Time.zone.today
         )
       end
 
@@ -55,7 +55,7 @@ RSpec.describe "Moon Note", type: :system, js: true do
 
   describe "moon note一覧" do
     context "moon noteが存在する場合" do
-      let!(:moon_note) { create(:moon_note, user: user, date: Date.today - 1) }
+      let!(:moon_note) { create(:moon_note, user: user, date: Time.zone.today - 1) }
       it "moon note一覧が表示される" do
         visit moon_notes_path
         expect(page).to have_content("今日は満月です。心が穏やかになります。")
@@ -63,7 +63,7 @@ RSpec.describe "Moon Note", type: :system, js: true do
 
       it "ページネーションが正しく機能する" do
         10.times do |i|
-          create(:moon_note, user: user, date: Date.today - 2 - i)
+          create(:moon_note, user: user, date: Time.zone.today - 2 - i)
         end
         visit moon_notes_path
 
@@ -83,7 +83,7 @@ RSpec.describe "Moon Note", type: :system, js: true do
   end
 
   describe "moon note編集" do
-    let!(:moon_note) { create(:moon_note, user: user, date: Date.today - 1, content: "更新前だよ") }
+    let!(:moon_note) { create(:moon_note, user: user, date: Time.zone.today - 1, content: "更新前だよ") }
 
     context "正常" do
       it "moon noteを正しく更新できる" do
@@ -116,7 +116,7 @@ RSpec.describe "Moon Note", type: :system, js: true do
   end
 
   describe "moon note削除" do
-  let!(:moon_note) { create(:moon_note, user: user, date: Date.today - 1) }
+  let!(:moon_note) { create(:moon_note, user: user, date: Time.zone.today - 1) }
     it "moon noteを正しく削除できる" do
       visit moon_notes_path
       expect do

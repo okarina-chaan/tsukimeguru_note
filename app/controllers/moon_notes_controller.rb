@@ -9,7 +9,7 @@ class MoonNotesController < ApplicationController
 
   def new
     @moon_note = current_user.moon_notes.build
-    data = MoonApiService.fetch(Date.today)
+    data = MoonApiService.fetch(Time.zone.today)
     loose_event = data[:loose_event] || data[:event]
     if loose_event.blank?
       redirect_to dashboard_path, alert: "今日のMoon Noteはありません。"
@@ -29,7 +29,7 @@ class MoonNotesController < ApplicationController
   end
 
   def create
-    data = MoonApiService.fetch(Date.today)
+    data = MoonApiService.fetch(Time.zone.today)
     loose_event = data&.dig(:loose_event) || data&.dig(:event)
     return redirect_to dashboard_path, alert: "今日のMoon Noteはありません。" if data.nil? || loose_event.blank?
     return redirect_to dashboard_path, alert: "今日のMoon Noteは作成済みです。" if current_user.moon_notes.exists?(date: data[:date])

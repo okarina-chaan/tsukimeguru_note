@@ -52,19 +52,19 @@ RSpec.describe MoonSignsController, type: :controller do
     context '有効な都道府県の場合' do
       it '東京都の座標を返す' do
         result = controller.send(:prefecture_to_coords, '東京都')
-        expect(result).to eq([35.6895, 139.6917])
+        expect(result).to eq([ 35.6895, 139.6917 ])
       end
 
       it '北海道の座標を返す' do
         result = controller.send(:prefecture_to_coords, '北海道')
-        expect(result).to eq([43.0642, 141.3469])
+        expect(result).to eq([ 43.0642, 141.3469 ])
       end
     end
 
     context '無効な都道府県の場合' do
       it '存在しない都道府県でデフォルト座標（東京）を返す' do
         result = controller.send(:prefecture_to_coords, '四国')
-        expect(result).to eq([35.6895, 139.6917])
+        expect(result).to eq([ 35.6895, 139.6917 ])
       end
     end
   end

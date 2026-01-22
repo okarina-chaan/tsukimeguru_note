@@ -17,7 +17,7 @@
         <!-- 年月表示 -->
         <div class="text-center">
           <h2 class="text-3xl font-bold"><%= @year %>年 <%= @month %>月</h2>
-          <p class="text-sm text-base-content/60 mt-1">🌙 Moon Phase Calendar</p>
+          <p class="text-sm text-base-content/60 mt-1">Moon Phase Calendar</p>
         </div>
 
         <!-- 次月ボタン -->
@@ -74,19 +74,19 @@
                     </div>
 
                     <!-- 月の絵文字 -->
-                    <div class="text-2xl sm:text-3xl mb-1" title="<%= day[:moon_phase] %>">
+                    <div class="text-sm sm:text-3xl mb-1" title="<%= day[:moon_phase] %>">
                       <%= day[:emoji] %>
                     </div>
 
                     <!-- 特別な日のバッジ -->
                     <% if day[:new_moon] %>
-                      <div class="badge badge-xs mt-1" style="background-color: #b3a1f7; color: #1A1A1A;">新月</div>
+                      <div class="badge badge-xs mt-1 hidden landscape:block lg:block " style="background-color: #b3a1f7; color: #1A1A1A;">新月</div>
                     <% elsif day[:full_moon] %>
-                      <div class="badge badge-xs mt-1" style="background-color: #F2EDA0; color: #1A1A1A;">満月</div>
+                      <div class="badge badge-xs mt-1 hidden landscape:block lg:block" style="background-color: #F2EDA0; color: #1A1A1A;">満月</div>
                     <% elsif day[:first_quarter] %>
-                      <div class="badge badge-xs mt-1" style="background-color: #F1ACF2; color: #1A1A1A;">上弦</div>
+                      <div class="badge badge-xs mt-1 hidden landscape:block lg:block" style="background-color: #F1ACF2; color: #1A1A1A;">上弦</div>
                     <% elsif day[:last_quarter] %>
-                      <div class="badge badge-xs mt-1" style="background-color: #EFD5F2; color: #1A1A1A;">下弦</div>
+                      <div class="badge badge-xs mt-1 hidden landscape:block lg:block" style="background-color: #EFD5F2; color: #1A1A1A;">下弦</div>
                     <% end %>
 
                     <!-- 今日のマーク -->
@@ -117,6 +117,9 @@
             <div class="badge badge-xs" style="background-color: #F1ACF2; color: #1A1A1A;">上弦</div>
             <div class="badge badge-xs" style="background-color: #F2EDA0; color: #1A1A1A;">満月</div>
             <div class="badge badge-xs" style="background-color: #EFD5F2; color: #1A1A1A;">下弦</div>
+          </div>
+          <div>
+            <p class="text-base-content/70">※ 月の名前は、スマホでの横画面・PC・タブレットで表示されます</p>
           </div>
         </div>
       </div>

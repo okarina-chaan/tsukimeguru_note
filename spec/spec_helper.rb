@@ -1,7 +1,9 @@
+require "active_support/testing/time_helpers"
 require "stub_env"
 
 RSpec.configure do |config|
   config.include StubEnv::Helpers
+  config.include ActiveSupport::Testing::TimeHelpers
   config.expect_with :rspec do |expectations|
     # This option will default to `true` in RSpec 4. It makes the `description`
     # and `failure_message` of custom matchers include text for helper methods

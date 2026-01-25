@@ -1,25 +1,34 @@
 class UsersController < ApplicationController
-  before_action :require_login
+  before_action :require_login, only: %i[ mypage send_email confirm_destroy]
 
   def mypage
   end
 
-  def settings
+  def send_email
+  end
+
+  def confirm_destroy
+    @user = current_user
+
+    # POSTされたときの挙動
+    if request.post?
+      # メールアドレスがない場合はエラー
+      unless @user.email.present?
+        redirect_to edit_email_path, alert: "削除連絡用のメールアドレスを登録してください"
+        return
+      end
+
+      # TODO:トークンの生成をする
+      # TODO:メールを送る処理をかく
+      
+      redirect_to send_email_path
+    end
   end
 
   def destroy
-    @user = current_user
-
-    # メールアドレスがない場合はエラー
-    unless @user.email.present?
-      redirect_to settings_path, alert: "削除連絡用のメールアドレスを登録してください"
-      return
-    end
-
-    # TODO: 削除確認メール送信（後で実装）
-
-    @user.destroy
+    # トークンが無効の場合は削除確認画面へ移動させる
+    
     reset_session
-    redirect_to root_path, notice: "アカウントを削除しました。確認メールを送信しました。"
+    redirect_to page_path("destroyed"), notice: "アカウント削除が完了しました。"
   end
 end

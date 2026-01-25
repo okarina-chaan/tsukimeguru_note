@@ -10,54 +10,54 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_01_13_134402) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_13_134402) do
   create_table "authentications", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.string "password_digest"
     t.string "provider", null: false
     t.string "uid", null: false
-    t.string "password_digest"
-    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["provider", "uid"], name: "index_authentications_on_provider_and_uid", unique: true
     t.index ["user_id"], name: "index_authentications_on_user_id"
   end
 
   create_table "daily_notes", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.date "date", null: false
-    t.integer "condition_score"
-    t.integer "mood_score"
-    t.text "did_today"
     t.string "challenge"
-    t.string "good_things"
-    t.string "try_tomorrow"
-    t.text "memo"
-    t.string "moon_phase_name"
+    t.integer "condition_score"
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.date "date", null: false
+    t.text "did_today"
+    t.string "good_things"
+    t.text "memo"
+    t.integer "mood_score"
     t.string "moon_phase_emoji"
+    t.string "moon_phase_name"
+    t.string "try_tomorrow"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["user_id", "date"], name: "index_daily_notes_on_user_id_and_date", unique: true
     t.index ["user_id"], name: "index_daily_notes_on_user_id"
   end
 
   create_table "moon_notes", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.date "date", null: false
-    t.float "moon_age", null: false
-    t.integer "moon_phase", null: false
     t.text "content", null: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.date "date", null: false
     t.integer "loose_moon_phase"
+    t.float "moon_age", null: false
+    t.integer "moon_phase", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
     t.index ["user_id", "date"], name: "index_moon_notes_on_user_id_and_date", unique: true
     t.index ["user_id"], name: "index_moon_notes_on_user_id"
   end
 
   create_table "moon_phases", force: :cascade do |t|
-    t.date "date"
     t.float "angle"
-    t.float "moon_age"
     t.datetime "created_at", null: false
+    t.date "date"
+    t.float "moon_age"
     t.datetime "updated_at", null: false
     t.index ["date"], name: "index_moon_phases_on_date", unique: true
   end
@@ -68,14 +68,14 @@ ActiveRecord::Schema[8.0].define(version: 2026_01_13_134402) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "line_user_id"
-    t.string "name"
     t.boolean "account_registered", default: false
     t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "moon_sign"
-    t.datetime "weekly_insight_generated_at"
     t.string "email"
+    t.string "line_user_id"
+    t.string "moon_sign"
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.datetime "weekly_insight_generated_at"
     t.index ["email"], name: "index_users_on_email", unique: true, where: "email IS NOT NULL"
     t.index ["line_user_id"], name: "index_users_on_line_user_id", unique: true
   end

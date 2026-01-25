@@ -1,25 +1,49 @@
 class UsersController < ApplicationController
-  before_action :require_login
+  before_action :require_login, only: %i[ mypage send_email confirm_destroy]
 
   def mypage
   end
 
-  def settings
+  def send_email
   end
 
-  def destroy
+  def confirm_destroy
     @user = current_user
 
-    # メールアドレスがない場合はエラー
-    unless @user.email.present?
-      redirect_to settings_path, alert: "削除連絡用のメールアドレスを登録してください"
+    # POSTされたときの挙動
+    if request.post?
+      # メールアドレスがない場合はエラー
+      unless @user.email.present?
+        redirect_to edit_email_path, alert: "削除連絡用のメールアドレスを登録してください"
+        return
+      end
+
+      # トークンの生成をする
+      token = @user.signed_id(expires_in: 30.minutes, purpose: :destroy_account)
+      # 削除リンクURLを作成する
+      delete_url = destroy_account_url(token: token)
+      # TODO:メールを送る処理をかく
+
+      redirect_to send_email_path
+    # GETのときはビューの表示をする(書いたほうがわかりやすいから書く)
+    else
+      render :confirm_destroy
+    end
+  end
+
+  def destroy_account
+    @user = User.find_signed(params[:token], purpose: :destroy_account)
+
+    # トークンの検証ができなかったときはマイページへリダイレクトさせる
+    unless @user
+      redirect_to root_path, alert: "このリンクは無効か、有効期限が切れています"
       return
     end
 
-    # TODO: 削除確認メール送信（後で実装）
-
-    @user.destroy
-    reset_session
-    redirect_to root_path, notice: "アカウントを削除しました。確認メールを送信しました。"
+    if request.delete?
+      @user.destroy
+      reset_session
+      redirect_to page_path("destroyed")
+    end
   end
 end

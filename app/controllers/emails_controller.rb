@@ -8,7 +8,7 @@ class EmailsController < ApplicationController
   def update
     @user = current_user
     if @user.update(email_params)
-      redirect_to settings_path, notice: "メールアドレスを登録しました"
+      redirect_to mypage_path, notice: "メールアドレスを登録しました"
     else
       flash.now[:alert] = "メールアドレスの登録に失敗しました"
       render :edit, status: :unprocessable_entity

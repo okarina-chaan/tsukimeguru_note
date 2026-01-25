@@ -1,0 +1,34 @@
+<div class="container mx-auto max-w-md mt-10">
+  <h1 class="text-xl font-bold mb-6 text-center">
+    退会の最終確認
+  </h1>
+
+  <div class="bg-red-50 border border-red-200 p-4 rounded mb-6">
+    <p class="text-sm text-red-800 mb-2">
+      この操作を行うと、アカウントは完全に削除されます。
+    </p>
+    <p class="text-sm text-red-800">
+      登録したデータは元に戻せませんので、注意してください。
+    </p>
+  </div>
+
+  <div class="mb-6 text-sm text-gray-700">
+    <p>
+      対象アカウント：
+      <strong><%= @user.email %></strong>
+    </p>
+  </div>
+
+  <%= form_with url: destroy_account_path(params[:token]), method: :delete do %>
+    <%= hidden_field_tag :token, params[:token] %>
+
+    <div class="flex flex-col gap-3">
+      <%= submit_tag "退会する",
+          class: "btn btn-danger w-full" %>
+
+      <%= link_to "キャンセルして戻る",
+          root_path,
+          class: "text-center text-sm text-gray-500 underline" %>
+    </div>
+  <% end %>
+</div>

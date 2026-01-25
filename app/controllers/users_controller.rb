@@ -18,17 +18,32 @@ class UsersController < ApplicationController
         return
       end
 
-      # TODO:トークンの生成をする
+      # トークンの生成をする
+      token = @user.signed_id(expires_in: 30.minutes, purpose: :destroy_account)
+      # 削除リンクURLを作成する
+      delete_url = destroy_account_url(token: token)
       # TODO:メールを送る処理をかく
-      
+
       redirect_to send_email_path
+    # GETのときはビューの表示をする(書いたほうがわかりやすいから書く)
+    else
+      render :confirm_destroy
     end
   end
 
-  def destroy
-    # トークンが無効の場合は削除確認画面へ移動させる
-    
-    reset_session
-    redirect_to page_path("destroyed"), notice: "アカウント削除が完了しました。"
+  def destroy_account
+    @user = User.find_signed(params[:token], purpose: :destroy_account)
+
+    # トークンの検証ができなかったときはマイページへリダイレクトさせる
+    unless @user
+      redirect_to root_path, alert: "このリンクは無効か、有効期限が切れています"
+      return
+    end
+
+    if request.delete?
+      @user.destroy
+      reset_session
+      redirect_to page_path("destroyed")
+    end
   end
 end

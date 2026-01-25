@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
   resource :account_name, only: [ :edit, :update ]
 
-  resources :users, only: [ :edit, :update, :destroy ] do
+  resources :users, only: [ :edit, :update ] do
       get :confirm_destroy, on: :collection
       get :send_email, on: :collection
       post :confirm_destroy, on: :collection
+      match "destroy_account/:token", to: "users#destroy_account", via: [ :get, :delete ], on: :collection, as: :destroy_account
   end
 
   resources :daily_notes, only: [ :index, :new, :create, :edit, :update, :destroy ]

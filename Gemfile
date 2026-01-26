@@ -117,6 +117,9 @@ group :development do
   # 計測結果をグラフ表示させる
   gem "stackprof"
   gem "flamegraph"
+
+  # メール確認に使う
+  gem "letter_opener_web"
 end
 
 group :test do

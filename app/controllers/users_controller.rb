@@ -21,11 +21,11 @@ class UsersController < ApplicationController
       # トークンの生成をする
       token = @user.signed_id(expires_in: 30.minutes, purpose: :destroy_account)
       # 削除リンクURLを作成する
-      delete_url = destroy_account_url(token: token)
+      delete_url = destroy_account_users_url(token: token)
       # メーラーに引数として渡し、メールを送信する
       UserMailer.deletion_email(@user, delete_url).deliver_now
 
-      redirect_to send_email_path
+      redirect_to send_email_users_path
     # GETのときはビューの表示をする(書いたほうがわかりやすいから書く)
     else
       render :confirm_destroy

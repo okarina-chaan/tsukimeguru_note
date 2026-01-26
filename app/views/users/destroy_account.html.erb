@@ -19,12 +19,12 @@
     </p>
   </div>
 
-  <%= form_with url: destroy_account_path(params[:token]), method: :delete do %>
+  <%= form_with url: destroy_account_users_path(params[:token]), method: :delete do %>
     <%= hidden_field_tag :token, params[:token] %>
 
     <div class="flex flex-col gap-3">
       <%= submit_tag "退会する",
-          class: "btn btn-danger w-full" %>
+          class: "btn btn-error w-full" %>
 
       <%= link_to "キャンセルして戻る",
           root_path,

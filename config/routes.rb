@@ -53,4 +53,7 @@ Rails.application.routes.draw do
     require "rack_session_access/capybara"
     mount RackSessionAccess::Middleware.new(Rails.application), at: "/rack_session"
   end
+
+  # letter_openerのルーティング
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end

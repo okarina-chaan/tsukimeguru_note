@@ -5,7 +5,7 @@
 	</div>
 
 	<div class="flex justify-center items-center gap-4 mt-8">
-		<%= link_to "退会する", confirm_destroy_users_path, data: { turbo: false, "turbo-method": :post }, class:"btn btn-error" %>
+		<%= button_to "退会する", confirm_destroy_users_path, data: { turbo: false }, class:"btn btn-error" %>
 		<%= link_to "キャンセル", mypage_path, class:"btn btn-primary btn-outline" %>
 	</div>
 </div>

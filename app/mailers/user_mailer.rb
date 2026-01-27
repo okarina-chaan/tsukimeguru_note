@@ -1,6 +1,4 @@
 class UserMailer < ApplicationMailer
-  default from: "noreply@tsukimerugu-note.com"
-
   def deletion_email(user, url)
     @user = user
     @url = url

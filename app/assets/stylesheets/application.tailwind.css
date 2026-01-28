@@ -62,28 +62,4 @@
     filter: brightness(1.1);
   }
 
-  /* 利用規約・プライバシーポリシー用スタイル */
-  .legal-content {
-    @apply max-w-3xl mx-auto px-6 py-10;
-  }
-
-  .legal-content h1 {
-    @apply text-2xl font-bold mb-8 text-center;
-    color: var(--c-accent-gold);
-  }
-
-  .legal-content h2 {
-    @apply text-lg font-semibold mt-10 mb-4 text-center;
-    color: var(--c-accent-peach);
-  }
-
-  .legal-content p {
-    @apply leading-relaxed mb-3;
-    color: var(--c-text-muted);
-  }
-
-  .legal-content ul {
-    @apply list-disc list-inside mb-3 space-y-2;
-    color: var(--c-accent-mauve);
-  }
 }

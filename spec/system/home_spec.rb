@@ -14,4 +14,4 @@ RSpec.describe "Home", type: :system do
       expect(page).to have_content "プライバシーポリシー"
     end
   end
-end 
+end

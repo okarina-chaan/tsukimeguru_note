@@ -10,7 +10,7 @@ RSpec.describe "Users", type: :system do
       before do
         sign_in_as(user)
       end
-        
+
       it "正常に確認画面が表示されること" do
         visit mypage_path
         expect(page).to have_content("マイページ")
@@ -21,7 +21,7 @@ RSpec.describe "Users", type: :system do
     end
 
     context "異常系" do
-      let(:no_email_user) { create(:user, email: nil)}
+      let(:no_email_user) { create(:user, email: nil) }
       it "mailがないときはメールアドレス登録画面に遷移すること" do
         sign_in_as(no_email_user)
         visit confirm_destroy_users_path
@@ -33,12 +33,12 @@ RSpec.describe "Users", type: :system do
   describe "account_destroy" do
     let(:user) { create(:user) }
     let(:token) { user.signed_id(expires_in: 30.minutes, purpose: :destroy_account) }
-    let(:url) {destroy_account_users_path(token: token)}
+    let(:url) { destroy_account_users_path(token: token) }
     context "正常系" do
       before do
         sign_in_as(user)
       end
-        
+
       it "正常にアカウントが削除されること" do
         visit url
         expect(page).to have_content("退会の最終確認")
@@ -72,4 +72,4 @@ RSpec.describe "Users", type: :system do
       end
     end
   end
-end 
+end

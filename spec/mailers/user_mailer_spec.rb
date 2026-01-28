@@ -12,7 +12,7 @@ RSpec.describe UserMailer, type: :mailer do
     end
 
     it "メールの宛先が正しく設定されること" do
-      expect(mail.to).to eq([user.email])
+      expect(mail.to).to eq([ user.email ])
     end
 
     it "メールの件名が正しく設定されること" do

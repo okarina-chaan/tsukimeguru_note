@@ -65,5 +65,9 @@
         </div>
       <% end %>
     </div>
+
+    <% if current_user.moon_sign.blank? %>
+      <%= render "moon_sign_card" %>
+    <% end %>
   </div>
 </div>

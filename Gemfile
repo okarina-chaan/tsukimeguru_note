@@ -91,7 +91,7 @@ group :development, :test do
   gem "rspec-rails"
   gem "factory_bot_rails"
   gem "capybara"
-  gem 'selenium-webdriver', '~> 4.40'
+  gem "selenium-webdriver", "~> 4.40"
 
   gem "pry-rails"
 

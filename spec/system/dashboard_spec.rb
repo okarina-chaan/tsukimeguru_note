@@ -71,7 +71,7 @@ RSpec.describe 'Dashboard', type: :system, js: true do
       before do
         user.update(moon_sign: nil)
       end
-      
+
       it '月星座診断カードが表示されること' do
         visit dashboard_path
         expect(page).to have_content '月星座診断'

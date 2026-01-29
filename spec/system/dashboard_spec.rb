@@ -28,6 +28,7 @@ RSpec.describe 'Dashboard', type: :system, js: true do
           moon_phase_name: "満月",
           moon_phase_emoji: "🌕",
           moon_age: 14.3,
+          angle: 180.0,
           date: Time.zone.today
         )
       end
@@ -52,6 +53,7 @@ RSpec.describe 'Dashboard', type: :system, js: true do
           moon_phase_name: "その他",
           moon_phase_emoji: "",
           moon_age: 12.0,
+          angle: 150.0,
           date: Time.zone.today
         )
       end
@@ -60,6 +62,36 @@ RSpec.describe 'Dashboard', type: :system, js: true do
         visit dashboard_path
         expect(page).not_to have_link 'Moon Noteを書く'
         expect(page).to have_content '対象日ではありません'
+      end
+    end
+  end
+
+  describe '月星座診断カードの表示について' do
+    context '月星座が未診断の場合' do
+      before do
+        user.update(moon_sign: nil)
+      end
+
+      it '月星座診断カードが表示されること' do
+        visit dashboard_path
+        expect(page).to have_content '月星座診断'
+      end
+
+      it '月星座診断ページに遷移できること' do
+        visit dashboard_path
+        click_on '診断を始める'
+        expect(page).to have_current_path moon_sign_path
+      end
+    end
+
+    context '月星座が診断済みの場合' do
+      before do
+        user.update(moon_sign: :aries)
+      end
+
+      it '月星座診断カードが表示されないこと' do
+        visit dashboard_path
+        expect(page).not_to have_content '月星座診断'
       end
     end
   end

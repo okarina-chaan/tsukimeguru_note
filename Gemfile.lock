@@ -111,7 +111,7 @@ GEM
       debug_inspector (>= 1.2.0)
     bootsnap (1.21.1)
       msgpack (~> 1.2)
-    brakeman (7.1.2)
+    brakeman (8.0.1)
       racc
     builder (3.3.0)
     bullet (8.1.0)
@@ -551,7 +551,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootsnap
-  brakeman (~> 7.1.2)
+  brakeman (~> 8.0.1)
   bullet
   capybara
   database_cleaner-active_record

@@ -22,15 +22,19 @@ class DailyNotesController < ApplicationController
       return
     end
 
-    # 既存のDaily Noteをチェックして更新するか新規作成するか決定
+    # 既存のDaily Noteをチェックしてエラーを出すか新規作成するか決定
+    # rubocop:disable Style/RedundantReturn
     @daily_note = current_user.daily_notes.find_by(date: selected_date)
 
     if @daily_note
-      redirect_to edit_daily_note_path(@daily_note) and return
+      flash.now[:error] = "#{selected_date.strftime('%Y年%m月%d日')}のDaily Noteは既に存在します"
+      @daily_note = current_user.daily_notes.build(date: selected_date)
+      return
     else
       @daily_note = current_user.daily_notes.build(date: selected_date)
     end
   end
+  # rubocop:enable Style/RedundantReturn
 
   def create
     @daily_note = current_user.daily_notes.build(daily_note_params)

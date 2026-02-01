@@ -29,6 +29,15 @@
         </div>
       <% end %>
 
+      <div class = "mb-6 p-4 bg-base-200/50 rounded-xl">
+      <p   class = "text-sm text-base-content/70 mb-3">
+          ※過去のDaily Noteを記録する場合はこちらから日付を選択してください
+        </p>
+        <%= f.date_field :date,
+            value: daily_note.date || Time.zone.today,
+            class: "input input-bordered w-full bg-base-100/80" %>
+      </div>
+
       <div class="space-y-6">
         <div class="card bg-base-200/70 rounded-2xl p-6 border border-base-300/40 space-y-6">
           <h2 class="text-xl font-semibold">今日の調子はどう？</h2>

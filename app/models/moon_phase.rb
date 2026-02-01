@@ -22,7 +22,6 @@ class MoonPhase < ApplicationRecord
     MoonApiService.detect_event(angle, MoonApiService::LOOSE_EVENT_TOLERANCE_DEGREES)
   end
 
-  # moon_notes 作成可能か
   def creatable_for_moon_note?
     loose_event.present?
   end

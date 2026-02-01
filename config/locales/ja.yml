@@ -7,15 +7,21 @@ ja:
       daily_note:
         condition_score: 体調
         mood_score: 気分
-        date: 今日
+        date: 日付
         memo: メモ
       moon_note:
         content: 本文
 
     errors:
       blank: "を入力してください"
-      taken: "は既に記入済みです"
+      taken: "はすでに登録されています"
       inclusion: "は正しい値を選択してください"
+      models:
+        daily_note:
+          attributes:
+            date:
+              taken: "はすでに存在します"
+              less_than_or_equal_to: "は今日より過去の日付にしてください"
   views:
     pagination:
       first: "<<"

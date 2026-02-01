@@ -11,11 +11,9 @@ Rails.application.routes.draw do
   resources :daily_notes, only: [ :index, :new, :create, :edit, :update, :destroy ]
   resources :moon_notes, only: [ :index, :new, :create, :edit, :update, :destroy ]
 
-  # Email認証
   resource :registration, only: [ :new, :create ]
   resource :session, only: [ :new, :create, :destroy ]
 
-  # メールアドレス登録
   resource :email, only: [ :edit, :update ]
 
   resource :moon_sign, only: [ :new, :create, :show ]

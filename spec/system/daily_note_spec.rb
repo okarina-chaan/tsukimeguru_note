@@ -115,6 +115,7 @@ RSpec.describe "Daily note機能", type: :system, js: true do
       create(
         :daily_note,
         user: user,
+        date: Time.zone.today,
         condition_score: 3,
         mood_score: 2,
         did_today: "朝早起きした。",
@@ -122,21 +123,46 @@ RSpec.describe "Daily note機能", type: :system, js: true do
       )
     end
 
-    it "編集画面で既存データがUIに反映されている" do
-      visit edit_daily_note_path(note)
+    context "正常系" do
+      it "編集画面で既存データがUIに反映されている" do
+        visit edit_daily_note_path(note)
 
-      expect(page).to have_field(
-        "daily_note_did_today",
-        with: "朝早起きした。"
-      )
+        expect(page).to have_field(
+          "daily_note_did_today",
+          with: "朝早起きした。"
+        )
 
-      expect(page).to have_css(
-        '[data-group="health"] .active[data-value="3"]'
-      )
+        expect(page).to have_css(
+          '[data-group="health"] .active[data-value="3"]'
+        )
 
-      expect(page).to have_css(
-        '[data-group="mood"] .active[data-value="2"]'
-      )
+        expect(page).to have_css(
+          '[data-group="mood"] .active[data-value="2"]'
+        )
+      end
+    end
+
+    context "異常系" do
+      it "未来の日付のDaily noteは保存できない" do
+        visit edit_daily_note_path(note)
+
+        fill_in "daily_note_date",	with: (Time.zone.today + 3.days)
+        click_button "更新する"
+
+        expect(page).to have_content("日付は今日より過去の日付にしてください")
+      end
+
+      it "既存のDaily noteを他のDaily noteと同じ日付に更新できない" do
+        note = create(:daily_note, user: user, date: Time.zone.today - 2.days)
+        other_note = create(:daily_note, user: user, date: Time.zone.today - 5.days)
+
+        visit edit_daily_note_path(note)
+
+        fill_in "daily_note_date", with: other_note.date
+        click_button "更新する"
+
+        expect(page).to have_content("（#{other_note.date.strftime("%Y年%m月%d日")}）は既に登録されています")
+      end
     end
   end
 

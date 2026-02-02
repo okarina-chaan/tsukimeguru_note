@@ -25,7 +25,10 @@ class DailyNote < ApplicationRecord
   def date_uniqueness_per_user
     return if date.blank? || !user_id
 
-    if self.class.exists?(user_id: user_id, date: date) && new_record?
+    duplicate_note = self.class.where(user_id: user_id, date: date)
+                               .where.not(id: id)
+
+    if duplicate_note.exists?
       errors.add(:date, "（#{date.strftime('%Y年%m月%d日')}）は既に登録されています")
     end
   end

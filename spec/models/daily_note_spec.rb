@@ -110,6 +110,15 @@ RSpec.describe "DailyNote", type: :model do
         expect(daily_note2).to be_invalid
         expect(daily_note2.errors[:date]).to include("（#{Time.zone.today.strftime('%Y年%m月%d日')}）は既に登録されています")
       end
+
+      it "daily noteの日付以外を編集しても、同じ日付であれば保存できる" do
+        daily_note = create(:daily_note, user: user, date: Time.zone.today)
+
+        daily_note.condition_score = 2
+        daily_note.mood_score = 3
+
+        expect(daily_note).to be_valid
+      end
     end
   end
 end

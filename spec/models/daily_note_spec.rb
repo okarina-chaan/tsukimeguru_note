@@ -100,6 +100,16 @@ RSpec.describe "DailyNote", type: :model do
         expect(daily_note).to be_invalid
         expect(daily_note.errors[:date]).to include("は今日より過去の日付にしてください")
       end
+
+      it '既存の日記を更新する際、他の日記と同じ日付に変更できない' do
+        daily_note1 = create(:daily_note, user: user, date: Time.zone.today)
+        daily_note2 = create(:daily_note, user: user, date: Time.zone.today - 1.day)
+
+        daily_note2.date = Time.zone.today
+
+        expect(daily_note2).to be_invalid
+        expect(daily_note2.errors[:date]).to include("（#{Time.zone.today.strftime('%Y年%m月%d日')}）は既に登録されています")
+      end
     end
   end
 end

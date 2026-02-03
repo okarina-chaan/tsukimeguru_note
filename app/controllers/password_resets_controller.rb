@@ -33,6 +33,14 @@ class PasswordResetsController < ApplicationController
   end
 
   def edit
+    @user = User.find_signed(params[:token], purpose: :password_reset)
+
+    # rubocop:disable Rails/I18nLocaleTexts
+    unless @user
+      redirect_to root_path, alert: "このリンクは無効か、有効期限が切れています"
+      nil
+    end
+    # rubocop:enable Rails/I18nLocaleTexts
   end
 
   def update

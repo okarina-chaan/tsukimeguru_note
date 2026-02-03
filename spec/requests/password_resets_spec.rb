@@ -105,6 +105,14 @@ RSpec.describe "PasswordResets", type: :request do
         patch password_resets_path, params: { token: token, password: "", password_confirmation: "" }
         expect(response.body).to include("パスワードを入力してください")
       end
+
+      it "email認証が存在しない場合にエラーメッセージが表示されること" do
+        email_auth.destroy
+        patch password_resets_path, params: { token: token, password: "new_password", password_confirmation: "new_password" }
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+        expect(response.body).to include("メール認証")
+      end
     end
   end
 end

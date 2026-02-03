@@ -3,6 +3,7 @@
     <h1 class="text-3xl font-display font-bold mb-6">パスワードリセット設定</h1>
 
     <%= form_with url: password_resets_path(token: params[:token]), method: :patch, local: true, class: "flex flex-col items-center" do |f| %>
+      <%= hidden_field_tag :token, params[:token] %>
       <!-- パスワード -->
       <div class="form-control mt-4 w-full">
           <label class="label justify-center">

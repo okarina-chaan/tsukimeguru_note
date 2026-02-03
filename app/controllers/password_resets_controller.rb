@@ -1,5 +1,9 @@
 class PasswordResetsController < ApplicationController
-  def new
+  rate_limit to:        10,
+             within:    1.hour,
+             only:      [ :create ],
+             by:        -> { request.remote_ip || "unknown" }
+    def new
     @email = params[:email]
   end
 
@@ -19,7 +23,7 @@ class PasswordResetsController < ApplicationController
     end
 
     token = @user.signed_id(expires_in: 30.minutes, purpose: :password_reset)
-    reset_url = edit_password_resets_path(token: token)
+    reset_url = edit_password_resets_url(token: token)
     PasswordResetMailer.password_reset_email(@email, reset_url).deliver_now
 
     redirect_to sent_password_resets_path, notice: "メールを送信しました。"

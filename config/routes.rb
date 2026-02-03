@@ -25,6 +25,8 @@ Rails.application.routes.draw do
       post  :weekly_insight,  on: :collection
   end
 
+  resource :password_resets,  only: [ :new, :create, :edit, :update ]
+
   namespace :api do
     resources :weekly_insights, only: [ :create ] do
       member do

@@ -1,0 +1,41 @@
+<div class="container mx-auto px-4 py-8 pt-20 max-w-lg flex justify-center">
+  <div class="text-center">
+    <h1 class="text-3xl font-display font-bold mb-6">パスワードリセット設定</h1>
+
+    <%= form_with url: password_resets_path(token: params[:token]), method: :patch, local: true, class: "flex flex-col items-center" do |f| %>
+      <%= hidden_field_tag :token, params[:token] %>
+      <!-- パスワード -->
+      <div class="form-control mt-4 w-full">
+          <label class="label justify-center">
+            <span class="label-text font-semibold">パスワード（6文字以上）</span>
+          </label>
+          <label class="input input-bordered flex items-center gap-2 bg-base-200/50">
+            <%= heroicon "lock-closed", variant: :outline, options: { class: "w-5 h-5 opacity-70" } %>
+            <%= f.password_field :password,
+                class: "grow bg-transparent",
+                placeholder: "••••••••",
+                required: true %>
+          </label>
+        </div>
+
+        <!-- パスワード確認 -->
+        <div class="form-control mt-4 w-full">
+          <label class="label justify-center">
+            <span class="label-text font-semibold">パスワード（確認）</span>
+          </label>
+          <label class="input input-bordered flex items-center gap-2 bg-base-200/50">
+            <%= heroicon "lock-closed", variant: :outline, options: { class: "w-5 h-5 opacity-70" } %>
+            <%= f.password_field :password_confirmation,
+                class: "grow bg-transparent",
+                placeholder: "••••••••",
+                required: true %>
+          </label>
+        </div>
+
+      <div class="mt-6">
+        <%= f.submit "パスワードをリセットする", class: "btn btn-primary" %>
+        <%= link_to "キャンセル", root_path, class: "btn btn-ghost" %>
+      </div>
+    <% end %>
+  </div>
+</div>

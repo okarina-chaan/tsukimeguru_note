@@ -29,6 +29,19 @@ ja:
       previous: "<"
       next: ">"
       truncate: "&hellip;"
+  password_resets:
+    create:
+      email_blank: "メールアドレスを入力してください"
+      email_sent: "メールを送信しました"
+      email_sent_with_period: "メールを送信しました。"
+    edit:
+      invalid_or_expired_link: "このリンクは無効か、有効期限が切れています"
+    update:
+      invalid_or_expired_link: "このリンクは無効か、有効期限が切れています"
+      password_blank: "パスワードを入力してください"
+      password_mismatch: "パスワードが一致しません"
+      password_reset_success: "パスワードをリセットしました。ログインしてください"
+      email_auth_not_set: "メール認証が設定されていません"
   helpers:
     page_entries_info:
       one_page:

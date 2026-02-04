@@ -46,6 +46,7 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
+    Rails.cache.clear
   end
 
   config.before(:each, type: :system) do

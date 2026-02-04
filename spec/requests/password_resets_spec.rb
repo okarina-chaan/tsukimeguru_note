@@ -113,6 +113,11 @@ RSpec.describe "PasswordResets", type: :request do
         follow_redirect!
         expect(response.body).to include("メール認証")
       end
+
+      it "6文字未満のパスワードの場合にエラーが表示されること" do
+        patch password_resets_path, params: { token: token, password: "abc", password_confirmation: "abc" }
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
     end
   end
 end

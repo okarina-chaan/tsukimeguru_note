@@ -61,16 +61,24 @@ class PasswordResetsController < ApplicationController
       render :edit, status: :unprocessable_entity
       return
     end
-    email_auth = @user.email_authentication
 
-    if email_auth
-      email_auth.update(
-        password: params[:password],
-        password_confirmation: params[:password_confirmation]
-      )
-      redirect_to new_session_path, notice: t(".password_reset_success")
-    else
+    # email認証を取得してパスワードリセットの分岐を作る
+    # 存在しない場合はエラーメッセージを表示してrootへリダイレクト
+    email_auth = @user.email_authentication
+    unless email_auth
       redirect_to root_path, alert: t(".email_auth_not_set")
+      return
     end
+
+    # パスワードを更新
+    if email_auth.update(password: params[:password], password_confirmation: params[:password_confirmation])
+      redirect_to new_session_path, notice: "パスワードをリセットしました。ログインしてください"
+    else
+      flash.now[:alert] = email_auth.errors.full_messages.join(", ")
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
   end
 end

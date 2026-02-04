@@ -12,23 +12,23 @@ RSpec.describe "MoonSigns", type: :request do
   describe 'GET /moon_sign' do
     context 'ユーザーが月星座を持っている場合' do
       it '正常にレスポンスを返す' do
-        get moon_sign_path
+        get moon_sign_path(sign: "aries")
         expect(response).to have_http_status(:ok)
       end
 
       it 'X共有リンクが表示される' do
-        get moon_sign_path
+        get moon_sign_path(sign: "aries")
         expect(response.body).to include("x.com/intent/tweet")
       end
 
       it 'OGP画像のメタタグが出力される' do
-        get moon_sign_path
+        get moon_sign_path(sign: "aries")
         expect(response.body).to include('og:image')
         expect(response.body).to include('/ogp/')
       end
 
       it '星座のメッセージが表示される' do
-        get moon_sign_path
+        get moon_sign_path(sign: "aries")
         expect(response.body).to include("情熱的で直感に従うタイプ")
       end
     end

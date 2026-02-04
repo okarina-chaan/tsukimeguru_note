@@ -74,7 +74,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem "brakeman", "~> 8.0", ">= 8.0.1"
+  gem "brakeman", "~> 8.0", ">= 8.0.2"
 
   gem "sqlite3", "~> 2.9"
 

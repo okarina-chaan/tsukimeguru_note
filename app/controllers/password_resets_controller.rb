@@ -3,7 +3,8 @@ class PasswordResetsController < ApplicationController
              within:    1.hour,
              only:      [ :create ],
              by:        -> { request.remote_ip || "unknown" }
-    def new
+
+  def new
     @email = params[:email]
   end
 

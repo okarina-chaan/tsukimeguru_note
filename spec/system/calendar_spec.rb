@@ -37,7 +37,7 @@ RSpec.describe "カレンダー", type: :system do
           { moon_phase_name: "満月", moon_phase_emoji: "🌕", moon_phase_angle: 180.0, event: :full_moon }
         )
         visit calendar_path
-        expect(page).to have_content("🌕")
+        expect(page).to have_content("満月")
       end
     end
   end

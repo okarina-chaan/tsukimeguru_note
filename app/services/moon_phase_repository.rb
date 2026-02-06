@@ -47,7 +47,7 @@ class MoonPhaseRepository
       data = MoonApiService.fetch(date)
       next if data.nil?
       next if data[:angle].nil? || data[:moon_age].nil?
-      
+
       moon_phases << MoonPhase.new(
         date: date,
         angle: data[:angle],

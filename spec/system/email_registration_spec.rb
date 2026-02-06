@@ -8,14 +8,14 @@ RSpec.describe 'メールアドレス登録', type: :system do
   end
 
   before do
-    # ユーザーとしてログイン
+    driven_by(:rack_test)
     page.set_rack_session(user_id: user.id)
   end
 
   describe '設定ページからメールアドレス登録' do
     context 'メールアドレス未登録の場合' do
       it '未登録と表示され、登録リンクがある' do
-        visit settings_path
+        visit mypage_path
 
         within '.card', text: 'メールアドレス' do
           expect(page).to have_content '未登録'
@@ -24,9 +24,9 @@ RSpec.describe 'メールアドレス登録', type: :system do
       end
 
       it 'メールアドレスを登録できる' do
-        visit settings_path
+        visit mypage_path
 
-        click_link '登録する'
+        click_link 'メールアドレスを登録する'
 
         expect(page).to have_current_path(edit_email_path)
         expect(page).to have_content 'アカウント削除時の連絡用です'
@@ -35,7 +35,7 @@ RSpec.describe 'メールアドレス登録', type: :system do
         click_button '登録する'
 
         expect(page).to have_content 'メールアドレスを登録しました'
-        expect(page).to have_current_path(settings_path)
+        expect(page).to have_current_path(mypage_path)
 
         # ユーザーのemailが更新されている
         expect(user.reload.email).to eq('line_user@example.com')
@@ -46,7 +46,7 @@ RSpec.describe 'メールアドレス登録', type: :system do
 
         click_link 'キャンセル'
 
-        expect(page).to have_current_path(settings_path)
+        expect(page).to have_current_path(mypage_path)
       end
     end
 
@@ -56,18 +56,18 @@ RSpec.describe 'メールアドレス登録', type: :system do
       end
 
       it '登録済みメールアドレスが表示され、変更リンクがある' do
-        visit settings_path
+        visit mypage_path
 
         within '.card', text: 'メールアドレス' do
           expect(page).to have_content 'registered@example.com'
-          expect(page).to have_link '変更する'
+          expect(page).to have_link 'メールアドレスを変更する'
         end
       end
 
       it 'メールアドレスを変更できる' do
-        visit settings_path
+        visit mypage_path
 
-        click_link '変更する'
+        click_link 'メールアドレスを変更する'
 
         expect(page).to have_current_path(edit_email_path)
 

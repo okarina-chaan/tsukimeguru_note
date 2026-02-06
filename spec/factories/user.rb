@@ -9,6 +9,7 @@ FactoryBot.define do
 
     trait :registered do
       name { "登録済みユーザー" }
+      account_registered { true }
     end
   end
 end

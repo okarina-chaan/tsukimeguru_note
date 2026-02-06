@@ -8,7 +8,7 @@ class Authentication < ApplicationRecord
   validates :uid, presence: true
   validates :password, presence: true, length: { minimum: 6 }, if: -> { provider == "email" }
   validates :password_confirmation, presence: true, if: -> { provider == "email" && password.present? }
-  validate :password_match, if: -> { provider == "email" && password.present? && password_confirmation.present? }
+  validate  :password_match, if: -> { provider == "email" && password.present? && password_confirmation.present? }
 
   # providerとuidの組み合わせは一意
   validates :uid, uniqueness: { scope: :provider }

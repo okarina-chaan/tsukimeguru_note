@@ -1,15 +1,18 @@
 require 'rails_helper'
 
 RSpec.describe 'Email認証', type: :system do
+  before do
+    driven_by(:rack_test)
+  end
   describe '新規登録' do
     it 'メールアドレスとパスワードで新規登録できる' do
       visit new_registration_path
 
-      fill_in 'メールアドレス', with: 'newuser@example.com'
-      fill_in 'パスワード（6文字以上）', with: 'password123'
-      fill_in 'パスワード（確認）', with: 'password123'
+      fill_in 'user_email', with: 'newuser@example.com'
+      fill_in 'user_password', with: 'password123'
+      fill_in 'user_password_confirmation', with: 'password123'
 
-      click_button '登録する'
+      click_button '新規登録'
 
       expect(page).to have_content 'アカウントを作成しました'
       expect(page).to have_content 'アカウント名を登録'
@@ -25,11 +28,11 @@ RSpec.describe 'Email認証', type: :system do
     it 'パスワードが短い場合、エラーが表示される' do
       visit new_registration_path
 
-      fill_in 'メールアドレス', with: 'newuser@example.com'
-      fill_in 'パスワード（6文字以上）', with: '12345'
-      fill_in 'パスワード（確認）', with: '12345'
+      fill_in 'user_email', with: 'newuser@example.com'
+      fill_in 'user_password', with: '12345'
+      fill_in 'user_password_confirmation', with: '12345'
 
-      click_button '登録する'
+      click_button '新規登録'
 
       expect(page).to have_content '登録に失敗しました'
       expect(User.find_by(email: 'newuser@example.com')).to be_nil
@@ -38,11 +41,11 @@ RSpec.describe 'Email認証', type: :system do
     it 'パスワード確認が一致しない場合、エラーが表示される' do
       visit new_registration_path
 
-      fill_in 'メールアドレス', with: 'newuser@example.com'
-      fill_in 'パスワード（6文字以上）', with: 'password123'
-      fill_in 'パスワード（確認）', with: 'different123'
+      fill_in 'user_email', with: 'newuser@example.com'
+      fill_in 'user_password', with: 'password123'
+      fill_in 'user_password_confirmation', with: 'different123'
 
-      click_button '登録する'
+      click_button '新規登録'
 
       expect(page).to have_content '登録に失敗しました'
       expect(User.find_by(email: 'newuser@example.com')).to be_nil
@@ -51,7 +54,7 @@ RSpec.describe 'Email認証', type: :system do
     it 'ログインページへのリンクがある' do
       visit new_registration_path
 
-      click_link 'ログインはこちら'
+      click_link 'ログイン', match: :first
 
       expect(page).to have_current_path(new_session_path)
     end
@@ -72,8 +75,8 @@ RSpec.describe 'Email認証', type: :system do
     it 'メールアドレスとパスワードでログインできる' do
       visit new_session_path
 
-      fill_in 'メールアドレス', with: 'existing@example.com'
-      fill_in 'パスワード', with: 'password123'
+      fill_in 'email', with: 'existing@example.com'
+      fill_in 'password', with: 'password123'
 
       click_button 'ログイン'
 
@@ -84,8 +87,8 @@ RSpec.describe 'Email認証', type: :system do
     it '間違ったパスワードの場合、エラーが表示される' do
       visit new_session_path
 
-      fill_in 'メールアドレス', with: 'existing@example.com'
-      fill_in 'パスワード', with: 'wrongpassword'
+      fill_in 'email', with: 'existing@example.com'
+      fill_in 'password', with: 'wrongpassword'
 
       click_button 'ログイン'
 
@@ -96,8 +99,8 @@ RSpec.describe 'Email認証', type: :system do
     it '存在しないメールアドレスの場合、エラーが表示される' do
       visit new_session_path
 
-      fill_in 'メールアドレス', with: 'nonexistent@example.com'
-      fill_in 'パスワード', with: 'password123'
+      fill_in 'email', with: 'nonexistent@example.com'
+      fill_in 'password', with: 'password123'
 
       click_button 'ログイン'
 
@@ -107,7 +110,7 @@ RSpec.describe 'Email認証', type: :system do
     it '新規登録ページへのリンクがある' do
       visit new_session_path
 
-      click_link '新規登録はこちら'
+      click_link '新規登録', match: :first
 
       expect(page).to have_current_path(new_registration_path)
     end
@@ -117,8 +120,8 @@ RSpec.describe 'Email認証', type: :system do
     it 'メールアドレス新規登録ボタンが表示される' do
       visit root_path
 
-      expect(page).to have_link 'メールアドレスで新規登録'
-      click_link 'メールアドレスで新規登録'
+      expect(page).to have_link '新規登録'
+      click_link '新規登録'
 
       expect(page).to have_current_path(new_registration_path)
     end
@@ -126,8 +129,8 @@ RSpec.describe 'Email認証', type: :system do
     it 'メールアドレスログインボタンが表示される' do
       visit root_path
 
-      expect(page).to have_link 'メールアドレスでログイン'
-      click_link 'メールアドレスでログイン'
+      expect(page).to have_link 'ログイン'
+      click_link 'ログイン', match: :first
 
       expect(page).to have_current_path(new_session_path)
     end

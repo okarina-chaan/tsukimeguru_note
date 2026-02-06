@@ -80,7 +80,7 @@ RSpec.describe 'Dashboard', type: :system, js: true do
       it '月星座診断ページに遷移できること' do
         visit dashboard_path
         click_on '診断を始める'
-        expect(page).to have_current_path moon_sign_path
+        expect(page).to have_current_path new_moon_sign_path
       end
     end
 

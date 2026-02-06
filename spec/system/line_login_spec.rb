@@ -13,7 +13,10 @@ RSpec.describe "LINEログインフロー", type: :system do
   it "新規ユーザーがLINEログインからアカウント登録画面に遷移する" do
     visit root_path
 
-    click_on id: "line-login-btn"
+    click_link "ログイン", match: :first
+    expect(page).to have_current_path(new_session_path)
+
+    click_link "LINEでログイン"
 
     expect(page.current_url).to include("https://access.line.me/oauth2/v2.1/authorize")
 
@@ -26,13 +29,21 @@ RSpec.describe "LINEログインフロー", type: :system do
   end
 
   it "既存ユーザーはダッシュボードに遷移する" do
-    create(:user, :registered, line_user_id: line_user_id)
+    user = create(:user, :registered, line_user_id: line_user_id)
+    user.authentications.create!(provider: "line", uid: line_user_id)
 
-    visit line_login_api_login_path
+    visit root_path
 
+    click_link "ログイン", match: :first
+    expect(page).to have_current_path(new_session_path)
+
+    click_link "LINEでログイン"
+
+    expect(page.current_url).to include("https://access.line.me/oauth2/v2.1/authorize")
     state = page.current_url.match(/state=([^&]+)/)[1]
     visit line_login_api_callback_path(code: "auth_code", state: state)
 
+    user = User.find_by(line_user_id: line_user_id)
     expect(page).to have_current_path(dashboard_path)
     expect(page).to have_content("ログインしました")
   end

@@ -55,8 +55,10 @@ RSpec.describe "Dashboard", type: :request do
        end
 
       it "正常にレスポンスを返す" do
-        get dashboard_path
-        expect(response).to have_http_status(:ok)
+        travel_to Time.zone.local(2026, 1, 22) do
+          get dashboard_path
+          expect(response).to have_http_status(:ok)
+        end
       end
 
       it "今日の日付が表示される" do

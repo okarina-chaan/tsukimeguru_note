@@ -10,6 +10,19 @@ RSpec.describe "WeeklyInsight integration", type: :request do
       .and_return(user)
 
     Rails.cache.clear
+    stub_env('OPENAI_API_KEY', 'test_api_key')
+    stub_request(:post, "https://api.openai.com/v1/chat/completions")
+      .to_return(
+                  status: 200,
+                  body: {
+                    choices: [ {
+                        message: {
+                          content: '{"question": "早起きについてどう感じますか？", "summary": "早起きすることで学習時間を確保しようとしていましたね"}'
+                        }
+                      } ]
+                    }.to_json,
+                  headers: { 'Content-Type' => 'application/json' }
+                )
   end
 
   it "POST → GET fragment で振り返りHTMLを取得できる" do
@@ -24,6 +37,6 @@ RSpec.describe "WeeklyInsight integration", type: :request do
     get "/api/weekly_insights/#{id}/fragment"
     expect(response).to have_http_status(:ok)
     expect(response.media_type).to eq("text/html")
-    expect(response.body).to include("今週の変化")
+    expect(response.body).to include("早起きについてどう感じますか？")
   end
 end

@@ -27,6 +27,7 @@ class MoonPhaseRepository
     Rails.logger.info("月相データをAPIから取得: #{date}")
     data = MoonApiService.fetch(date)
     return nil if data.nil?
+    return nil if data[:angle].nil? || data[:moon_age].nil?
 
     MoonPhase.create!(
       date: date,
@@ -45,6 +46,7 @@ class MoonPhaseRepository
 
       data = MoonApiService.fetch(date)
       next if data.nil?
+      next if data[:angle].nil? || data[:moon_age].nil?
 
       moon_phases << MoonPhase.new(
         date: date,

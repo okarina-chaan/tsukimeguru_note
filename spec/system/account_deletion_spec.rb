@@ -1,106 +1,61 @@
 require 'rails_helper'
 
 RSpec.describe 'アカウント削除', type: :system do
-  describe '設定ページからアカウント削除' do
-    context 'メールアドレス登録済みユーザー' do
-      let!(:user) do
-        user = User.create!(email: 'user@example.com', line_user_id: 'LINE123', name: '太郎', account_registered: true)
-        user.authentications.create!(provider: 'line', uid: 'LINE123')
-        user
+  let!(:user) { create(:user, email: "test@example.com") }
+
+  before do
+    sign_in_as(user)
+  end
+
+  describe "正常系: アカウント削除フロー" do
+    it "退会申請を行い、メールを受信し、最終的にアカウントを削除できる" do
+      visit confirm_destroy_users_path
+      expect(page).to have_content("本当に退会しますか？")
+
+      click_button "退会する"
+
+      expect(ActionMailer::Base.deliveries.count).to eq(1)
+      mail = ActionMailer::Base.deliveries.last
+      expect(mail.to).to include(user.email)
+      expect(mail.subject).to include("アカウント削除")
+
+      expect(page).to have_current_path(send_email_users_path)
+
+      body = mail.html_part.decoded
+      match = body.match(/href="([^"]*destroy_account[^"]*)"/)
+
+      if match.nil? && mail.text_part
+        body = mail.text_part.decoded
+        match = body.match(/(http.*?destroy_account.*?)\s/)
       end
 
-      before do
-        page.set_rack_session(user_id: user.id)
-      end
+      deletion_url = match[1]
+      visit deletion_url
 
-      it 'アカウント削除ボタンが表示される' do
-        visit settings_path
+      expect(page).to have_content("退会の最終確認")
 
-        within '.card', text: 'アカウント削除' do
-          expect(page).to have_content 'アカウントを削除すると、すべてのデータが削除されます'
-          expect(page).to have_button 'アカウントを削除する'
-        end
-      end
+      expect {
+        click_button "退会する"
+      }.to change { User.count }.by(-1)
 
-      it 'アカウントを削除できる' do
-        visit settings_path
+      expect(page).to have_current_path(page_path("destroyed"))
+    end
+  end
 
-        # 確認ダイアログをスキップしてDELETEリクエストを送信
-        page.driver.submit :delete, user_path(user), {}
+  describe "準正常系: メールアドレス未登録" do
+    let(:user_no_email) { create(:user, email: nil) }
 
-        expect(page).to have_content 'アカウントを削除しました'
-        expect(page).to have_current_path(root_path)
-
-        # ユーザーが削除されている
-        expect(User.find_by(id: user.id)).to be_nil
-      end
-
-      it '関連データも削除される' do
-        # 関連データを作成
-        user.daily_notes.create!(date: Time.zone.today, condition_score: 3, mood_score: 4)
-        user.moon_notes.create!(date: Time.zone.today, moon_age: 1.0, moon_phase: 1, content: 'test')
-
-        user_id = user.id
-
-        # 確認ダイアログをスキップしてDELETEリクエストを送信
-        page.driver.submit :delete, user_path(user), {}
-
-        # ユーザーが削除されている
-        expect(User.find_by(id: user_id)).to be_nil
-
-        # 関連データも削除されている
-        expect(DailyNote.where(user_id: user_id).count).to eq(0)
-        expect(MoonNote.where(user_id: user_id).count).to eq(0)
-        expect(Authentication.where(user_id: user_id).count).to eq(0)
-      end
+    before do
+      sign_in_as(user_no_email)
     end
 
-    context 'メールアドレス未登録ユーザー' do
-      let!(:user) do
-        user = User.create!(line_user_id: 'LINE456', name: '次郎', account_registered: true)
-        user.authentications.create!(provider: 'line', uid: 'LINE456')
-        user
-      end
+    it "メール登録ページへ誘導される" do
+      visit confirm_destroy_users_path
 
-      before do
-        page.set_rack_session(user_id: user.id)
-      end
+      click_button "退会する"
 
-      it 'アカウント削除を実行すると、メールアドレス登録を促すメッセージが表示される' do
-        # 確認ダイアログをスキップしてDELETEリクエストを送信
-        page.driver.submit :delete, user_path(user), {}
-
-        expect(page).to have_content '削除連絡用のメールアドレスを登録してください'
-        expect(page).to have_current_path(settings_path)
-
-        # ユーザーは削除されていない
-        expect(User.find_by(id: user.id)).to be_present
-      end
-    end
-
-    context 'Email認証のみのユーザー' do
-      let!(:user) do
-        user = User.create!(email: 'email_only@example.com', name: '三郎', account_registered: true)
-        user.authentications.create!(
-          provider: 'email',
-          uid: 'email_only@example.com',
-          password: 'password123',
-          password_confirmation: 'password123'
-        )
-        user
-      end
-
-      before do
-        page.set_rack_session(user_id: user.id)
-      end
-
-      it 'アカウントを削除できる' do
-        # 確認ダイアログをスキップしてDELETEリクエストを送信
-        page.driver.submit :delete, user_path(user), {}
-
-        expect(page).to have_content 'アカウントを削除しました'
-        expect(User.find_by(id: user.id)).to be_nil
-      end
+      expect(page).to have_current_path(edit_email_path)
+      expect(page).to have_content("削除連絡用のメールアドレスを登録してください")
     end
   end
 end

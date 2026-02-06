@@ -152,13 +152,13 @@ RSpec.describe User, type: :model do
       user = create(:user, email: "test@example.com")
       expect { user.destroy }.to change { User.count }.by(-1)
     end
-    
+
     it "関連する認証情報も削除される" do
       user = create(:user, email: "test@example.com")
       user.authentications.create!(provider: "email", uid: "test@example.com", password: "password123", password_confirmation: "password123")
       expect { user.destroy }.to change { Authentication.count }.by(-1)
     end
-    
+
     it "関連するdaily noteも削除される" do
       user = create(:user, email: "test@example.com")
       user.daily_notes.create!(date: Time.zone.today, condition_score: 3, mood_score: 4)

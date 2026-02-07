@@ -1,5 +1,8 @@
+require "simplecov"
 require "active_support/testing/time_helpers"
 require "stub_env"
+
+SimpleCov.start "rails"
 
 RSpec.configure do |config|
   config.include StubEnv::Helpers

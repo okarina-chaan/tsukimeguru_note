@@ -126,4 +126,5 @@ group :test do
   gem "webmock"
   gem "rack_session_access", "~> 0.2.0"
   gem "database_cleaner-active_record"
+  gem "simplecov", require: false
 end

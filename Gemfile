@@ -43,12 +43,6 @@ gem "kamal", require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 
-# 認証に使った
-gem "omniauth-auth0"
-
-# CSRF対策
-gem "omniauth-rails_csrf_protection"
-
 # HTTP通信に使う
 gem "faraday"
 
@@ -64,10 +58,6 @@ gem "kaminari", git: "https://github.com/kaminari/kaminari"
 # 月相を一括で保存することに使う
 gem "activerecord-import"
 
-group :development, :production do
-  # Lineログイン
-  gem "omniauth-line"
-end
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

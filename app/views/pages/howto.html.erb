@@ -1,42 +1,43 @@
-<main class="max-w-3xl mx-auto px-4 py-10 space-y-8">
+<section class="min-h-screen bg-base-100 text-base-content py-14 px-4">
+  <div class="max-w-4xl mx-auto space-y-10">
+    <header class="text-center space-y-3">
+      <h1 class="text-4xl font-display tracking-widest">使い方</h1>
+    </header>
 
-  <header class="space-y-2">
-    <h1 class="text-2xl font-bold">使い方</h1>
-  </header>
 
   <section class="space-y-3">
-    <h2 class="text-xl font-semibold">Daily Note</h2>
+    <h2 class="text-xl font-semibold font-display">Daily Note</h2>
 
     <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
-      <summary class="collapse-title text-base font-medium">
+      <summary class="collapse-title text-base-content/80 font-medium">
         Daily Note とは（毎日 / 体調・気分・行動）
       </summary>
       <div class="collapse-content space-y-4">
-        <p class="text-base-content/90">
-          毎日の記録用ノートです。        
+        <p class="text-base-content/70">
+          毎日の記録用ノートです。
         </p>
-        <p class="text-base-content/90">
+        <p class="text-base-content/70">
           体調や気分、願いを叶えるためにやったこと、その結果などを簡単に記録していきましょう。
         </p>
-        <p class="text-base-content/90">
+        <p class="text-base-content/70">
           全部書かなくてもOK。体調と気分だけの日があっても大丈夫です。
         </p>
 
         <div class="space-y-2">
-          <h3 class="font-semibold">記録内容</h3>
-          <ul class="list-disc pl-5 space-y-1 text-base-content/90">
+          <h3 class="font-semibold text-base-content/80">記録内容</h3>
+          <ul class="list-disc pl-5 space-y-1 text-base-content/70">
             <li>体調</li>
             <li>気分</li>
-            <li>願いを叶えるためにやったこと</li>
-            <li>その結果（悪かったこと / 良かったこと）</li>
+            <li>願いを叶えるために今日やったこと</li>
+            <li>その結果（うまくいかなかったこと / 良かったこと）</li>
             <li>明日試してみたいこと</li>
             <li>簡単なメモ</li>
           </ul>
         </div>
 
         <div class="space-y-2">
-          <h3 class="font-semibold">更新頻度</h3>
-          <p class="text-base-content/90">毎日（書ける日に少しずつでOK）</p>
+          <h3 class="font-semibold text-base-content/80">更新頻度</h3>
+          <p class="text-base-content/70">毎日（書ける日に少しずつでOK）</p>
         </div>
 
       </div>
@@ -44,23 +45,23 @@
   </section>
 
   <section class="space-y-3">
-    <h2 class="text-xl font-semibold">Moon Note</h2>
+    <h2 class="text-xl font-semibold font-display">Moon Note</h2>
 
     <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
-      <summary class="collapse-title text-base font-medium">
+      <summary class="collapse-title text-base-content/80 font-medium">
         Moon Note とは（週1くらい / 月の節目）
       </summary>
       <div class="collapse-content space-y-4">
-        <p class="text-base-content/90">
+        <p class="text-base-content/70">
           新月・上弦・満月・下弦の月の前後（±1日）だけ記録できる、月の満ち欠けの節目のノートです。
         </p>
-        <p class="text-base-content/90">
-          月のパワーを借りながら、ゆっくり振り返ってみましょう。
+        <p class="text-base-content/70">
+          月の満ち欠けのタイミングで、ゆっくり振り返ってみましょう。
         </p>
 
         <div class="space-y-2">
-          <h3 class="font-semibold">記録内容（月相ごとのテーマ）</h3>
-          <ul class="list-disc pl-5 space-y-1 text-base-content/90">
+          <h3 class="font-semibold text-base-content/80">記録内容（月相ごとのテーマ）</h3>
+          <ul class="list-disc pl-5 space-y-1 text-base-content/70">
             <li><span class="font-medium">新月：</span>願い事（新しいスタート）</li>
             <li><span class="font-medium">上弦の月：</span>達成のために吸収したいこと</li>
             <li><span class="font-medium">満月：</span>達成できたこと（感謝や気づき）</li>
@@ -69,9 +70,122 @@
         </div>
 
         <div class="space-y-2">
-          <h3 class="font-semibold">更新頻度</h3>
-          <p class="text-base-content/90">1週間に1度程度（書ける月相の日に）</p>
+          <h3 class="font-semibold text-base-content/80">更新頻度</h3>
+          <p class="text-base-content/70">1週間に1度程度（書ける月相の日に）</p>
         </div>
+      </div>
+    </details>
+  </section>
+
+  <section class="space-y-3">
+    <h2 class="text-xl font-semibold font-display">分析</h2>
+
+    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+      <summary class="collapse-title text-base-content/80 font-medium">
+        振り返り機能
+      </summary>
+      <div class="collapse-content space-y-3">
+        <p class="text-base-content/70">
+          先週1週間分のDaily Noteの内容を振り返り、気づきを得るためのカードが表示されます。
+        </p>
+        <p class="text-base-content/70">
+          あえて「良かった・悪かった」というような評価をしない設計にしています。
+        </p>
+        <p class="text-base-content/70">
+          このアプリでは、あなた自身の感じたことや気づきを大切にしてください。
+        </p>
+
+        <div class="space-y-2">
+          <h3 class="font-semibold text-base-content/80">更新頻度</h3>
+          <p class="text-base-content/70">1週間に1度（月曜日にリセットされます）</p>
+        </div>
+
+        <div class="space-y-2">
+          <h3 class="font-semibold text-base-content/80">注意事項</h3>
+          <p class="text-base-content/70">先週分のDaily Noteがまだ記録されていない場合は、振り返ることができません。</p>
+          <p class="text-base-content/70">そのときは、先週の日付でDaily Noteを記録してから再度振り返り機能を利用してください。</p>
+        </div>
+      </div>
+    </details>
+    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+      <summary class="collapse-title text-base-content/80 font-medium">
+        グラフ表示
+      </summary>
+        <div class="collapse-content space-y-3">
+          <p class="text-base-content/70">
+            体調・気分の推移をグラフで確認できます。
+          </p>
+          <p class="text-base-content/70">
+            月の満ち欠けとあなたの記録の関係を見返してみましょう。
+          </p>
+        </div>
+    </details>
+  </section>
+
+  <section class="space-y-3">
+    <h2 class="text-xl font-semibold font-display">カレンダー</h2>
+
+    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+      <summary class="collapse-title text-base-content/80 font-medium">
+        カレンダー表示
+      </summary>
+      <div class="collapse-content space-y-3">
+        <p class="text-base-content/70">
+          月ごとのカレンダー表示で、その日の月相やMoon Noteが作成できるかどうかを確認できます。
+        </p>
+        <p class="text-base-content/70">
+          月齢は正確ですが、月相の表示はアプリの都合上、±1日の誤差がある場合があります。ご了承ください。
+        </p>
+      </div>
+    </details>
+  </section>
+
+  <section class="space-y-3">
+    <h2 class="text-xl font-semibold font-display">My Page</h2>
+
+    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+      <summary class="collapse-title text-base-content/80 font-medium">
+        プロフィール設定
+      </summary>
+      <div class="collapse-content space-y-3">
+        <p class="text-base-content/70">
+          ユーザー名や、メールアドレスの変更、月星座診断結果の表示ができます。
+        </p>
+        <p class="text-base-content/70">
+          現在はメールアドレスの変更のみ対応しています。
+        </p>
+      </div>
+    </details>
+    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+      <summary class="collapse-title text-base-content/80 font-medium">
+        月星座診断機能
+      </summary>
+      <div class="collapse-content space-y-3">
+        <p class="text-base-content/70">
+          月星座は、生まれた日の月の位置する星座のことです。
+        </p>
+        <p class="text-base-content/70">
+          月星座はあなたの内面的な性格や感情、潜在的な欲求を表すと言われています。
+        </p>
+        <p class="text-base-content/70">
+          この機能ではあなたの月星座を診断し、その特徴やおすすめの振り返りテーマを表示します。
+        </p>
+      </div>
+    </details>
+    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+      <summary class="collapse-title text-base-content/80 font-medium">
+        退会
+      </summary>
+      <div class="collapse-content space-y-3">
+        <p class="text-base-content/70">
+          アカウントの削除（退会）を行うことができます。
+        </p>
+        <p class="text-base-content/70">
+          退会を希望される場合は、メールを送付いたしますので、メールアドレスを登録してください。
+        </p>
+        <p class="text-base-content/70">
+          退会を行うと、あなたのアカウント情報や記録データはすべて削除され、復元することはできません。ご了承ください。
+        </p>
       </div>
     </details>
   </section>

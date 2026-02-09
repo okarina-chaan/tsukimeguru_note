@@ -40,7 +40,7 @@
 
       <div class="space-y-6">
         <div class="card bg-base-200/70 rounded-2xl p-6 border border-base-300/40 space-y-6">
-          <h2 class="text-xl font-semibold">今日の調子はどう？</h2>
+          <h2 class="text-xl font-display">今日の調子はどう？</h2>
           <p class="text-sm text-base-content/80">* 体調と気分は必須項目です</p>
 
           <div data-diary-entry-target="healthSection" data-group="health">
@@ -94,32 +94,50 @@
           </div>
         </div>
 
-        <div class="card bg-base-200/70 rounded-2xl p-6 border border-base-300/40 space-y-4">
-          <h2 class="text-xl font-semibold">今日はどんな日だった？</h2>
+        <!-- テキストの登録 -->
+        <div class="card bg-base-200/70 rounded-2xl p-6 border border-base-300/40 space-y-5">
+          <h2 class="text-xl font-display">今日はどんな日だった？</h2>
 
-          <%= f.text_field :did_today,
-            placeholder: "今日やったことは？",
-            class: "input input-bordered w-full bg-base-100/80" %>
+          
+          <p class="text-sm text-base-content/80">* 書けるときに書いてみましょう</p>
 
-          <%= f.text_field :try_tomorrow,
-            placeholder: "明日やってみたいことは？",
-            class: "input input-bordered w-full bg-base-100/80" %>
 
-          <%= f.text_field :challenge,
-            placeholder: "うまくいかなかったことは？",
-            class: "input input-bordered w-full bg-base-100/80" %>
+          <div class="space-y-1">
+            <%= f.label :did_today, "今日できたこと", class: "label-text font-medium" %>
+            <%= f.text_field :did_today,
+              placeholder: "朝ストレッチした",
+              class: "input input-bordered w-full bg-base-100/80" %>
+          </div>
 
-          <%= f.text_field :good_things,
-            placeholder: "よかったことは？",
-            class: "input input-bordered w-full bg-base-100/80" %>
+          <div class="space-y-1">
+            <%= f.label :challenge, "少し残念だったこと", class: "label-text font-medium" %>
+            <%= f.text_field :challenge,
+              placeholder: "夜遅くまでスマホを見てしまった",
+              class: "input input-bordered w-full bg-base-100/80" %>
+          </div>
 
-          <h2 class="text-lg font-semibold flex items-center gap-2 text-primary">
-             メモ
-          </h2>
+          <div class="space-y-1">
+            <%= f.label :good_things, "うれしかったこと", class: "label-text font-medium" %>
+            <%= f.text_field :good_things,
+              placeholder: "ストレッチで体がすっきりした",
+              class: "input input-bordered w-full bg-base-100/80" %>
+          </div>
+
+          <div class="space-y-1">
+            <%= f.label :try_tomorrow, "明日の一歩", class: "label-text font-medium" %>
+            <%= f.text_field :try_tomorrow,
+              placeholder: "22時以降はスマホを見ない",
+              class: "input input-bordered w-full bg-base-100/80" %>
+          </div>
+
+        <div class="space-y-1">
+          <%= f.label :memo, "メモ", class: "label-text fond-midium" %>
           <%= f.text_area :memo,
             rows: 6,
             placeholder: "今日感じたことや気づきを自由に...",
             class: "textarea textarea-bordered w-full bg-base-100/80" %>
+        </div>
+
 
         <div class="text-center pt-4">
           <%= f.submit submit_label, class: "btn btn-primary rounded-full px-10" %>

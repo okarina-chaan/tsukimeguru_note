@@ -12,6 +12,7 @@ RSpec.describe "Moon Note", type: :system, js: true do
           event: :full_moon,
           moon_phase_name: "満月",
           moon_phase_emoji: "🌕",
+          loose_event_name: "満月",
           moon_age: 14.3,
           date: Time.zone.today
         )

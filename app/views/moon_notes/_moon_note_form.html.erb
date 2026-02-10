@@ -6,7 +6,7 @@
 
 <div class="card bg-base-200/70 border border-base-300/40">
   <div class="card-body space-y-4">
-    <% if moon_note.errors.any? %>
+    <% if moon_note && moon_note.errors.any? %>
       <div class="alert alert-error">
         <p class="font-semibold mb-2">入力内容にエラーがあります</p>
         <ul class="text-sm space-y-1">

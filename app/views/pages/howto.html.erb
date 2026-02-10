@@ -16,29 +16,25 @@
 
       <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
         <summary class="collapse-title text-base-content/80 font-medium leading-relaxed">
-          Daily Note とは（まいにちの、ちょっとしたメモ）
+          Daily Note とは（まいにちの日記）
         </summary>
         <div class="collapse-content space-y-5">
           <p class="text-base-content/70 text-sm">
             その日の体調や気分、ふと感じたことをかきとめるノートです。<br>
+            かきとめなくても、体調と気分のアイコンを選べば、記録することができます。<br>
             全部うめなくてもOK。今の気持ちを一言のこすだけで、自分をいたわる習慣になります。
           </p>
 
           <div class="p-4 bg-base-100/50 rounded-xl space-y-3">
             <h3 class="font-semibold text-sm text-base-content/80">たとえば、こんなふうに…</h3>
             <ul class="text-sm text-base-content/70 space-y-2 leading-relaxed">
-              <li>・「今日は体が軽い！お散歩して気分転換できた」</li>
-              <li>・「少し疲れ気味。明日は早く寝てみようかな」</li>
-              <li>・「やりたかった本読みが、5ページ進んだ！」</li>
+              <li>・「健康的になりたいと思って、今日は一駅歩いて帰ってきた。」</li>
+              <li>・「少し疲れ気味。明日は早く寝てみようかな。」</li>
+              <li>・「やる気が空回りして周りとうまく行かなかった。でも積極的に動くことはできた。」</li>
             </ul>
-          </div>
-
-          <div class="pt-2 text-center">
-            <p class="text-[10px] text-base-content/50 mb-2">入力画面のイメージ</p>
-            <div class="rounded-lg overflow-hidden border border-base-300 max-w-xs mx-auto">
-              <%# 実際の画像パスに差し替えてください %>
-              <img src="/images/guide/daily-note-sample.png" alt="Daily Noteの入力画面" class="w-full">
-            </div>
+            <p class="text-sm text-base-content/70">
+              項目ごとに、浮かんできたこともあるかもしれませんね。
+            </p>
           </div>
         </div>
       </details>
@@ -52,7 +48,7 @@
 
       <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
         <summary class="collapse-title text-base-content/80 font-medium leading-relaxed">
-          Moon Note とは（月の満ち欠けに合わせた振り返り）
+          Moon Note とは（月の満ち欠けに合わせた日記）
         </summary>
         <div class="collapse-content space-y-6">
           <p class="text-base-content/70 text-sm leading-relaxed">
@@ -65,34 +61,159 @@
               <h3 class="font-bold text-base-content/90 flex items-center gap-2 mb-2">
                 <span class="w-2 h-2 rounded-full bg-slate-800"></span> 新月：ねがいごと
               </h3>
-              <p class="text-xs text-base-content/70 leading-relaxed mb-3">「新しい趣味をはじめる」「今月は穏やかに過ごす」など、これからの願いをかいてみましょう。</p>
-              <img src="/images/guide/moon-new.png" alt="新月の画面" class="rounded border border-base-300 w-full h-auto">
+              <p class="text-xs text-base-content/70 leading-relaxed mb-3">
+                「新しい趣味をはじめる」「今月は穏やかに過ごす」など、<br>
+                これからの願いをかいてみましょう。<br>
+                新月はこれからの始まりを表します。
+              </p>
             </div>
             <div class="p-4 bg-base-100/60 rounded-xl border border-base-300/30">
               <h3 class="font-bold text-base-content/90 flex items-center gap-2 mb-2">
-                <span class="w-2 h-2 rounded-full bg-slate-400"></span> 上弦：行動する
+                <span class="w-2 h-2 rounded-full bg-slate-400"></span> 上弦の月：行動する
               </h3>
-              <p class="text-xs text-base-content/70 leading-relaxed mb-3">「目標のために本を買う」「苦手を少し練習する」など、一歩進むためのヒントをかきます。</p>
-              <img src="/images/guide/moon-waxing.png" alt="上弦の月の画面" class="rounded border border-base-300 w-full h-auto">
+              <p class="text-xs text-base-content/70 leading-relaxed mb-3">
+                「目標のために本を買う」「苦手を少し練習する」など、<br>
+                一歩進むためのヒントをかきます。<br>
+                上弦の月は、満月に向かって満ちていく時期です。
+              </p>
             </div>
             <div class="p-4 bg-base-100/60 rounded-xl border border-base-300/30">
               <h3 class="font-bold text-base-content/90 flex items-center gap-2 mb-2">
                 <span class="w-2 h-2 rounded-full bg-yellow-200"></span> 満月：感謝する
               </h3>
-              <p class="text-xs text-base-content/70 leading-relaxed mb-3">「がんばった自分を褒める」「できたことに目を向ける」。うまくいかなくても、気づきがあればOK。</p>
-              <img src="/images/guide/moon-full.png" alt="満月の画面" class="rounded border border-base-300 w-full h-auto">
+              <p class="text-xs text-base-content/70 leading-relaxed mb-3">
+                「がんばった自分を褒める」「できたことに目を向ける」<br>
+                うまくいかなくても、気づきがあればOK。<br>
+                満月は満ちた時期です。
+              </p>
             </div>
             <div class="p-4 bg-base-100/60 rounded-xl border border-base-300/30">
               <h3 class="font-bold text-base-content/90 flex items-center gap-2 mb-2">
-                <span class="w-2 h-2 rounded-full bg-slate-300"></span> 下弦：手放す
+                <span class="w-2 h-2 rounded-full bg-slate-300"></span> 下弦の月：手放す
               </h3>
-              <p class="text-xs text-base-content/70 leading-relaxed mb-3">「無理していたことをやめる」「モヤモヤを整理する」など、次の新月に向けて心を軽くしましょう。</p>
-              <img src="/images/guide/moon-waning.png" alt="下弦の月の画面" class="rounded border border-base-300 w-full h-auto">
+              <p class="text-xs text-base-content/70 leading-relaxed mb-3">
+                「無理していたことをやめる」「モヤモヤを整理する」など、<br>
+                次の新月に向けて心を軽くしましょう。<br>
+                下弦の月は、新しいスタートに向かって背負ったものを軽くしていく時期です。
+              </p>
             </div>
           </div>
         </div>
       </details>
+
+      <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+        <summary class="collapse-title text-base-content/80 font-medium leading-relaxed">
+          Moon Noteデモ画面（※作成イメージです。記録はできません。）
+        </summary>
+        <div class="collapse-content space-y-6" data-controller="moon-phase-demo">
+          <!-- 月相選択タブ -->
+          <div class="flex flex-wrap gap-2 justify-center">
+            <button type="button"
+                    data-action="click->moon-phase-demo#selectPhase"
+                    data-phase="new_moon"
+                    class="phase-tab btn btn-sm btn-outline">
+              🌑 新月
+            </button>
+            <button type="button"
+                    data-action="click->moon-phase-demo#selectPhase"
+                    data-phase="first_quarter_moon"
+                    class="phase-tab btn btn-sm btn-outline">
+              🌓 上弦の月
+            </button>
+            <button type="button"
+                    data-action="click->moon-phase-demo#selectPhase"
+                    data-phase="full_moon"
+                    class="phase-tab btn btn-sm btn-outline btn-primary">
+              🌕 満月
+            </button>
+            <button type="button"
+                    data-action="click->moon-phase-demo#selectPhase"
+                    data-phase="last_quarter_moon"
+                    class="phase-tab btn btn-sm btn-outline">
+              🌗 下弦の月
+            </button>
+          </div>
+
+          <!-- テーマカード（切り替え表示） -->
+          <div class="space-y-4">
+            <div data-phase-content="new_moon" class="hidden">
+              <div class="card bg-base-200/70 border border-base-300/40">
+                <div class="card-body space-y-2 text-center">
+                  <p class="text-sm uppercase tracking-[0.4em] text-base-content/60">Theme</p>
+                  <h3 class="text-2xl font-serif text-primary">新しい始まり</h3>
+                  <p class="text-base text-base-content/80 leading-relaxed">新月はスタートのタイミング。なりたい姿をイメージしましょう</p>
+                </div>
+              </div>
+            </div>
+
+            <div data-phase-content="first_quarter_moon" class="hidden">
+              <div class="card bg-base-200/70 border border-base-300/40">
+                <div class="card-body space-y-2 text-center">
+                  <p class="text-sm uppercase tracking-[0.4em] text-base-content/60">Theme</p>
+                  <h3 class="text-2xl font-serif text-primary">吸収と行動</h3>
+                  <p class="text-base text-base-content/80 leading-relaxed">上弦の月は行動力が高まるとき。願いを叶えるために取り入れたいことはありますか？</p>
+                </div>
+              </div>
+            </div>
+
+            <div data-phase-content="full_moon" class="">
+              <div class="card bg-base-200/70 border border-base-300/40">
+                <div class="card-body space-y-2 text-center">
+                  <p class="text-sm uppercase tracking-[0.4em] text-base-content/60">Theme</p>
+                  <h3 class="text-2xl font-serif text-primary">振り返りと感謝</h3>
+                  <p class="text-base text-base-content/80 leading-relaxed">満月は達成や完了のエネルギーが高まります。感謝とともに振り返りましょう。</p>
+                </div>
+              </div>
+            </div>
+
+            <div data-phase-content="last_quarter_moon" class="hidden">
+              <div class="card bg-base-200/70 border border-base-300/40">
+                <div class="card-body space-y-2 text-center">
+                  <p class="text-sm uppercase tracking-[0.4em] text-base-content/60">Theme</p>
+                  <h3 class="text-2xl font-serif text-primary">手放しと浄化</h3>
+                  <p class="text-base text-base-content/80 leading-relaxed">下弦の月は不要なものをリセットしていくタイミング。手放したいことは何ですか？</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- フォーム -->
+          <%= render "moon_notes/moon_note_form", moon_note: MoonNote.new, demo: true %>
+        </div>
+      </details>
+
+      <script>
+        // Stimulus controller for moon phase demo
+        (() => {
+          const application = window.Stimulus || Application.start();
+
+          application.register("moon-phase-demo", class extends Stimulus.Controller {
+            selectPhase(event) {
+              const phase = event.currentTarget.dataset.phase;
+
+              // Update tab styles
+              this.element.querySelectorAll('.phase-tab').forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-outline');
+              });
+              event.currentTarget.classList.add('btn-primary');
+              event.currentTarget.classList.remove('btn-outline');
+
+              // Show corresponding content
+              this.element.querySelectorAll('[data-phase-content]').forEach(content => {
+                if (content.dataset.phaseContent === phase) {
+                  content.classList.remove('hidden');
+                } else {
+                  content.classList.add('hidden');
+                }
+              });
+            }
+          });
+        })();
+      </script>
     </section>
+
+
 
     <section class="space-y-4">
       <h2 class="text-xl font-semibold font-display flex items-center gap-2 text-base-content/90">

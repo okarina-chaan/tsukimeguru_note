@@ -105,29 +105,29 @@
         <summary class="collapse-title text-base-content/80 font-medium leading-relaxed">
           Moon Noteデモ画面（※作成イメージです。記録はできません。）
         </summary>
-        <div class="collapse-content space-y-6" data-controller="moon-phase-demo">
+        <div class="collapse-content space-y-6" id="moon-phase-demo">
           <!-- 月相選択タブ -->
           <div class="flex flex-wrap gap-2 justify-center">
             <button type="button"
-                    data-action="click->moon-phase-demo#selectPhase"
+                    onclick="selectMoonPhase('new_moon', this)"
                     data-phase="new_moon"
                     class="phase-tab btn btn-sm btn-outline">
               🌑 新月
             </button>
             <button type="button"
-                    data-action="click->moon-phase-demo#selectPhase"
+                    onclick="selectMoonPhase('first_quarter_moon', this)"
                     data-phase="first_quarter_moon"
                     class="phase-tab btn btn-sm btn-outline">
               🌓 上弦の月
             </button>
             <button type="button"
-                    data-action="click->moon-phase-demo#selectPhase"
+                    onclick="selectMoonPhase('full_moon', this)"
                     data-phase="full_moon"
                     class="phase-tab btn btn-sm btn-outline btn-primary">
               🌕 満月
             </button>
             <button type="button"
-                    data-action="click->moon-phase-demo#selectPhase"
+                    onclick="selectMoonPhase('last_quarter_moon', this)"
                     data-phase="last_quarter_moon"
                     class="phase-tab btn btn-sm btn-outline">
               🌗 下弦の月
@@ -136,45 +136,17 @@
 
           <!-- テーマカード（切り替え表示） -->
           <div class="space-y-4">
-            <div data-phase-content="new_moon" class="hidden">
-              <div class="card bg-base-200/70 border border-base-300/40">
-                <div class="card-body space-y-2 text-center">
-                  <p class="text-sm uppercase tracking-[0.4em] text-base-content/60">Theme</p>
-                  <h3 class="text-2xl font-serif text-primary">新しい始まり</h3>
-                  <p class="text-base text-base-content/80 leading-relaxed">新月はスタートのタイミング。なりたい姿をイメージしましょう</p>
+            <% moon_themes.each_with_index do |(phase, theme), index| %>
+              <div data-phase-content="<%= phase %>" class="<%= index == 2 ? '' : 'hidden' %>">
+                <div class="card bg-base-200/70 border border-base-300/40">
+                  <div class="card-body space-y-2 text-center">
+                    <p class="text-sm uppercase tracking-[0.4em] text-base-content/60">Theme</p>
+                    <h3 class="text-2xl font-serif text-primary"><%= theme[:title] %></h3>
+                    <p class="text-base text-base-content/80 leading-relaxed"><%= theme[:description] %></p>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div data-phase-content="first_quarter_moon" class="hidden">
-              <div class="card bg-base-200/70 border border-base-300/40">
-                <div class="card-body space-y-2 text-center">
-                  <p class="text-sm uppercase tracking-[0.4em] text-base-content/60">Theme</p>
-                  <h3 class="text-2xl font-serif text-primary">吸収と行動</h3>
-                  <p class="text-base text-base-content/80 leading-relaxed">上弦の月は行動力が高まるとき。願いを叶えるために取り入れたいことはありますか？</p>
-                </div>
-              </div>
-            </div>
-
-            <div data-phase-content="full_moon" class="">
-              <div class="card bg-base-200/70 border border-base-300/40">
-                <div class="card-body space-y-2 text-center">
-                  <p class="text-sm uppercase tracking-[0.4em] text-base-content/60">Theme</p>
-                  <h3 class="text-2xl font-serif text-primary">振り返りと感謝</h3>
-                  <p class="text-base text-base-content/80 leading-relaxed">満月は達成や完了のエネルギーが高まります。感謝とともに振り返りましょう。</p>
-                </div>
-              </div>
-            </div>
-
-            <div data-phase-content="last_quarter_moon" class="hidden">
-              <div class="card bg-base-200/70 border border-base-300/40">
-                <div class="card-body space-y-2 text-center">
-                  <p class="text-sm uppercase tracking-[0.4em] text-base-content/60">Theme</p>
-                  <h3 class="text-2xl font-serif text-primary">手放しと浄化</h3>
-                  <p class="text-base text-base-content/80 leading-relaxed">下弦の月は不要なものをリセットしていくタイミング。手放したいことは何ですか？</p>
-                </div>
-              </div>
-            </div>
+            <% end %>
           </div>
 
           <!-- フォーム -->
@@ -183,33 +155,27 @@
       </details>
 
       <script>
-        // Stimulus controller for moon phase demo
-        (() => {
-          const application = window.Stimulus || Application.start();
+        // Moon phase tab switcher
+        function selectMoonPhase(phase, clickedButton) {
+          const container = document.getElementById('moon-phase-demo');
 
-          application.register("moon-phase-demo", class extends Stimulus.Controller {
-            selectPhase(event) {
-              const phase = event.currentTarget.dataset.phase;
+          // Update tab styles
+          container.querySelectorAll('.phase-tab').forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline');
+          });
+          clickedButton.classList.add('btn-primary');
+          clickedButton.classList.remove('btn-outline');
 
-              // Update tab styles
-              this.element.querySelectorAll('.phase-tab').forEach(btn => {
-                btn.classList.remove('btn-primary');
-                btn.classList.add('btn-outline');
-              });
-              event.currentTarget.classList.add('btn-primary');
-              event.currentTarget.classList.remove('btn-outline');
-
-              // Show corresponding content
-              this.element.querySelectorAll('[data-phase-content]').forEach(content => {
-                if (content.dataset.phaseContent === phase) {
-                  content.classList.remove('hidden');
-                } else {
-                  content.classList.add('hidden');
-                }
-              });
+          // Show corresponding content
+          container.querySelectorAll('[data-phase-content]').forEach(content => {
+            if (content.dataset.phaseContent === phase) {
+              content.classList.remove('hidden');
+            } else {
+              content.classList.add('hidden');
             }
           });
-        })();
+        }
       </script>
     </section>
 

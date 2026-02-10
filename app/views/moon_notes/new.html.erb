@@ -21,26 +21,7 @@
       </div>
     </div>
 
-    <%= form_with model: @moon_note, local: true do |f| %>
-      <div class="card bg-base-200/70 border border-base-300/40">
-        <div class="card-body space-y-6">
-          <div>
-            <label class="label">
-              <span class="label-text text-base font-medium">あなたの Moon Note</span>
-            </label>
-            <%= f.text_area :content,
-                rows: 8,
-                class: "textarea textarea-bordered textarea-lg w-full bg-base-100/80",
-                placeholder: "月のテーマに照らして、思っていること・願い・手放したいものなどを書いてみてください…" %>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-6 flex justify-center">
-        <%= f.submit "保存する",
-            class: "btn btn-primary px-10" %>
-      </div>
-    <% end %>
+    <%= render "moon_note_form", moon_note: @moon_note, submit_label: "保存する" %>
 
   </div>
 </section>

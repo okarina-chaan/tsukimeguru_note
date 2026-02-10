@@ -14,35 +14,7 @@
       </div>
     </section>
 
-    <section class="card bg-base-200/70 border border-base-300/40">
-      <div class="card-body space-y-4">
-        <% if @moon_note.errors.any? %>
-          <div class="alert alert-error">
-            <p class="font-semibold mb-2">入力内容にエラーがあります</p>
-            <ul class="text-sm space-y-1">
-              <% @moon_note.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <%= form_with model: @moon_note, local: true do |f| %>
-          <label class="block space-y-2">
-            <span class="text-sm text-base-content/80">この日のMoon Note</span>
-            <%= f.text_area :content,
-                rows: 8,
-                class: "textarea textarea-bordered w-full bg-base-100/80",
-                placeholder: "思っていること・願い・手放したいものなどを書いてください…" %>
-          </label>
-
-          <div class="text-center pt-4 space-x-3">
-            <%= f.submit "更新する", class: "btn btn-primary px-8" %>
-            <%= link_to "キャンセル", moon_notes_path, class: "btn btn-ghost" %>
-          </div>
-        <% end %>
-      </div>
-    </section>
+    <%= render "moon_note_form", moon_note: @moon_note, submit_label: "更新する", show_cancel: true %>
 
   </div>
 </section>

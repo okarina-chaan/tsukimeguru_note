@@ -17,14 +17,14 @@ class MoonNotesController < ApplicationController
     end
     @moon_note.moon_phase = data[:event] || loose_event
     @moon_note.loose_moon_phase = loose_event
-    @moon_phase_name = data[:moon_phase_name]
+    @moon_phase_name = data[:loose_event_name]
     @moon_phase_emoji = data[:moon_phase_emoji]
     @moon_age = data[:moon_age]
 
     theme = MoonNoteThemeService.for(data[:loose_event])
     @moon_theme = theme[:title]
     @moon_theme_description = theme[:description]
-    flash.now[:notice] = "今日は#{data[:moon_phase_name]}です。Moon Noteを作成しましょう！"
+    flash.now[:notice] = "今日は#{data[:loose_event_name]}です。Moon Noteを作成しましょう！"
     render :new
   end
 

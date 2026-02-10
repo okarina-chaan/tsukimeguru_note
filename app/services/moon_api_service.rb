@@ -46,6 +46,7 @@ class MoonApiService
       moon_age: moon_age,
       event: strict_event,                       # Dashboard はこれを使う
       loose_event: loose_event,                  # MoonNote はこれを使う
+      loose_event_name: phase_name_for_event(loose_event),
       moon_phase_name: phase_name(angle),        # 基本の月相名称
       moon_phase_emoji: phase_emoji(angle)
     }
@@ -74,7 +75,7 @@ class MoonApiService
   end
 
 
-  # event → 日本語表記（Dashboard 専用でも使用可能）
+  # event → 日本語表記（Dashboardとmoon note両方で使う）
   def self.phase_name_for_event(event)
     case event
     when :new_moon           then "新月"

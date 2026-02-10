@@ -1,194 +1,287 @@
 <section class="min-h-screen bg-base-100 text-base-content py-14 px-4">
-  <div class="max-w-4xl mx-auto space-y-10">
-    <header class="text-center space-y-3">
-      <h1 class="text-4xl font-display tracking-widest">使い方</h1>
+  <div class="max-w-4xl mx-auto space-y-20">
+    <header class="text-center space-y-3 mb-14">
+      <h1 class="text-4xl font-display tracking-widest text-base-content/90">使い方</h1>
+      <p class="text-sm text-base-content/60 leading-relaxed">
+        今のあなたの気持ちを、大切に書きとめるためのヒントです。<br>
+        疲れている夜は、眺めるだけでも大丈夫ですよ。
+      </p>
     </header>
 
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold font-display flex items-center gap-2 text-base-content/90">
+        <%= heroicon "pencil-square", variant: :outline, options: { class: "w-6 h-6 text-primary" } %>
+        Daily Note
+      </h2>
 
-  <section class="space-y-3">
-    <h2 class="text-xl font-semibold font-display">Daily Note</h2>
+      <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+        <summary class="collapse-title text-base-content/80 font-medium leading-relaxed">
+          Daily Note とは（まいにちの日記）
+        </summary>
+        <div class="collapse-content space-y-5">
+          <p class="text-base-content/70 text-sm leading-relaxed">
+            体調と気分を記録。テキストは任意です。<br>
+            全部うめなくてもOK。
+          </p>
 
-    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
-      <summary class="collapse-title text-base-content/80 font-medium">
-        Daily Note とは（毎日 / 体調・気分・行動）
-      </summary>
-      <div class="collapse-content space-y-4">
-        <p class="text-base-content/70">
-          毎日の記録用ノートです。
-        </p>
-        <p class="text-base-content/70">
-          体調や気分、願いを叶えるためにやったこと、その結果などを簡単に記録していきましょう。
-        </p>
-        <p class="text-base-content/70">
-          全部書かなくてもOK。体調と気分だけの日があっても大丈夫です。
-        </p>
-
-        <div class="space-y-2">
-          <h3 class="font-semibold text-base-content/80">記録内容</h3>
-          <ul class="list-disc pl-5 space-y-1 text-base-content/70">
-            <li>体調</li>
-            <li>気分</li>
-            <li>願いを叶えるために今日やったこと</li>
-            <li>その結果（うまくいかなかったこと / 良かったこと）</li>
-            <li>明日試してみたいこと</li>
-            <li>簡単なメモ</li>
-          </ul>
+          <div class="p-4 bg-base-100/50 rounded-xl">
+            <h3 class="font-semibold text-sm text-base-content/80 mb-3">記録例</h3>
+            <ul class="text-sm text-base-content/70 space-y-2 leading-relaxed">
+              <li>・「今日は一駅歩いて帰った」</li>
+              <li>・「少し疲れ気味。明日は早く寝よう」</li>
+            </ul>
+          </div>
         </div>
+      </details>
+    </section>
 
-        <div class="space-y-2">
-          <h3 class="font-semibold text-base-content/80">更新頻度</h3>
-          <p class="text-base-content/70">毎日（書ける日に少しずつでOK）</p>
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold font-display flex items-center gap-2 text-base-content/90">
+        <%= heroicon "moon", variant: :outline, options: { class: "w-6 h-6 text-primary" } %>
+        Moon Note
+      </h2>
+
+      <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+        <summary class="collapse-title text-base-content/80 font-medium leading-relaxed">
+          Moon Note とは（月の満ち欠けに合わせた日記）
+        </summary>
+        <div class="collapse-content space-y-6">
+          <p class="text-base-content/70 text-sm leading-relaxed">
+            新月や満月など、月のリズムに合わせてひらく特別なノートです。<br>
+            特定の日にしか書けないので、通知が届いたらゆっくり自分と向き合ってみましょう。
+          </p>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div class="p-4 bg-base-100/60 rounded-xl border border-base-300/30">
+              <h3 class="font-bold text-base-content/90 flex items-center gap-2 mb-2">
+                <span class="w-2 h-2 rounded-full bg-slate-800"></span> 新月：ねがいごと
+              </h3>
+              <p class="text-xs text-base-content/70 leading-relaxed mb-3">
+                これからの願いをかきとめましょう。<br>
+                例：「新しい趣味をはじめる」
+              </p>
+            </div>
+            <div class="p-4 bg-base-100/60 rounded-xl border border-base-300/30">
+              <h3 class="font-bold text-base-content/90 flex items-center gap-2 mb-2">
+                <span class="w-2 h-2 rounded-full bg-slate-400"></span> 上弦の月：行動する
+              </h3>
+              <p class="text-xs text-base-content/70 leading-relaxed mb-3">
+                一歩進むためのヒントを。<br>
+                例：「目標のために本を買う」
+              </p>
+            </div>
+            <div class="p-4 bg-base-100/60 rounded-xl border border-base-300/30">
+              <h3 class="font-bold text-base-content/90 flex items-center gap-2 mb-2">
+                <span class="w-2 h-2 rounded-full bg-yellow-200"></span> 満月：感謝する
+              </h3>
+              <p class="text-xs text-base-content/70 leading-relaxed mb-3">
+                がんばった自分を褒めましょう。<br>
+                気づきがあればOK。
+              </p>
+            </div>
+            <div class="p-4 bg-base-100/60 rounded-xl border border-base-300/30">
+              <h3 class="font-bold text-base-content/90 flex items-center gap-2 mb-2">
+                <span class="w-2 h-2 rounded-full bg-slate-300"></span> 下弦の月：手放す
+              </h3>
+              <p class="text-xs text-base-content/70 leading-relaxed mb-3">
+                心を軽くしましょう。<br>
+                例：「無理していたことをやめる」
+              </p>
+            </div>
+          </div>
         </div>
+      </details>
 
-      </div>
-    </details>
-  </section>
+      <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+        <summary class="collapse-title text-base-content/80 font-medium leading-relaxed">
+          Moon Noteデモ画面（※作成イメージです。記録はできません。）
+        </summary>
+        <div class="collapse-content space-y-6" id="moon-phase-demo">
+          <!-- 月相選択タブ -->
+          <div class="flex flex-wrap gap-2 justify-center">
+            <button type="button"
+                    onclick="selectMoonPhase('new_moon', this)"
+                    data-phase="new_moon"
+                    class="phase-tab btn btn-sm btn-outline">
+              🌑 新月
+            </button>
+            <button type="button"
+                    onclick="selectMoonPhase('first_quarter_moon', this)"
+                    data-phase="first_quarter_moon"
+                    class="phase-tab btn btn-sm btn-outline">
+              🌓 上弦の月
+            </button>
+            <button type="button"
+                    onclick="selectMoonPhase('full_moon', this)"
+                    data-phase="full_moon"
+                    class="phase-tab btn btn-sm btn-outline btn-primary">
+              🌕 満月
+            </button>
+            <button type="button"
+                    onclick="selectMoonPhase('last_quarter_moon', this)"
+                    data-phase="last_quarter_moon"
+                    class="phase-tab btn btn-sm btn-outline">
+              🌗 下弦の月
+            </button>
+          </div>
 
-  <section class="space-y-3">
-    <h2 class="text-xl font-semibold font-display">Moon Note</h2>
+          <!-- テーマカード（切り替え表示） -->
+          <div class="space-y-4">
+            <% moon_themes.each_with_index do |(phase, theme), index| %>
+              <div data-phase-content="<%= phase %>" class="<%= index == 2 ? '' : 'hidden' %>">
+                <div class="card bg-base-200/70 border border-base-300/40">
+                  <div class="card-body space-y-2 text-center">
+                    <p class="text-sm uppercase tracking-[0.4em] text-base-content/60">Theme</p>
+                    <h3 class="text-2xl font-serif text-primary"><%= theme[:title] %></h3>
+                    <p class="text-base text-base-content/80 leading-relaxed"><%= theme[:description] %></p>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
 
-    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
-      <summary class="collapse-title text-base-content/80 font-medium">
-        Moon Note とは（週1くらい / 月の節目）
-      </summary>
-      <div class="collapse-content space-y-4">
-        <p class="text-base-content/70">
-          新月・上弦・満月・下弦の月の前後（±1日）だけ記録できる、月の満ち欠けの節目のノートです。
-        </p>
-        <p class="text-base-content/70">
-          月の満ち欠けのタイミングで、ゆっくり振り返ってみましょう。
-        </p>
-
-        <div class="space-y-2">
-          <h3 class="font-semibold text-base-content/80">記録内容（月相ごとのテーマ）</h3>
-          <ul class="list-disc pl-5 space-y-1 text-base-content/70">
-            <li><span class="font-medium">新月：</span>願い事（新しいスタート）</li>
-            <li><span class="font-medium">上弦の月：</span>達成のために吸収したいこと</li>
-            <li><span class="font-medium">満月：</span>達成できたこと（感謝や気づき）</li>
-            <li><span class="font-medium">下弦の月：</span>手放したいこと</li>
-          </ul>
+          <!-- フォーム -->
+          <%= render "moon_notes/moon_note_form", moon_note: MoonNote.new, demo: true %>
         </div>
+      </details>
 
-        <div class="space-y-2">
-          <h3 class="font-semibold text-base-content/80">更新頻度</h3>
-          <p class="text-base-content/70">1週間に1度程度（書ける月相の日に）</p>
+      <script>
+        // Moon phase tab switcher
+        function selectMoonPhase(phase, clickedButton) {
+          const container = document.getElementById('moon-phase-demo');
+
+          // Update tab styles
+          container.querySelectorAll('.phase-tab').forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline');
+          });
+          clickedButton.classList.add('btn-primary');
+          clickedButton.classList.remove('btn-outline');
+
+          // Show corresponding content
+          container.querySelectorAll('[data-phase-content]').forEach(content => {
+            if (content.dataset.phaseContent === phase) {
+              content.classList.remove('hidden');
+            } else {
+              content.classList.add('hidden');
+            }
+          });
+        }
+      </script>
+    </section>
+
+
+
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold font-display flex items-center gap-2 text-base-content/90">
+        <%= heroicon "chart-bar", variant: :outline, options: { class: "w-6 h-6 text-primary" } %>
+        分析（ふりかえり）
+      </h2>
+
+      <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl text-base-content/70">
+        <summary class="collapse-title text-base-content/80 font-medium">
+          先週の振り返り
+        </summary>
+        <div class="collapse-content space-y-4">
+          <p class="text-sm text-base-content/70">
+            先週のDaily noteから、あなたの一週間をまとめます。
+          </p>
+          <p class="text-xs opacity-60">※先週の記録が必要です</p>
         </div>
-      </div>
-    </details>
-  </section>
+      </details>
 
-  <section class="space-y-3">
-    <h2 class="text-xl font-semibold font-display">分析</h2>
-
-    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
-      <summary class="collapse-title text-base-content/80 font-medium">
-        振り返り機能
-      </summary>
-      <div class="collapse-content space-y-3">
-        <p class="text-base-content/70">
-          先週1週間分のDaily Noteの内容を振り返り、気づきを得るためのカードが表示されます。
-        </p>
-        <p class="text-base-content/70">
-          あえて「良かった・悪かった」というような評価をしない設計にしています。
-        </p>
-        <p class="text-base-content/70">
-          このアプリでは、あなた自身の感じたことや気づきを大切にしてください。
-        </p>
-
-        <div class="space-y-2">
-          <h3 class="font-semibold text-base-content/80">更新頻度</h3>
-          <p class="text-base-content/70">1週間に1度（月曜日にリセットされます）</p>
-        </div>
-
-        <div class="space-y-2">
-          <h3 class="font-semibold text-base-content/80">注意事項</h3>
-          <p class="text-base-content/70">先週分のDaily Noteがまだ記録されていない場合は、振り返ることができません。</p>
-          <p class="text-base-content/70">そのときは、先週の日付でDaily Noteを記録してから再度振り返り機能を利用してください。</p>
-        </div>
-      </div>
-    </details>
-    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+      <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
       <summary class="collapse-title text-base-content/80 font-medium">
         グラフ表示
       </summary>
-        <div class="collapse-content space-y-3">
-          <p class="text-base-content/70">
-            体調・気分の推移をグラフで確認できます。
-          </p>
-          <p class="text-base-content/70">
-            月の満ち欠けとあなたの記録の関係を見返してみましょう。
+        <div class="collapse-content">
+          <p class="text-sm text-base-content/70">
+            体調・気分の推移をグラフで表示。<br>
+            月の満ち欠けとの関係が見えます。
           </p>
         </div>
     </details>
-  </section>
+    </section>
 
-  <section class="space-y-3">
-    <h2 class="text-xl font-semibold font-display">カレンダー</h2>
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold font-display flex items-center gap-2 text-base-content/90">
+        <%= heroicon "calendar", variant: :outline, options: { class: "w-6 h-6 text-primary" } %>
+        カレンダー
+      </h2>
 
-    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
-      <summary class="collapse-title text-base-content/80 font-medium">
-        カレンダー表示
-      </summary>
-      <div class="collapse-content space-y-3">
-        <p class="text-base-content/70">
-          月ごとのカレンダー表示で、その日の月相やMoon Noteが作成できるかどうかを確認できます。
-        </p>
-        <p class="text-base-content/70">
-          月齢は正確ですが、月相の表示はアプリの都合上、±1日の誤差がある場合があります。ご了承ください。
-        </p>
-      </div>
-    </details>
-  </section>
+      <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl text-base-content/70">
+        <summary class="collapse-title text-base-content/80 font-medium">
+          月相（げっそう）の確認
+        </summary>
+        <div class="collapse-content space-y-3">
+          <p class="text-sm text-base-content/70">
+            月の形や、Moon Note が書ける日を確認できます。
+          </p>
+          <p class="text-xs opacity-60">
+            ※月相の表示は±1日の誤差がある場合があります
+          </p>
+        </div>
+      </details>
+    </section>
 
-  <section class="space-y-3">
-    <h2 class="text-xl font-semibold font-display">My Page</h2>
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold font-display flex items-center gap-2 text-base-content/90">
+        <%= heroicon "user", variant: :outline, options: { class: "w-6 h-6 text-primary" } %>
+        My Page
+      </h2>
 
-    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
-      <summary class="collapse-title text-base-content/80 font-medium">
-        プロフィール設定
-      </summary>
-      <div class="collapse-content space-y-3">
-        <p class="text-base-content/70">
-          ユーザー名や、メールアドレスの変更、月星座診断結果の表示ができます。
-        </p>
-        <p class="text-base-content/70">
-          現在はメールアドレスの変更のみ対応しています。
-        </p>
-      </div>
-    </details>
-    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
-      <summary class="collapse-title text-base-content/80 font-medium">
-        月星座診断機能
-      </summary>
-      <div class="collapse-content space-y-3">
-        <p class="text-base-content/70">
-          月星座は、生まれた日の月の位置する星座のことです。
-        </p>
-        <p class="text-base-content/70">
-          月星座はあなたの内面的な性格や感情、潜在的な欲求を表すと言われています。
-        </p>
-        <p class="text-base-content/70">
-          この機能ではあなたの月星座を診断し、その特徴やおすすめの振り返りテーマを表示します。
-        </p>
-      </div>
-    </details>
-    <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
-      <summary class="collapse-title text-base-content/80 font-medium">
+      <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl text-base-content/70">
+        <summary class="collapse-title text-base-content/80 font-medium">
+          あなたの月星座について
+        </summary>
+        <div class="collapse-content">
+          <p class="text-sm text-base-content/70">
+            生まれた時の月の位置から、あなたの「内側の自分」を診断。<br>
+            おすすめの振り返りテーマも表示されます。
+          </p>
+        </div>
+      </details>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold font-display flex items-center gap-2 text-base-content/90">
+        <%= heroicon "arrow-path", variant: :outline, options: { class: "w-6 h-6 text-primary" } %>
+        パスワードリセット
+      </h2>
+
+      <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl text-base-content/70">
+        <summary class="collapse-title text-base-content/80 font-medium">
+          パスワードをリセットする
+        </summary>
+        <div class="collapse-content">
+          <p class="text-sm text-base-content/70">
+            トップページの「ログイン」ボタンからリセット可能。<br>
+            <span class="badge badge-sm badge-outline mt-2 text-primary">メールアドレス登録が必要</span>
+            <span class="badge badge-sm badge-ghost mt-2 text-primary">LINE登録の方は不要</span>
+          </p>
+        </div>
+      </details>
+    </section>
+
+    <section class="space-y-4">
+      <h2 class="text-xl font-semibold font-display flex items-center gap-2 text-base-content/90">
+        <%= heroicon "arrow-right-on-rectangle", variant: :outline, options: { class: "w-6 h-6 text-primary" } %>
         退会
-      </summary>
-      <div class="collapse-content space-y-3">
-        <p class="text-base-content/70">
-          アカウントの削除（退会）を行うことができます。
-        </p>
-        <p class="text-base-content/70">
-          退会を希望される場合は、メールを送付いたしますので、メールアドレスを登録してください。
-        </p>
-        <p class="text-base-content/70">
-          退会を行うと、あなたのアカウント情報や記録データはすべて削除され、復元することはできません。ご了承ください。
-        </p>
-      </div>
-    </details>
-  </section>
+      </h2>
 
-</main>
-
+      <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl text-base-content/70">
+        <summary class="collapse-title text-base-content/80 font-medium">
+          退会について
+        </summary>
+        <div class="collapse-content">
+          <p class="text-sm text-base-content/70">
+            Mypageの「退会する」ボタンから手続きできます。<br>
+            <span class="badge badge-sm badge-outline mt-2 text-primary">メールアドレス登録が必要</span>
+          </p>
+        </div>
+      </details>
+    </section>
+  </div>
+</section>
+  </div>
+</section>

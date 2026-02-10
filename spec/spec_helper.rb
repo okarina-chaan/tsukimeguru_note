@@ -1,8 +1,11 @@
-require "simplecov"
+# カバレッジ確認したいときは COVERAGE=true bundle exec rspec
+if ENV["COVERAGE"]
+  require "simplecov"
+  SimpleCov.start "rails"
+end
+
 require "active_support/testing/time_helpers"
 require "stub_env"
-
-SimpleCov.start "rails"
 
 RSpec.configure do |config|
   config.include StubEnv::Helpers

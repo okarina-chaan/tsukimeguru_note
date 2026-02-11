@@ -1,3 +1,5 @@
+import Chart from "chart.js/auto"
+import annotationPlugin from "chartjs-plugin-annotation"
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
@@ -11,21 +13,10 @@ export default class extends Controller {
   connect() {
     console.log("📅 Labels:", this.labelsValue);
     console.log("🌙 Moon Markers:", this.moonMarkersValue);
-    const Chart = window.Chart
-    const annotationPlugin = window["chartjs-plugin-annotation"]
-
-    if (!Chart) {
-      console.warn("Chart.js failed to load")
-      window.dispatchEvent(new Event("page:ready"))
-      return
-    }
 
     // annotation plugin 登録（重複防止）
-    if (annotationPlugin) {
-      const pluginModule = annotationPlugin.default || annotationPlugin
-      if (!Chart.registry.plugins.get("annotation")) {
-        Chart.register(pluginModule)
-      }
+    if (!Chart.registry.plugins.get("annotation")) {
+      Chart.register(annotationPlugin)
     }
 
     const ctx = this.element.getContext("2d")
@@ -73,7 +64,7 @@ export default class extends Controller {
         scales: {
           x: {
             grid: { display: false },
-            ticks: { 
+            ticks: {
               color: "#F9DECD",
               callback: function(value, index, ticks) {
                 // "2025-12-01" から "12-01" に変換

@@ -52,23 +52,10 @@ AIによる振り返りについては、ユーザーの日記について「良
 |------|------|:----:|
 | **Daily Note<br>（日々の記録）** | ・体調（5段階評価）<br>・気持ち（5段階評価）<br>・今日できたこと<br>・少し残念だったこと<br>・うれしかったこと<br>・明日の一歩<br>・自由に記述できるメモ<br><br>毎日の心身の状態を記録し、自分と向き合う時間を作ります。 | [![Image from Gyazo](https://i.gyazo.com/969a1ab65efa7bb2fe9d963c0d133c30.gif)](https://gyazo.com/969a1ab65efa7bb2fe9d963c0d133c30)|
 | **Moon Note<br>（月相の記録）** | 新月・上弦の月・満月・下弦の月のタイミングでのみ記録できる特別な日記です。<br>月のリズムに合わせた振り返りや願い事を残すことができます。 | [![Image from Gyazo](https://i.gyazo.com/3334b45fc039a1bdf1a895d6c1f3d8ef.gif)](https://gyazo.com/3334b45fc039a1bdf1a895d6c1f3d8ef) |
-| **AI振り返り機能** | 週に1回、AIがあなたの日記をもとに振り返りレポートを生成します。<br>客観的な視点から、あなたの1週間を見つめ直すことができます。 | ![AI振り返りのデモ](/assets/images/ai_review.gif) |
+| **AI振り返り機能** | 週に1回、AIがあなたの日記をもとに振り返りレポートを生成します。<br>客観的な視点から、あなたの1週間を見つめ直すことができます。 | [![Image from Gyazo](https://i.gyazo.com/2a470d3114eb4975290340079b6f52b0.gif)](https://gyazo.com/2a470d3114eb4975290340079b6f52b0) |
 | **グラフ機能** | 過去の体調や気持ちの変化を月相と合わせてグラフで確認できます。<br>月のリズムと自分の心身の変化の関係性を発見できます。 | [![Image from Gyazo](https://i.gyazo.com/31c374463cac195ba8c2080ab94c4123.png)](https://gyazo.com/31c374463cac195ba8c2080ab94c4123) |
-| **カレンダー機能** | 月相と日記の記録をカレンダービューで一覧できます。<br>どの日に何を書いたか、月相がどうだったかを視覚的に把握できます。 | ![カレンダーのデモ](/assets/images/calendar.gif) |
+| **カレンダー機能** | 月相と日記の記録をカレンダービューで一覧できます。<br>どの日に何を書いたか、月相がどうだったかを視覚的に把握できます。 | [![Image from Gyazo](https://i.gyazo.com/09b94795631c93844e19d32ff8a70229.png)](https://gyazo.com/09b94795631c93844e19d32ff8a70229) |
 
-ユーザーはアプリを開くとdashboardページに遷移します。  
-毎日登録できる日記、「daily note」の内容は以下の通りです。  
-
-- 体調（5段階評価）
-- 気持ち（5段階評価）
-- 今日できたこと
-- 少し残念だったこと
-- うれしかったこと
-- 明日の一歩
-- 自由に記述できるテキストボックス
-
-グラフで過去の体調や気持ちの記録を振り返ることができます。    
-新月の時だけは願い事を書くことができ、満月の時にはその願い事に対して振り返りを残すことができます。--
 
 ## ユーザーの獲得について
 
@@ -102,17 +89,27 @@ MVPリリース時：
 AIによる振り返り機能 （週1回）
 グラフでの振り返り機能  
 
-## 使用する技術スタック  
+## 使用する技術スタック
 
-フレームワーク：Ruby on Rails 8  
-データベース：PostgreSQL  
-デプロイ先：Render  
-使用予定のAPI：  
-LINE Login API（ユーザー認証）   
-Free AstrologyAPI(月星座情報) 
-chart.js（グラフ表示）  
-おはこん番地は!?Web API（月相計算）  
-フロントエンド：Tailwind CSS + JavaScript + React(部分的に)
+**バックエンド：**  
+- Ruby on Rails 8
+- PostgreSQL
+
+**フロントエンド：**  
+- Tailwind CSS
+- JavaScript
+- React（部分的に）
+- Chart.js（グラフ表示）
+
+**デプロイ：**  
+- Render
+
+**使用API：**  
+- LINE Login API（ユーザー認証）
+- OpenAI API（AI振り返り機能）
+- Free Astrology API（月星座情報）
+- おはこん番地は!?Web API（月相計算）
+
 
 ## 画面遷移図
 

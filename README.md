@@ -1,5 +1,5 @@
 サービスはこちら：https://tsukimeguru-note.com/
-![](/assets/images/ogp.png)
+![](app/assets/images/ogp.png)
 
 ## サービス概要
 月の満ち欠けと連動した日記アプリ「月めぐるノート」  

@@ -42,19 +42,19 @@ RSpec.describe LineMessageSetting, type: :model do
       end
 
       it "上弦の月の通知が有効なユーザーのみを返す" do
-        setting1 = LineMessageSetting.create!(user: user1, first_quarter: true)
-        setting2 = LineMessageSetting.create!(user: user2, first_quarter: false)
+        setting1 = LineMessageSetting.create!(user: user1, first_quarter_moon: true)
+        setting2 = LineMessageSetting.create!(user: user2, first_quarter_moon: false)
 
-        expect(LineMessageSetting.enabled_for_phase(:first_quarter)).to include(setting1)
-        expect(LineMessageSetting.enabled_for_phase(:first_quarter)).to_not include(setting2)
+        expect(LineMessageSetting.enabled_for_phase(:first_quarter_moon)).to include(setting1)
+        expect(LineMessageSetting.enabled_for_phase(:first_quarter_moon)).to_not include(setting2)
       end
 
       it "下弦の月の通知が有効なユーザーのみを返す" do
-        setting1 = LineMessageSetting.create!(user: user1, last_quarter: true)
-        setting2 = LineMessageSetting.create!(user: user2, last_quarter: false)
+        setting1 = LineMessageSetting.create!(user: user1, last_quarter_moon: true)
+        setting2 = LineMessageSetting.create!(user: user2, last_quarter_moon: false)
 
-        expect(LineMessageSetting.enabled_for_phase(:last_quarter)).to include(setting1)
-        expect(LineMessageSetting.enabled_for_phase(:last_quarter)).to_not include(setting2)
+        expect(LineMessageSetting.enabled_for_phase(:last_quarter_moon)).to include(setting1)
+        expect(LineMessageSetting.enabled_for_phase(:last_quarter_moon)).to_not include(setting2)
       end
     end
   end

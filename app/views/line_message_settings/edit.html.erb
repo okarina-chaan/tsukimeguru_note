@@ -11,7 +11,7 @@
 	      </p>
 	    </div>
 
-	    <%= form_with model: @line_message_setting, url: line_message_setting_path, local: true do |f| %>
+	    <%= form_with model: @line_message_setting, url: line_message_setting_path, method: :patch, local: true do |f| %>
 	      <div class="space-y-4">
 
 	        <div class="grid grid-cols-2 gap-3">

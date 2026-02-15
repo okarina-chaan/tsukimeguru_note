@@ -43,7 +43,7 @@
   --size-field: 0.25rem;
   --border: 1px;
   --depth: 1;
-  --noise: 1;
+  --noise: 0;
 
   --color-calendar-today: #7EB0F2;
   --color-calendar-writable: #977EF2;
@@ -52,3 +52,4 @@
   --color-calendar-first-quarter: #7EB0F2;
   --color-calendar-last-quarter: #F2EDA0;
 }
+

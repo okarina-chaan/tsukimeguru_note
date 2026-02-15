@@ -11,21 +11,23 @@ Rails.application.routes.draw do
                                       as: :destroy_account
   end
 
-  resources :daily_notes,     only: [ :index, :new, :create, :edit, :update, :destroy ]
-  resources :moon_notes,      only: [ :index, :new, :create, :edit, :update, :destroy ]
+  resources :daily_notes,         only: [ :index, :new, :create, :edit, :update, :destroy ]
+  resources :moon_notes,          only: [ :index, :new, :create, :edit, :update, :destroy ]
 
-  resource  :registration,    only: [ :new, :create ]
-  resource  :session,         only: [ :new, :create, :destroy ]
+  resource  :registration,        only: [ :new, :create ]
+  resource  :session,             only: [ :new, :create, :destroy ]
 
-  resource  :email,           only: [ :edit, :update ]
+  resource  :email,               only: [ :edit, :update ]
 
-  resource  :moon_sign,       only: [ :new, :create, :show ]
+  resource :line_message_setting, only: [ :edit, :update ]
 
-  resource  :analysis,        only: [ :show ], path: "insights", controller: "analysis" do
-      post  :weekly_insight,  on: :collection
+  resource  :moon_sign,           only: [ :new, :create, :show ]
+
+  resource  :analysis,            only: [ :show ], path: "insights", controller: "analysis" do
+      post  :weekly_insight,      on: :collection
   end
 
-  resources :password_resets, only: [ :new, :create ] do
+  resources :password_resets,     only: [ :new, :create ] do
     collection do
       get :sent
       get :edit
@@ -35,7 +37,7 @@ Rails.application.routes.draw do
   patch "password_resets", to: "password_resets#update"
 
   namespace :api do
-    resources :weekly_insights, only: [ :create ] do
+    resources :weekly_insights,   only: [ :create ] do
       member do
         get :fragment
       end

@@ -122,6 +122,5 @@ RSpec.describe "LineMessageSettings", type: :request do
         expect(response).to redirect_to(root_path)
       end
     end
-
   end
 end

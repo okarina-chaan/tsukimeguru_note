@@ -215,6 +215,9 @@ GEM
       letter_opener (~> 1.9)
       railties (>= 6.1)
       rexml
+    line-bot-api (2.6.1)
+      base64 (~> 0.2)
+      multipart-post (~> 2.4)
     lint_roller (1.1.0)
     logger (1.7.0)
     loofah (2.25.0)
@@ -234,6 +237,7 @@ GEM
     minitest (6.0.1)
       prism (~> 1.5)
     msgpack (1.8.0)
+    multipart-post (2.4.1)
     net-http (0.9.1)
       uri (>= 0.11.1)
     net-imap (0.6.2)
@@ -536,6 +540,7 @@ DEPENDENCIES
   kamal
   kaminari!
   letter_opener_web
+  line-bot-api
   memory_profiler
   pg (~> 1.6)
   propshaft

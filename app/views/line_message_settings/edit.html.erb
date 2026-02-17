@@ -1,0 +1,48 @@
+<div class="container mx-auto px-4 py-8 space-y-8">
+
+  <h1 class="text-3xl font-display">LINE通知設定</h1>
+
+	<div class="card bg-base-200 shadow">
+	  <div class="card-body space-y-4">
+
+	    <div>
+	      <p class="text-sm opacity-70">
+	        Moon Note対象日の中で、通知したい月相を選択してください（複数選択できます）。
+	      </p>
+	    </div>
+
+	    <%= form_with model: @line_message_setting, url: line_message_setting_path, method: :patch, local: true do |f| %>
+	      <div class="space-y-4">
+
+	        <div class="grid grid-cols-2 gap-3">
+	          <label class="flex items-center gap-2">
+	            <%= f.check_box :new_moon, class: "checkbox" %>
+	            <span>新月🌑</span>
+	          </label>
+
+	          <label class="flex items-center gap-2">
+	            <%= f.check_box :first_quarter_moon, class: "checkbox" %>
+	            <span>上弦の月🌓</span>
+	          </label>
+
+	          <label class="flex items-center gap-2">
+	            <%= f.check_box :full_moon, class: "checkbox" %>
+	            <span>満月🌕️</span>
+	          </label>
+
+	          <label class="flex items-center gap-2">
+	            <%= f.check_box :last_quarter_moon, class: "checkbox" %>
+	            <span>下弦の月🌗</span>
+	          </label>
+	        </div>
+
+	        <div class="pt-2">
+	          <%= f.submit "設定する", class: "btn btn-outline btn-xs w-full" %>
+	        </div>
+
+	      </div>
+	    <% end %>
+	  </div>
+	</div>
+
+</div>

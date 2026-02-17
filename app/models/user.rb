@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :daily_notes, dependent: :destroy
   has_many :moon_notes, dependent: :destroy
   has_many :authentications, dependent: :destroy
+  has_one :line_message_setting, dependent: :destroy
 
   # line_user_idはnullable（email認証ユーザーはNULL）
   validates :line_user_id, uniqueness: true, allow_nil: true

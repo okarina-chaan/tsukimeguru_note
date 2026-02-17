@@ -27,6 +27,18 @@ class LineLoginApiController < ApplicationController
     # authenticationsテーブルから検索
     authentication = Authentication.find_by(provider: "line", uid: line_user_id)
 
+    # ログインユーザーの場合、LINE連携処理をする
+    # 既に別ユーザーが使っていたらエラーにする
+    if current_user
+      return redirect_to(mypage_path, alert: "このLINEアカウントは既に別のユーザーに連携されています") if authentication && authentication.user != current_user
+
+      current_user.update!(line_user_id: line_user_id)
+      current_user.authentications.find_or_create_by!(provider: "line", uid: line_user_id)
+      redirect_to mypage_path, notice: "LINE連携が完了しました"
+      return
+    end
+
+    # ログインしていないユーザーの場合、LINEを使ったユーザー登録処理をする
     if authentication
       user = authentication.user
     else

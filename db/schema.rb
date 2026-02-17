@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_13_134402) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_14_084937) do
   create_table "authentications", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "password_digest"
@@ -38,6 +38,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_13_134402) do
     t.integer "user_id", null: false
     t.index ["user_id", "date"], name: "index_daily_notes_on_user_id_and_date", unique: true
     t.index ["user_id"], name: "index_daily_notes_on_user_id"
+  end
+
+  create_table "line_message_settings", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.boolean "first_quarter_moon", default: false, null: false
+    t.boolean "full_moon", default: false, null: false
+    t.datetime "last_notified_at"
+    t.boolean "last_quarter_moon", default: false, null: false
+    t.boolean "new_moon", default: false, null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_line_message_settings_on_user_id"
   end
 
   create_table "moon_notes", force: :cascade do |t|
@@ -82,5 +94,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_13_134402) do
 
   add_foreign_key "authentications", "users"
   add_foreign_key "daily_notes", "users"
+  add_foreign_key "line_message_settings", "users"
   add_foreign_key "moon_notes", "users"
 end

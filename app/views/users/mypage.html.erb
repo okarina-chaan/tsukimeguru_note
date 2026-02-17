@@ -21,6 +21,7 @@
             <% end %>
           </div>
 
+        <!-- 月星座診断機能結果 -->
         <div class="flex items-center gap-2">
           <p>月星座：<%= current_user.moon_sign || "未診断" %></p>
           <% if current_user.moon_sign.present? %>
@@ -31,6 +32,34 @@
       </div>
     </div>
 
+    <!-- LINE通知機能設定カード -->
+  <div class="card bg-base-200 shadow">
+    <div class="card-body space-y-2">
+      <h2 class="card-title">LINE通知設定</h2>
+        <p class="text-sm opacity-70">
+          Moon Noteの対象日に通知を受け取れます。通知ON/OFF、通知する月相を選べます。
+        </p>
+      <% if current_user.line_user_id.blank? %>
+        <!-- LINE未連携の場合 -->
+        <p class="text-sm opacity-70">
+          LINE通知を受け取るには、LINEアカウントとの連携が必要です。
+        </p>
+
+        <%= link_to line_login_api_login_path,
+            class: "btn text-white border-0 w-full",
+            style: "background-color: #06C755;" do %>
+          <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.036 9.608.391.084.922.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975 1.765-1.89 2.547-3.807 2.547-5.968z"></path>
+          </svg>
+          LINE連携をする
+        <% end %>
+      <% else %>
+        <!-- LINE連携済みの場合 -->
+        <%= link_to "設定する", edit_line_message_setting_path, class: "btn btn-outline" %>
+      <% end %>
+    </div>
+  </div> 
+
   <div class="card bg-gradient-to-r from-indigo-500/30 to-purple-600/40 shadow">
     <div class="card-body">
       <h2 class="card-title"> 月星座診断</h2>
@@ -40,6 +69,7 @@
       </p>
       <p>
         月星座別でおすすめの振り返りテーマを提案しました。
+
       </p>
       <%= link_to "月星座を診断する", new_moon_sign_path,
             class: "btn btn-primary w-full mt-3" %>

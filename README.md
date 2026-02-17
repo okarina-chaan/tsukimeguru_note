@@ -52,7 +52,7 @@ AIによる振り返りについては、ユーザーの日記について「良
 |------|------|:----:|
 | **Daily Note<br>（日々の記録）** | ・体調（5段階評価）<br>・気持ち（5段階評価）<br>・今日できたこと<br>・少し残念だったこと<br>・うれしかったこと<br>・明日の一歩<br>・自由に記述できるメモ<br><br>毎日の心身の状態を記録し、自分と向き合う時間を作ります。 | [![Image from Gyazo](https://i.gyazo.com/969a1ab65efa7bb2fe9d963c0d133c30.gif)](https://gyazo.com/969a1ab65efa7bb2fe9d963c0d133c30)|
 | **Moon Note<br>（月相の記録）** | 新月・上弦の月・満月・下弦の月のタイミングでのみ記録できる特別な日記です。<br>月のリズムに合わせた振り返りや願い事を残すことができます。 | [![Image from Gyazo](https://i.gyazo.com/3334b45fc039a1bdf1a895d6c1f3d8ef.gif)](https://gyazo.com/3334b45fc039a1bdf1a895d6c1f3d8ef) |
-| **AI振り返り機能** | 週に1回、AIがあなたの日記をもとに振り返りレポートを生成します。<br>客観的な視点から、あなたの1週間を見つめ直すことができます。 | [![Image from Gyazo](https://i.gyazo.com/2a470d3114eb4975290340079b6f52b0.gif)](https://gyazo.com/2a470d3114eb4975290340079b6f52b0) |
+| **AI振り返り機能** | 週に1回、AIがあなたの日記をもとに振り返りレポートを生成します。<br>客観的な視点から、あなたの1週間を見つめ直すことができます。 | [![Image from Gyazo](https://i.gyazo.com/a990d58ea1ff5565298661a4b2057f83.gif)](https://gyazo.com/a990d58ea1ff5565298661a4b2057f83) |
 | **グラフ機能** | 過去の体調や気持ちの変化を月相と合わせてグラフで確認できます。<br>月のリズムと自分の心身の変化の関係性を発見できます。 | [![Image from Gyazo](https://i.gyazo.com/31c374463cac195ba8c2080ab94c4123.png)](https://gyazo.com/31c374463cac195ba8c2080ab94c4123) |
 | **カレンダー機能** | 月相と日記の記録をカレンダービューで一覧できます。<br>どの日に何を書いたか、月相がどうだったかを視覚的に把握できます。 | [![Image from Gyazo](https://i.gyazo.com/09b94795631c93844e19d32ff8a70229.png)](https://gyazo.com/09b94795631c93844e19d32ff8a70229) |
 

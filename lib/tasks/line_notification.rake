@@ -7,7 +7,7 @@ namespace :line do
     return unless data.present?
 
     loose_phase = data[:loose_event]
-    message = LineNotificationService.message_for(loose_phase)
+    message = MoonNoteMessageService.message_for(loose_phase)
     return if message.nil?
 
     LineMessageSetting.enabled_for_phase(loose_phase).each do |setting|

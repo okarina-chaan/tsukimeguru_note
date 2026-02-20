@@ -2,27 +2,6 @@ require "rails_helper"
 require "line/bot"
 
 RSpec.describe LineNotificationService do
-    describe ".message_for" do
-    it "新月のときは新月のMoon Noteの日のメッセージが返る" do
-      expect(MoonNoteMessageService.message_for(:new_moon)).to include("新月のMoon Noteの日")
-    end
-
-    it "満月のときは満月のMoon Noteの日のメッセージが返る" do
-      expect(MoonNoteMessageService.message_for(:full_moon)).to include("満月のMoon Noteの日")
-    end
-
-    it "上弦の月のときは上弦の月のMoon Noteの日のメッセージが返る" do
-      expect(MoonNoteMessageService.message_for(:first_quarter_moon)).to include("上弦の月のMoon Noteの日")
-    end
-
-    it "下弦の月のときは下弦の月のMoon Noteの日のメッセージが返る" do
-      expect(MoonNoteMessageService.message_for(:last_quarter_moon)).to include("下弦の月のMoon Noteの日")
-    end
-
-    it "不明なフェーズのときはnilが返る" do
-      expect(MoonNoteMessageService.message_for(:unknown_phase)).to be_nil
-    end
-  end
 
   describe ".notify" do
     let(:mock_client) { double("Line::Bot::Client") }

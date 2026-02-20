@@ -4,11 +4,11 @@ namespace :line do
     today = Time.zone.today
 
     data = MoonApiService.fetch(today)
-    return unless data.present?
+    next unless data.present?
 
     loose_phase = data[:loose_event]
     message = MoonNoteMessageService.message_for(loose_phase)
-    return if message.nil?
+    next if message.nil?
 
     LineMessageSetting.enabled_for_phase(loose_phase).each do |setting|
       user = setting.user

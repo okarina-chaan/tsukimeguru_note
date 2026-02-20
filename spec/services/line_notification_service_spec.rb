@@ -2,7 +2,6 @@ require "rails_helper"
 require "line/bot"
 
 RSpec.describe LineNotificationService do
-
   describe ".notify" do
     let(:mock_client) { double("Line::Bot::Client") }
 

@@ -3,7 +3,7 @@ require "line/bot"
 class LineNotificationService
   def self.client
     @client ||= Line::Bot::V2::MessagingApi::ApiClient.new(
-      channel_access_token: ENV["LINE_MESSAGING_API_CHANNEL_ACCESS_TOKEN"]
+      channel_access_token: ENV["LINE_MESSAGE_API_CHANNEL_ACCESS_TOKEN"]
     )
   end
 

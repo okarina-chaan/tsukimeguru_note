@@ -13,7 +13,7 @@ RSpec.describe LineNotificationService do
     it "line_user_idがあるユーザーにpush_messageが呼ばれる" do
       user = create(:user, line_user_id: "LINE123")
       LineNotificationService.notify(user, "テストメッセージ")
-      expect(mock_client).to have_received(:push_message).with(instance_of(Line::Bot::V2::MessagingApi::PushMessageRequest))
+      expect(mock_client).to have_received(:push_message).with(push_message_request: instance_of(Line::Bot::V2::MessagingApi::PushMessageRequest))
     end
 
     it "line_user_idがないユーザーにはpush_messageが呼ばれない" do

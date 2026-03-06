@@ -51,5 +51,7 @@ jobs:
           bin/rails db:schema:load
         env:
           RAILS_ENV: test
+      - name: Build Tailwind Css
+        run: bin/rails tailwindcss:build
       - name: Run Rspec
         run: bundle exec rspec

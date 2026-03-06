@@ -49,6 +49,7 @@ jobs:
       - name: Load database schema
         run: 
           bin/rails db:schema:load
-        env: RAILS_ENV: test
+        env:
+          RAILS_ENV: test
       - name: Run Rspec
         run: bundle exec rspec

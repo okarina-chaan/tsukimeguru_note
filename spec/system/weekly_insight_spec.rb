@@ -6,6 +6,7 @@ RSpec.describe '週次振り返り機能', type: :system, js: true do
 
   before do
     sign_in_as(user)
+    create_moon_phases(1.month.ago.to_date, 1.month.from_now.to_date)
   end
 
   describe '振り返り生成フロー' do

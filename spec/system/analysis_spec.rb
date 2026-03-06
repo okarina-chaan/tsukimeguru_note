@@ -12,6 +12,8 @@ RSpec.describe "Analysis", type: :system, js: true do
       before do
         allow(Reflection::OpenaiService).to receive(:new).and_return(reflection)
         allow(reflection).to receive(:call).and_return({ "question" => "振り返りの質問", "summary" => "先週のdaily noteの要約" })
+
+        create_moon_phases(1.month.ago.to_date, 1.month.from_now.to_date)
       end
       it "押せるときはボタンが有効" do
         user.update!(weekly_insight_generated_at: nil)
@@ -34,6 +36,10 @@ RSpec.describe "Analysis", type: :system, js: true do
     end
 
     context '異常系' do
+      before do
+        create_moon_phases(1.month.ago.to_date, 1.month.from_now.to_date)
+      end
+
       it "押せないときはボタンが無効" do
         Rails.cache.write("weekly_insight_user_#{user.id}_week_#{Time.zone.today.beginning_of_week}", {
           "question" => "テスト質問",

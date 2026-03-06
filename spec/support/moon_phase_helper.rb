@@ -7,6 +7,16 @@ module MoonPhaseHelper
         "phase": 2
       }.to_json, headers: { 'Content-Type' => 'application/json' })
   end
+
+  def create_moon_phases(start_date, end_date)
+    (start_date..end_date).each do |date|
+      MoonPhase.create!(
+        date: date,
+        angle: rand(0..360),
+        moon_age: rand(0..29)
+      )
+    end
+  end
 end
 
 RSpec.configure do |config|

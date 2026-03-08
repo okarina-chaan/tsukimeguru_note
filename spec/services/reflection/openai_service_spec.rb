@@ -21,6 +21,10 @@ RSpec.describe Reflection::OpenaiService do
     context '日記データが空の場合' do
       let(:user) { create(:user) }
       let(:daily_notes) { [] }
+      before do
+        stub_env('OPENAI_API_KEY', 'test_api_key')
+      end
+
       it "エラーメッセージが表示される" do
         service = Reflection::OpenaiService.new(daily_notes: daily_notes)
         result = service.call

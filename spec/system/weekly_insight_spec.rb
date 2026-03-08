@@ -6,11 +6,13 @@ RSpec.describe '週次振り返り機能', type: :system, js: true do
 
   before do
     sign_in_as(user)
+    create_moon_phases(1.month.ago.to_date, 1.month.from_now.to_date)
   end
 
   describe '振り返り生成フロー' do
     context '日記データが存在する場合' do
       before do
+        stub_env('OPENAI_API_KEY', 'test_api_key')
         3.times do |i|
           create(:daily_note,
             user: user,

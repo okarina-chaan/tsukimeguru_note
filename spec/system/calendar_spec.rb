@@ -5,6 +5,8 @@ RSpec.describe "カレンダー", type: :system do
 
   before do
     sign_in_as(user)
+
+    create_moon_phases(1.month.ago.to_date, 1.month.from_now.to_date)
   end
 
   describe "カレンダー画面" do

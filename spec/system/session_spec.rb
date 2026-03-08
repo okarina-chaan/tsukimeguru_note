@@ -10,7 +10,7 @@ RSpec.describe "セッション管理", type: :system do
   it "LINEログインしてからログアウトできる" do
     stub_moon_phase_api
 
-    create_moon_phases(Time.zone.today, Time.zone.today)
+    create_moon_phases(1.month.ago.to_date, 1.month.from_now.to_date)
 
     user = User.create!(line_user_id: "U1234567890abcdef", name: "テストユーザー", account_registered: true)
     user.authentications.create(provider: "line", uid: "U1234567890abcdef")

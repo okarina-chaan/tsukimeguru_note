@@ -12,7 +12,7 @@ RSpec.describe '週次振り返り機能', type: :system, js: true do
   describe '振り返り生成フロー' do
     context '日記データが存在する場合' do
       before do
-        stub_env('OPEN_AI_KEY', 'test_api_key')
+        stub_env('OPENAI_API_KEY', 'test_api_key')
         3.times do |i|
           create(:daily_note,
             user: user,

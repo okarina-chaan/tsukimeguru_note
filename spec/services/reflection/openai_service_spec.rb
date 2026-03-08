@@ -22,7 +22,7 @@ RSpec.describe Reflection::OpenaiService do
       let(:user) { create(:user) }
       let(:daily_notes) { [] }
       before do
-        stub_env('OPEN_AI_KEY', 'test_api_key')
+        stub_env('OPENAI_API_KEY', 'test_api_key')
       end
 
       it "エラーメッセージが表示される" do

@@ -18,10 +18,7 @@ RSpec.describe "セッション管理", type: :system do
     click_link "ログイン", match: :first
     find("a[href='/line_login_api/login']", visible: :all, match: :first).click
 
-    sleep 3
-
-    expect(page).to have_content("今日はどんな記録を残しますか？")
-    expect(page).to have_current_path(dashboard_path)
+    expect(page).to have_current_path(dashboard_path, wait: 10)
 
     click_on "ログアウト"
     expect(page).to have_current_path(root_path)

@@ -146,11 +146,10 @@
       </details>
 
       <script>
-        // Moon phase tab switcher
+        // Moon Noteのデモ画面を動的に変える
         function selectMoonPhase(phase, clickedButton) {
           const container = document.getElementById('moon-phase-demo');
 
-          // Update tab styles
           container.querySelectorAll('.phase-tab').forEach(btn => {
             btn.classList.remove('btn-primary');
             btn.classList.add('btn-outline');
@@ -158,7 +157,6 @@
           clickedButton.classList.add('btn-primary');
           clickedButton.classList.remove('btn-outline');
 
-          // Show corresponding content
           container.querySelectorAll('[data-phase-content]').forEach(content => {
             if (content.dataset.phaseContent === phase) {
               content.classList.remove('hidden');
@@ -168,6 +166,28 @@
           });
         }
       </script>
+
+
+      <details class="collapse collapse-arrow bg-base-200 border border-base-300 rounded-2xl">
+        <summary class="collapse-title text-base-content/80 font-medium leading-relaxed">
+          Moon Noteが作れる日に、リマインドできます
+        </summary>
+        
+        <div class="collapse-content space-y-6">
+          <p class="text-base-content/70 text-sm leading-relaxed">
+            LINEと連携することで、Moon Noteが作成できる日をお知らせします。
+          </p>
+          <p class="text-base-content/70 text-sm leading-relaxed">
+            通知する時間は、Moon Noteが作成できる日の20:00です。
+          </p>
+          <p class="text-base-content/70 text-sm leading-relaxed">
+            MyPageのLINE通知設定から、お知らせする月相を設定してください。
+          </p>
+          <p class="text-base-content/70 text-sm leading-relaxed">
+            ※まだ連携してない方は、MyPageの「LINE連携をする」から登録できます。
+          </p>
+        </div>
+        
     </section>
 
 

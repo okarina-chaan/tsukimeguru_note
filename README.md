@@ -131,4 +131,4 @@ Figma：<https://www.figma.com/design/eGtdn0sVWhmvQkbmZAhXqE/%E7%94%BB%E9%9D%A2%
 
 ## ER図
 
-[![Image from Gyazo](https://i.gyazo.com/627212fd610c337a59985f5b0a337557.png)](https://gyazo.com/627212fd610c337a59985f5b0a337557)
+[![Image from Gyazo](https://i.gyazo.com/7628da55ccc00f31a4201ed26085c128.png)](https://gyazo.com/7628da55ccc00f31a4201ed26085c128)

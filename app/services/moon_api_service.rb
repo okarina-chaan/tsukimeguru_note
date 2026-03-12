@@ -134,29 +134,21 @@ class MoonApiService
 
   # グラフ用の月相を取得
   def self.fetch_moon_markers(start_date, end_date)
-    moon_markers = []
+    year = start_date.year
+    month = start_date.month
 
-    (start_date..end_date).each do |date|
-      result = fetch(date)
-      next if result.nil?
-
-      # strict_event を使用
-      if result[:event] == :full_moon
-        moon_markers << {
-          date: date.to_s,
-          type: "full_moon",
-          emoji: "🌕"
-        }
-      elsif result[:event] == :new_moon
-        moon_markers << {
-          date: date.to_s,
-          type: "new_moon",
-          emoji: "🌑"
-        }
+    moon_phases = MoonPhaseRepository.fetch_month(year, month)
+    moon_marks = []
+    # 満月と新月のときにアノテーションを表示させたい
+    moon_phases.each do |moon_phase|
+      event = detect_event(moon_phase.angle, STRICT_EVENT_TOLERANCE_DEGREES)
+      if event == :new_moon
+        moon_marks << { date: moon_phase.date.to_s, type: "new_moon", emoji: "🌑" }
+      elsif event == :full_moon
+        moon_marks << { date: moon_phase.date.to_s, type: "full_moon", emoji: "🌕️" }
       end
     end
-
-    moon_markers
+    moon_marks
   end
 
   def self.fetch_monthly_events_with_range(year, month)

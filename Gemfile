@@ -19,7 +19,7 @@ gem "jbuilder"
 
 # Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
 gem "tailwindcss-ruby"
-gem "tailwindcss-rails", "~> 4.3"
+gem "tailwindcss-rails", "~> 4.5"
 
 gem "heroicon"
 

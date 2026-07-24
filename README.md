@@ -1,4 +1,6 @@
-サービスはこちら：https://tsukimeguru-note.com/
+## サービス終了しました🌕️使っていただきありがとうございました！
+
+~~サービスはこちら：https://tsukimeguru-note.com/~~
 ![](app/assets/images/ogp.png)
 
 ## サービス概要
